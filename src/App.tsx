@@ -6,12 +6,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 // 🎨 素材層 (ASSETS LAYER)
 // ==========================================
 const ASSETS = {
-  // 1. 新增 Logo 欄位 (請貼上您的 Imgur Logo 連結)
+  // 1. Logo
   logo: "https://drive.google.com/file/d/1M-U8vr_LZXM56NQDNb5sDPZyQdwPN31f/view?usp=drive_link",
 
-  // 2. 您的其他圖片 (保持原樣或更新)
+  // 2. 一家三口照片 (已確認連結)
   family: "https://drive.google.com/file/d/16iZWeAVFG3PYDGCmWQi_HqS_bkcffDQd/view?usp=drive_link", 
+  
+  // 3. 旅遊裝備 (若有新連結請貼這，目前用佔位圖)
   items: "https://placehold.co/600x300/png?text=Paste+Imgur+Items+Link",
+  
+  // 4. 背景紋理
   paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
   worldMap: "https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg", 
 };
@@ -19,6 +23,13 @@ const ASSETS = {
 // ==========================================
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
+
+const polaroids = [
+  { id: 1, src: "https://images.unsplash.com/photo-1519681393784-d120267933ba", caption: "全家福 @京都櫻花樹下", rotate: "-rotate-2" },
+  { id: 2, src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", caption: "孩子們在長灘島玩沙", rotate: "rotate-3" },
+  { id: 3, src: "https://images.unsplash.com/photo-1491884662610-735432c3143a", caption: "阿里山看日出冷到發抖", rotate: "-rotate-1" },
+  { id: 4, src: "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3", caption: "日本東北賞楓", rotate: "rotate-2" },
+];
 
 const allTrips = [
   { year: 2025, season: "春假", title: "紐西蘭開露營車", location: "New Zealand", status: "規劃中", type: "future" },
@@ -45,11 +56,17 @@ const mapPins = [
   { id: 4, name: "泰國", top: "45%", left: "75%", img: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=600" },
 ];
 
+// 🔧 修復版圖片轉換器
 const resolveImage = (url: string) => {
   if (!url || url.includes("Upload") || url.includes("Paste")) return url;
-  if (url.includes("drive.google.com") && url.includes("/d/")) {
-    const idMatch = url.match(/\/d\/(.*?)\//);
-    if (idMatch && idMatch[1]) return `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+  
+  if (url.includes("drive.google.com")) {
+    // 嘗試抓取檔案 ID
+    const idMatch = url.match(/\/d\/([^/]+)/);
+    if (idMatch && idMatch[1]) {
+      // 改用 lh3.googleusercontent.com 比較不會被擋，或是標準的 uc?export=view
+      return `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+    }
   }
   return url;
 };
@@ -155,6 +172,7 @@ const InteractiveMap = () => {
                   src={mapPins.find(p => p.id === activePin)?.img} 
                   alt="Travel Memory" 
                   className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
                 />
               </div>
               <p className="text-center font-bold text-stone-700 text-lg">
@@ -198,7 +216,13 @@ const App = () => {
           transition={{ type: "spring", duration: 1.5, delay: 0.5 }}
           className="absolute top-10 left-10 hidden md:block w-48"
         >
-           <img src={resolveImage(ASSETS.items)} alt="Items" className="drop-shadow-lg opacity-90 w-full h-auto" onError={(e) => e.currentTarget.style.opacity = '0.3'} />
+           <img 
+             src={resolveImage(ASSETS.items)} 
+             alt="Items" 
+             className="drop-shadow-lg opacity-90 w-full h-auto" 
+             referrerPolicy="no-referrer"
+             onError={(e) => e.currentTarget.style.opacity = '0.3'} 
+           />
         </motion.div>
 
         <div className="max-w-3xl mx-auto relative z-10">
@@ -214,6 +238,7 @@ const App = () => {
                src={resolveImage(ASSETS.logo)} 
                alt="Linbei Logo" 
                className="w-full h-full object-contain drop-shadow-xl hover:scale-110 transition-transform cursor-pointer"
+               referrerPolicy="no-referrer"
                onError={(e) => e.currentTarget.style.opacity = '0.3'} 
              />
           </motion.div>
@@ -226,7 +251,13 @@ const App = () => {
             className="flex justify-center items-end gap-4 mb-6"
           >
             <div className="w-64 h-64 relative">
-               <img src={resolveImage(ASSETS.family)} alt="Family" className="w-full h-full object-contain drop-shadow-xl" onError={(e) => e.currentTarget.style.opacity = '0.3'} />
+               <img 
+                 src={resolveImage(ASSETS.family)} 
+                 alt="Family" 
+                 className="w-full h-full object-contain drop-shadow-xl" 
+                 referrerPolicy="no-referrer"
+                 onError={(e) => e.currentTarget.style.opacity = '0.3'} 
+               />
             </div>
           </motion.div>
           
