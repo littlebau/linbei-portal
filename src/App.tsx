@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Map, Video, Calendar, MapPin, Camera, Backpack, Star, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -6,24 +6,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 // 🎨 素材層 (ASSETS LAYER)
 // ==========================================
 const ASSETS = {
-  // 請記得換成您的 Imgur 網址
-  pets: "https://placehold.co/600x400/png?text=Paste+Imgur+Pets+Link", 
+  // 1. 新增 Logo 欄位 (請貼上您的 Imgur Logo 連結)
+  logo: "https://drive.google.com/file/d/1M-U8vr_LZXM56NQDNb5sDPZyQdwPN31f/view?usp=drive_link",
+
+  // 2. 您的其他圖片 (保持原樣或更新)
+  family: "https://drive.google.com/file/d/16iZWeAVFG3PYDGCmWQi_HqS_bkcffDQd/view?usp=drive_link", 
   items: "https://placehold.co/600x300/png?text=Paste+Imgur+Items+Link",
   paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
-  // 世界地圖素材 (手繪風格)
   worldMap: "https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg", 
 };
 
 // ==========================================
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
-
-const polaroids = [
-  { id: 1, src: "https://images.unsplash.com/photo-1519681393784-d120267933ba", caption: "全家福 @京都櫻花樹下", rotate: "-rotate-2" },
-  { id: 2, src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e", caption: "孩子們在長灘島玩沙", rotate: "rotate-3" },
-  { id: 3, src: "https://images.unsplash.com/photo-1491884662610-735432c3143a", caption: "阿里山看日出冷到發抖", rotate: "-rotate-1" },
-  { id: 4, src: "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3", caption: "日本東北賞楓", rotate: "rotate-2" },
-];
 
 const allTrips = [
   { year: 2025, season: "春假", title: "紐西蘭開露營車", location: "New Zealand", status: "規劃中", type: "future" },
@@ -43,7 +38,6 @@ const allTrips = [
   { year: 2018, season: "春假", title: "京都大阪賞櫻粉紅泡泡", location: "Kyoto/Osaka", status: "已完成", type: "past" },
 ];
 
-// 地圖上的圖釘資料 (top/left 是位置百分比，您可以自己微調)
 const mapPins = [
   { id: 1, name: "紐西蘭", top: "85%", left: "92%", img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=600" },
   { id: 2, name: "日本", top: "35%", left: "85%", img: "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?auto=format&fit=crop&q=80&w=600" },
@@ -73,7 +67,7 @@ const TypewriterTitle = ({ text }: { text: string }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ 
             duration: 0.1, 
-            delay: index * 0.15, // 每個字延遲 0.15 秒出現
+            delay: index * 0.15,
             type: "spring", 
             stiffness: 100 
           }}
@@ -105,10 +99,9 @@ const InteractiveMap = () => {
   const [activePin, setActivePin] = useState<number | null>(null);
 
   return (
-    <div className="relative w-full aspect-[16/9] bg-blue-50/50 rounded-3xl border-4 border-stone-800 overflow-hidden shadow-xl my-12">
-      {/* 地圖背景 */}
+    <div className="relative w-full aspect-[16/9] bg-blue-50/50 rounded-3xl border-4 border-stone-800 overflow-hidden shadow-xl my-12 group">
       <div 
-        className="absolute inset-0 opacity-40 bg-contain bg-no-repeat bg-center"
+        className="absolute inset-0 opacity-40 bg-contain bg-no-repeat bg-center transition-transform duration-1000 group-hover:scale-105"
         style={{ backgroundImage: `url(${ASSETS.worldMap})` }}
       ></div>
       
@@ -116,35 +109,45 @@ const InteractiveMap = () => {
         <span className="font-bold text-stone-800">🌍 點點看我們去哪玩!</span>
       </div>
 
-      {/* 圖釘們 */}
       {mapPins.map((pin) => (
         <div key={pin.id} className="absolute" style={{ top: pin.top, left: pin.left }}>
           <motion.button
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.3 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setActivePin(pin.id)}
-            className="relative -translate-x-1/2 -translate-y-1/2 group"
+            className="relative -translate-x-1/2 -translate-y-1/2"
           >
             <MapPin size={32} className="text-red-500 drop-shadow-md fill-red-500" />
-            <span className="absolute top-full left-1/2 -translate-x-1/2 bg-stone-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileHover={{ opacity: 1, y: 0 }}
+              className="absolute top-full left-1/2 -translate-x-1/2 bg-stone-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap mt-1 pointer-events-none"
+            >
               {pin.name}
-            </span>
+            </motion.span>
           </motion.button>
         </div>
       ))}
 
-      {/* 彈出視窗 (照片展示) */}
+      {/* 彈出視窗 */}
       <AnimatePresence>
         {activePin && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
             onClick={() => setActivePin(null)}
           >
-            <div className="bg-white p-4 rounded-2xl shadow-2xl max-w-sm w-full rotate-1 relative" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setActivePin(null)} className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600">
+            <motion.div 
+              initial={{ scale: 0.5, opacity: 0, rotate: -5 }}
+              animate={{ scale: 1, opacity: 1, rotate: 1 }}
+              exit={{ scale: 0.8, opacity: 0, rotate: 5 }}
+              transition={{ type: "spring", damping: 15 }}
+              className="bg-white p-4 rounded-2xl shadow-2xl max-w-sm w-full relative" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button onClick={() => setActivePin(null)} className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600 transition-colors">
                 <X size={20} />
               </button>
               <div className="aspect-video bg-stone-100 rounded-lg overflow-hidden mb-2">
@@ -157,7 +160,7 @@ const InteractiveMap = () => {
               <p className="text-center font-bold text-stone-700 text-lg">
                 📍 {mapPins.find(p => p.id === activePin)?.name} 之旅
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -176,10 +179,11 @@ const App = () => {
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
-        .hand-drawn-border { filter: url(#wobble); }
+        .hand-drawn-border { stroke-linecap: round; stroke-linejoin: round; filter: url(#wobble); }
         .hand-drawn-box { border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; border: 3px solid #78350f; }
         .hand-drawn-shadow { box-shadow: 5px 5px 0px 0px rgba(120, 53, 15, 0.2); }
       `}</style>
+      
       <svg style={{position: 'absolute', width: 0, height: 0}}>
         <filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" /></filter>
       </svg>
@@ -189,96 +193,63 @@ const App = () => {
         
         {/* 動畫：裝備從左邊滑入 */}
         <motion.div 
-          initial={{ x: -100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="absolute top-10 left-10 hidden md:block w-48 transform -rotate-12"
+          initial={{ x: -100, opacity: 0, rotate: -45 }}
+          animate={{ x: 0, opacity: 1, rotate: -12 }}
+          transition={{ type: "spring", duration: 1.5, delay: 0.5 }}
+          className="absolute top-10 left-10 hidden md:block w-48"
         >
            <img src={resolveImage(ASSETS.items)} alt="Items" className="drop-shadow-lg opacity-90 w-full h-auto" onError={(e) => e.currentTarget.style.opacity = '0.3'} />
         </motion.div>
 
         <div className="max-w-3xl mx-auto relative z-10">
           
-          {/* 動畫：寵物彈跳進場 (Bounce In) */}
+          {/* LOGO 顯示區塊 (放在最上面) */}
           <motion.div 
-            initial={{ y: -200, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 120, damping: 12, delay: 0.2 }}
+            initial={{ scale: 0, rotate: -10 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: "spring", stiffness: 120, delay: 0.2 }}
+            className="w-40 h-40 mx-auto mb-6"
+          >
+             <img 
+               src={resolveImage(ASSETS.logo)} 
+               alt="Linbei Logo" 
+               className="w-full h-full object-contain drop-shadow-xl hover:scale-110 transition-transform cursor-pointer"
+               onError={(e) => e.currentTarget.style.opacity = '0.3'} 
+             />
+          </motion.div>
+
+          {/* 動畫：一家三口照片慢慢浮現 (Fade In) */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 3, ease: "easeOut" }} 
             className="flex justify-center items-end gap-4 mb-6"
           >
             <div className="w-64 h-64 relative">
-               <img src={resolveImage(ASSETS.pets)} alt="Pets" className="w-full h-full object-contain drop-shadow-xl" onError={(e) => e.currentTarget.style.opacity = '0.3'} />
+               <img src={resolveImage(ASSETS.family)} alt="Family" className="w-full h-full object-contain drop-shadow-xl" onError={(e) => e.currentTarget.style.opacity = '0.3'} />
             </div>
           </motion.div>
           
-          <motion.div 
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.8, type: "spring" }}
-            className="inline-block bg-white border-4 border-stone-800 px-8 py-3 rounded-[30px_40px_30px_20px/20px_30px_40px_30px] shadow-[6px_6px_0_0_rgba(0,0,0,0.1)] rotate-[-2deg] mb-6 relative"
-          >
-              <span className="text-3xl font-bold tracking-widest text-stone-800">FAMILY TRAVEL LOG</span>
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-yellow-200/50 rotate-3 shadow-sm"></div>
-          </motion.div>
-
-          {/* 打字機標題特效 */}
-          <div className="mb-6">
+          <div className="mb-6 min-h-[80px]">
             <TypewriterTitle text="林北三人成團" />
           </div>
           
           <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5 }}
             className="text-xl text-stone-600 max-w-lg mx-auto leading-relaxed font-bold"
           >
-            從 2018 到 2026<br/>
+            從 2018 到 2025<br/>
             收集世界的角落，紀錄我們一起長大的時光。
           </motion.p>
         </div>
       </header>
 
-      {/* Interactive Map Section */}
       <section className="max-w-5xl mx-auto px-6 mb-16">
         <InteractiveMap />
       </section>
 
-      {/* Polaroid Wall */}
-      <section className="py-16 px-4 mb-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-           <svg width="100%" height="100%"><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#78350f" strokeWidth="2"/></pattern><rect width="100%" height="100%" fill="url(#grid)" /></svg>
-        </div>
-
-        <div className="max-w-6xl mx-auto relative z-10">
-           <div className="flex justify-center items-center gap-4 mb-12">
-              <div className="h-px bg-stone-300 w-20"></div>
-              <h2 className="text-3xl font-bold text-stone-700">我們的回憶牆</h2>
-              <div className="h-px bg-stone-300 w-20"></div>
-           </div>
-
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 p-4">
-             {polaroids.map((photo, i) => (
-               <motion.div 
-                 key={photo.id} 
-                 initial={{ opacity: 0, scale: 0.5 }}
-                 whileInView={{ opacity: 1, scale: 1 }}
-                 viewport={{ once: true }}
-                 transition={{ delay: i * 0.1, type: "spring" }}
-                 whileHover={{ scale: 1.1, rotate: 0, zIndex: 50 }}
-                 className={`bg-white p-3 pb-10 shadow-[5px_5px_15px_rgba(0,0,0,0.15)] ${photo.rotate} cursor-pointer group`}
-               >
-                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-rose-200/60 rotate-2 shadow-sm backdrop-blur-sm z-10"></div>
-                 <div className="aspect-[4/5] overflow-hidden mb-3 border border-stone-100 bg-stone-100">
-                   <img src={resolveImage(photo.src)} alt={photo.caption} className="w-full h-full object-cover group-hover:contrast-110 transition-all" />
-                 </div>
-                 <p className="text-center font-bold text-stone-600 text-sm hand-drawn-font">{photo.caption}</p>
-               </motion.div>
-             ))}
-           </div>
-        </div>
-      </section>
-
-      {/* Timeline with Scroll Reveal */}
       <main className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {allTrips.map((trip, index) => (
@@ -288,8 +259,8 @@ const App = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
-              whileHover={{ y: -5 }}
-              className={`group relative bg-white p-6 hand-drawn-box hand-drawn-shadow ${trip.type === 'future' ? 'bg-[#fffbeb] border-dashed' : ''}`}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className={`group relative bg-white p-6 hand-drawn-box hand-drawn-shadow transition-all ${trip.type === 'future' ? 'bg-[#fffbeb] border-dashed' : ''}`}
             >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-red-400 border-2 border-red-600 shadow-md z-10"></div>
 
@@ -329,12 +300,11 @@ const App = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="mt-24 pt-12 border-t-4 border-dotted border-stone-300 text-center relative">
          <div className="relative z-10 flex flex-col items-center justify-center gap-4 text-stone-400 mb-8">
            <div className="flex gap-4">
-             <Camera size={24} className="text-stone-300" />
-             <Backpack size={24} className="text-stone-300" />
+             <Camera size={24} className="text-stone-300 hover:text-stone-600 transition-colors" />
+             <Backpack size={24} className="text-stone-300 hover:text-stone-600 transition-colors" />
            </div>
            <p className="text-stone-500 font-bold text-lg">
              © 2025 Family Travel Journal.<br/>
