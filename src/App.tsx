@@ -232,7 +232,7 @@ const App = () => {
             transition={{ delay: 1.5 }}
             className="text-xl text-stone-600 max-w-lg mx-auto leading-relaxed font-bold"
           >
-            從 2018 到 2025<br/>
+            從 2018 到 2026<br/>
             收集世界的角落，紀錄我們一起長大的時光。
           </motion.p>
         </div>
