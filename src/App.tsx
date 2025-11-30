@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import { Map, Video, Calendar, MapPin, Camera, Backpack, Star } from 'lucide-react';
 
 // ==========================================
