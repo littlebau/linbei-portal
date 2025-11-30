@@ -1,22 +1,23 @@
-import { useState, useEffect } from 'react';
-import { Map, Video, Calendar, MapPin, Camera, Backpack, Star } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Map, Video, Calendar, MapPin, Camera, Backpack, Star, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // ==========================================
 // 🎨 素材層 (ASSETS LAYER)
 // ==========================================
 const ASSETS = {
-  // 1. Logo
-  logo: "https://drive.google.com/file/d/1M-U8vr_LZXM56NQDNb5sDPZyQdwPN31f/view?usp=drive_link",
+  // 1. Logo (Imgur)
+  logo: "https://i.imgur.com/your-logo-link.png", // 請確認這裡有換成您上傳後的 Logo 連結，如果還沒上傳可以用預設佔位
 
-  // 2. 一家三口照片 (已確認連結)
+  // 2. 一家三口照片 (Google Drive)
   family: "https://drive.google.com/file/d/16iZWeAVFG3PYDGCmWQi_HqS_bkcffDQd/view?usp=drive_link", 
   
-  // 3. 旅遊裝備 (若有新連結請貼這，目前用佔位圖)
+  // 3. 旅遊裝備 (Imgur)
   items: "https://placehold.co/600x300/png?text=Paste+Imgur+Items+Link",
   
   // 4. 背景紋理
   paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
+  worldMap: "https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg", 
 };
 
 // ==========================================
@@ -48,16 +49,23 @@ const allTrips = [
   { year: 2018, season: "春假", title: "京都大阪賞櫻粉紅泡泡", location: "Kyoto/Osaka", status: "已完成", type: "past" },
 ];
 
-// 🔧 修復版圖片轉換器
+const mapPins = [
+  { id: 1, name: "紐西蘭", top: "85%", left: "92%", img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=600" },
+  { id: 2, name: "日本", top: "35%", left: "85%", img: "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?auto=format&fit=crop&q=80&w=600" },
+  { id: 3, name: "台灣", top: "42%", left: "82%", img: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&q=80&w=600" },
+  { id: 4, name: "泰國", top: "45%", left: "75%", img: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=600" },
+];
+
+// 🔧 終極修復版圖片轉換器
 const resolveImage = (url: string) => {
   if (!url || url.includes("Upload") || url.includes("Paste")) return url;
   
   if (url.includes("drive.google.com")) {
-    // 嘗試抓取檔案 ID
+    // 抓取檔案 ID
     const idMatch = url.match(/\/d\/([^/]+)/);
     if (idMatch && idMatch[1]) {
-      // 改用 lh3.googleusercontent.com 比較不會被擋，或是標準的 uc?export=view
-      return `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+      // 使用 thumbnail 接口並請求最大尺寸 (w1000)，這個接口通常比較寬鬆
+      return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
     }
   }
   return url;
@@ -98,6 +106,83 @@ const TypewriterTitle = ({ text }: { text: string }) => {
         <motion.path d="M5,15 Q80,5 150,12 T295,10" fill="none" stroke="#fcd34d" strokeWidth="12" strokeLinecap="round"/>
       </motion.svg>
     </h1>
+  );
+};
+
+// ==========================================
+// 🧩 元件：互動地圖
+// ==========================================
+const InteractiveMap = () => {
+  const [activePin, setActivePin] = useState<number | null>(null);
+
+  return (
+    <div className="relative w-full aspect-[16/9] bg-blue-50/50 rounded-3xl border-4 border-stone-800 overflow-hidden shadow-xl my-12 group">
+      <div 
+        className="absolute inset-0 opacity-40 bg-contain bg-no-repeat bg-center transition-transform duration-1000 group-hover:scale-105"
+        style={{ backgroundImage: `url(${ASSETS.worldMap})` }}
+      ></div>
+      
+      <div className="absolute top-4 left-4 z-10 bg-white/80 px-4 py-2 rounded-lg border-2 border-stone-800 rotate-2">
+        <span className="font-bold text-stone-800">🌍 點點看我們去哪玩!</span>
+      </div>
+
+      {mapPins.map((pin) => (
+        <div key={pin.id} className="absolute" style={{ top: pin.top, left: pin.left }}>
+          <motion.button
+            whileHover={{ scale: 1.3 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setActivePin(pin.id)}
+            className="relative -translate-x-1/2 -translate-y-1/2"
+          >
+            <MapPin size={32} className="text-red-500 drop-shadow-md fill-red-500" />
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileHover={{ opacity: 1, y: 0 }}
+              className="absolute top-full left-1/2 -translate-x-1/2 bg-stone-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap mt-1 pointer-events-none"
+            >
+              {pin.name}
+            </motion.span>
+          </motion.button>
+        </div>
+      ))}
+
+      {/* 彈出視窗 */}
+      <AnimatePresence>
+        {activePin && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 z-20 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+            onClick={() => setActivePin(null)}
+          >
+            <motion.div 
+              initial={{ scale: 0.5, opacity: 0, rotate: -5 }}
+              animate={{ scale: 1, opacity: 1, rotate: 1 }}
+              exit={{ scale: 0.8, opacity: 0, rotate: 5 }}
+              transition={{ type: "spring", damping: 15 }}
+              className="bg-white p-4 rounded-2xl shadow-2xl max-w-sm w-full relative" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button onClick={() => setActivePin(null)} className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1 shadow-md hover:bg-red-600 transition-colors">
+                <X size={20} />
+              </button>
+              <div className="aspect-video bg-stone-100 rounded-lg overflow-hidden mb-2">
+                <img 
+                  src={mapPins.find(p => p.id === activePin)?.img} 
+                  alt="Travel Memory" 
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+              <p className="text-center font-bold text-stone-700 text-lg">
+                📍 {mapPins.find(p => p.id === activePin)?.name} 之旅
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
@@ -192,7 +277,9 @@ const App = () => {
         </div>
       </header>
 
-      {/* Interactive Map Section Removed */}
+      <section className="max-w-5xl mx-auto px-6 mb-16">
+        <InteractiveMap />
+      </section>
 
       <main className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -251,7 +338,7 @@ const App = () => {
              <Backpack size={24} className="text-stone-300 hover:text-stone-600 transition-colors" />
            </div>
            <p className="text-stone-500 font-bold text-lg">
-             © 2026 Family Travel Journal.<br/>
+             © 2025 Family Travel Journal.<br/>
              <span className="text-sm font-normal">Created with Love, Gemini & StackBlitz.</span>
            </p>
          </div>
