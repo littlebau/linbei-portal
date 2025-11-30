@@ -12,7 +12,7 @@ const ASSETS = {
   // 2. 一家三口照片
   family: "https://drive.google.com/file/d/16iZWeAVFG3PYDGCmWQi_HqS_bkcffDQd/view?usp=drive_link", 
   
-  // 3. 旅遊裝備
+  // 3. 旅遊裝備 (維持 Imgur 連結或佔位)
   items: "https://placehold.co/600x300/png?text=Travel+Items",
   
   // 4. 背景紋理
@@ -23,66 +23,67 @@ const ASSETS = {
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
 
+// 這裡將所有行程都設為 'past' (已完成)，並更新了穩定的圖片連結
 const allTrips = [
   { 
-    year: 2025, season: "春假", title: "紐西蘭開露營車", location: "New Zealand", status: "Planning", type: "future",
+    year: 2025, season: "春假", title: "紐西蘭", location: "New Zealand", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800"
   },
   { 
-    year: 2025, season: "秋假", title: "日本東北賞楓追火車", location: "Tohoku, Japan", status: "Planning", type: "future",
-    image: "https://images.unsplash.com/photo-1505886559267-3367b36f7330?auto=format&fit=crop&q=80&w=800"
+    year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1528360983277-13d9b152c6d7?auto=format&fit=crop&q=80&w=800" // 日本秋景
   },
   { 
-    year: 2024, season: "秋假", title: "名古屋樂高樂園+吉卜力", location: "Nagoya, Japan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1594979397839-a9c80338779b?auto=format&fit=crop&q=80&w=800"
+    year: 2024, season: "秋假", title: "名古屋", location: "Nagoya, Japan", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1565619624098-e6598710b218?auto=format&fit=crop&q=80&w=800" // 名古屋城概念
   },
   { 
-    year: 2024, season: "暑假", title: "泰國喀比島+芭達雅跳島", location: "Krabi/Pattaya", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800"
+    year: 2024, season: "暑假", title: "泰國喀比島+芭達雅", location: "Krabi/Pattaya", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800" // 泰國海灘
   },
   { 
-    year: 2024, season: "春假", title: "馬來西亞沙巴探險", location: "Sabah, Malaysia", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80&w=800"
+    year: 2024, season: "春假", title: "馬來西亞沙巴", location: "Sabah, Malaysia", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80&w=800" // 沙巴海景
   },
   { 
-    year: 2023, season: "秋假", title: "東京富士山+輕井澤避暑", location: "Tokyo/Karuizawa", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&q=80&w=800"
+    year: 2023, season: "秋假", title: "東京富士山+輕井澤", location: "Tokyo/Karuizawa", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&q=80&w=800" // 富士山
   },
   { 
-    year: 2023, season: "春假", title: "阿里山坐小火車看日出", location: "Alishan, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1517469399878-a28a278914ba?auto=format&fit=crop&q=80&w=800"
+    year: 2023, season: "春假", title: "阿里山", location: "Alishan, Taiwan", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1627894451152-66352ae07b22?auto=format&fit=crop&q=80&w=800" // 台灣山林
   },
   { 
-    year: 2022, season: "秋假", title: "金門戰地風光+找風獅爺", location: "Kinmen, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1627918349275-04b327b87232?auto=format&fit=crop&q=80&w=800"
+    year: 2022, season: "秋假", title: "金門", location: "Kinmen, Taiwan", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1599827876288-299691b33e9e?auto=format&fit=crop&q=80&w=800" // 閩式建築
   },
   { 
-    year: 2021, season: "春假", title: "澎湖花火節吃仙人掌冰", location: "Penghu, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1589982704987-9b23b379b339?auto=format&fit=crop&q=80&w=800"
+    year: 2021, season: "春假", title: "澎湖", location: "Penghu, Taiwan", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1590053912959-1d2279b9dd71?auto=format&fit=crop&q=80&w=800" // 澎湖跨海大橋概念
   },
   { 
-    year: 2020, season: "秋假", title: "台東花蓮東海岸慢遊", location: "Hualien/Taitung", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1588762557343-6c7088b9076f?auto=format&fit=crop&q=80&w=800"
+    year: 2020, season: "秋假", title: "台東花蓮", location: "Hualien/Taitung", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1571474004502-c1def214ac6d?auto=format&fit=crop&q=80&w=800" // 東海岸
   },
   { 
-    year: 2020, season: "寒假", title: "菲律賓長灘島最後一飛", location: "Boracay, Philippines", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&q=80&w=800"
+    year: 2020, season: "寒假", title: "菲律賓長灘島", location: "Boracay, Philippines", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&q=80&w=800" // 長灘島帆船
   },
   { 
-    year: 2019, season: "秋假", title: "花蓮太魯閣壯麗峽谷", location: "Hualien, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1596716075908-7243c220263f?auto=format&fit=crop&q=80&w=800"
+    year: 2019, season: "秋假", title: "花蓮", location: "Hualien, Taiwan", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1596716075908-7243c220263f?auto=format&fit=crop&q=80&w=800" // 太魯閣峽谷
   },
   { 
-    year: 2019, season: "春假", title: "小琉球看海龜", location: "Xiao Liuqiu", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1682687220208-22d7a2543e88?auto=format&fit=crop&q=80&w=800"
+    year: 2019, season: "春假", title: "小琉球", location: "Xiao Liuqiu", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1582963032768-466d739226eb?auto=format&fit=crop&q=80&w=800" // 海龜/海島
   },
   { 
-    year: 2018, season: "秋假", title: "薄荷島巧克力山眼鏡猴", location: "Bohol, Philippines", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&q=80&w=800"
+    year: 2018, season: "秋假", title: "薄荷島", location: "Bohol, Philippines", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1542332205-4da5d5fa6184?auto=format&fit=crop&q=80&w=800" // 巧克力山
   },
   { 
-    year: 2018, season: "春假", title: "京都大阪賞櫻粉紅泡泡", location: "Kyoto/Osaka", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800"
+    year: 2018, season: "春假", title: "京都大阪賞櫻", location: "Kyoto/Osaka", status: "Done", type: "past",
+    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800" // 櫻花
   },
 ];
 
@@ -188,7 +189,7 @@ const App = () => {
           {/* Logo 與 家庭照片並排區塊 */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20 mb-12 w-full mt-8">
             
-            {/* LOGO - 放大 */}
+            {/* LOGO */}
             <motion.div 
               initial={{ scale: 0, rotate: -10 }}
               animate={{ scale: 1, rotate: 0 }}
@@ -206,7 +207,7 @@ const App = () => {
                />
             </motion.div>
 
-            {/* 一家三口照片 - 質感拍立得風格 */}
+            {/* 一家三口照片 */}
             <motion.div 
               initial={{ opacity: 0, x: 20, rotate: 5 }}
               animate={{ opacity: 1, x: 0, rotate: 3 }}
@@ -219,7 +220,7 @@ const App = () => {
                  <img 
                    src={resolveImage(ASSETS.family)} 
                    alt="Family" 
-                   className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-500" 
+                   className="w-full h-full object-cover hover:scale-105 transition-all duration-700" 
                    referrerPolicy="no-referrer"
                    onError={(e) => e.currentTarget.style.opacity = '0.3'} 
                  />
@@ -256,10 +257,10 @@ const App = () => {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
               whileHover={{ y: -8 }}
-              className={`group relative bg-white p-4 flex flex-col journal-card rounded-sm transition-all duration-300 ${trip.type === 'future' ? 'opacity-90' : 'hover:shadow-xl'}`}
+              className="group relative bg-white p-4 flex flex-col journal-card rounded-sm transition-all duration-300 hover:shadow-xl"
             >
-              {/* 紙膠帶裝飾 (取代圖釘) */}
-              <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 ${trip.type === 'future' ? 'bg-yellow-100/80' : 'bg-blue-100/80'} shadow-sm rotate-1 z-20 backdrop-blur-[1px]`}></div>
+              {/* 紙膠帶裝飾 */}
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-blue-100/80 shadow-sm rotate-1 z-20 backdrop-blur-[1px]"></div>
 
               {/* 拍立得風格圖片區 */}
               <div className="relative aspect-[4/3] overflow-hidden mb-5 bg-stone-100 p-1 border border-stone-100 shadow-inner">
@@ -267,17 +268,13 @@ const App = () => {
                    <img 
                      src={resolveImage(trip.image)} 
                      alt={trip.title} 
-                     className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${trip.type === 'future' ? 'grayscale-[80%]' : ''}`}
+                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                      referrerPolicy="no-referrer"
                    />
-                   {/* 狀態戳章 */}
+                   {/* 狀態戳章 (所有行程都顯示 Completed) */}
                    <div className="absolute top-2 right-2">
-                      <span className={`inline-block px-2 py-1 text-xs font-black tracking-widest uppercase border-2 ${
-                        trip.type === 'future' 
-                          ? 'bg-white/80 border-stone-400 text-stone-500' 
-                          : 'bg-white/90 border-red-500 text-red-500 -rotate-6 shadow-md'
-                      }`}>
-                        {trip.status}
+                      <span className="inline-block px-2 py-1 text-xs font-black tracking-widest uppercase border-2 bg-white/90 border-blue-500 text-blue-500 -rotate-6 shadow-md">
+                        Done
                       </span>
                    </div>
                  </div>
@@ -300,13 +297,13 @@ const App = () => {
                    <MapPin size={14} className="text-stone-400" /> {trip.location}
                 </div>
 
-                {/* 質感按鈕區 */}
+                {/* 質感按鈕區 (全部啟用) */}
                 <div className="mt-auto flex gap-3 border-t border-dashed border-stone-200 pt-4">
-                  <button disabled={trip.type === 'future'} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all ${trip.type === 'future' ? 'text-stone-300 cursor-not-allowed' : 'text-stone-600 hover:text-blue-600 hover:bg-blue-50 rounded-md'}`}>
+                  <button className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-blue-600 hover:bg-blue-50 rounded-md">
                     <Map size={16} /> <span className="tracking-widest">PLAN</span>
                   </button>
                   <div className="w-px bg-stone-200 my-1"></div>
-                  <button disabled={trip.type === 'future'} className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all ${trip.type === 'future' ? 'text-stone-300 cursor-not-allowed' : 'text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-md'}`}>
+                  <button className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-md">
                     <Video size={16} /> <span className="tracking-widest">VLOG</span>
                   </button>
                 </div>
