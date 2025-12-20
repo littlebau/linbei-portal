@@ -82,21 +82,21 @@ const allTrips: Trip[] = [
     year: 2023, season: "春假", title: "阿里山", location: "台灣 阿里山", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1627894451152-66352ae07b22?auto=format&fit=crop&q=80&w=800",
     album: "https://photos.google.com/",
-    plan: "",
-    vlog: ""
+    plan: "https://docs.google.com/document/d/1PYevx-l8pimaWODh2JkjZLyz-8xXUVX9/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
+    vlog: "https://youtu.be/H3iL7GCYOCo"
   },
   { 
     year: 2022, season: "秋假", title: "金門", location: "台灣 金門", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1599827876288-299691b33e9e?auto=format&fit=crop&q=80&w=800",
     album: "https://photos.google.com/",
-    plan: "",
-    vlog: ""
+    plan: "https://docs.google.com/document/d/19ejwcXm1rbVKTpVYrv3bB0djDR7FpDbL/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
+    vlog: "https://youtu.be/qgYisyxXANc"
   },
   { 
     year: 2021, season: "春假", title: "澎湖", location: "台灣 澎湖", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1590053912959-1d2279b9dd71?auto=format&fit=crop&q=80&w=800",
     album: "https://photos.google.com/",
-    plan: "",
+    plan: "https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ/edit?usp=drive_link",
     vlog: ""
   },
   { 
@@ -204,24 +204,17 @@ const PawVlogIcon = ({ size = 28, className = "" }: { size?: number, className?:
 const MascotLabel = ({ trip }: { trip: Trip }) => (
   <div className="absolute -top-[52px] -left-[10px] z-30 group-hover:animate-bounce-slight origin-bottom-left w-[100px] h-[100px]">
       <div className="relative w-full h-full flex flex-col items-center justify-end">
-          
-          {/* 1. 後層：吉祥物去背圖 (使用 resolveImage 確保 Google Drive 連結可用) */}
           <img 
             src={resolveImage(ASSETS.shiba)} 
             alt="Mascot"
             className="w-16 h-16 object-contain absolute bottom-[25px] left-[15px] z-10"
             style={{ transform: "rotate(-5deg)" }}
           />
-
-          {/* 2. 前層：小板子 (不會遮住文字) */}
           <div 
             className="relative z-20 bg-[#fff9c4] border-2 border-[#d6c0ae] px-3 py-1.5 rounded-md shadow-md text-center min-w-[70px] -rotate-3 transform translate-y-2 translate-x-1"
-            style={{
-                boxShadow: "2px 2px 0px rgba(0,0,0,0.1)"
-            }}
+            style={{ boxShadow: "2px 2px 0px rgba(0,0,0,0.1)" }}
           >
               <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#d6c0ae] rounded-full opacity-50"></div>
-              
               <span className="block text-base font-black text-stone-600 font-['Patrick_Hand'] leading-none">
                   {trip.year}
               </span>
@@ -271,7 +264,7 @@ const RandomSticker = ({ index }: { index: number }) => {
   );
 };
 
-// 🏷️ 可愛動物紙膠帶元件 (上方的裝飾膠帶)
+// 🏷️ 可愛動物紙膠帶元件
 const CuteWashiTape = ({ index }: { index: number }) => {
   const tapeColors = [
     "bg-red-100/90", "bg-blue-100/90", "bg-green-100/90", "bg-yellow-100/90", "bg-orange-100/90"
@@ -304,9 +297,9 @@ const CuteWashiTape = ({ index }: { index: number }) => {
   );
 };
 
-// 📍 地點紙膠帶元件 (改版：貼在白色外框上)
+// 📍 地點紙膠帶元件
 const LocationTapeLabel = ({ location, index }: { location: string, index: number }) => {
-    const rotate = (index % 2 === 0) ? -2 : 2; // 稍微傾斜
+    const rotate = (index % 2 === 0) ? -2 : 2; 
     
     return (
         <div 
@@ -314,7 +307,6 @@ const LocationTapeLabel = ({ location, index }: { location: string, index: numbe
             style={{ transform: `rotate(${rotate}deg)` }}
         >
             <div className="relative bg-orange-400/90 backdrop-blur-sm pl-4 pr-3 py-1 shadow-sm border-dashed border-white/50 rounded-sm">
-                {/* 膠帶左側撕裂感 */}
                 <div 
                     className="absolute top-0 bottom-0 -left-1 w-2 bg-orange-400/90"
                     style={{
@@ -331,20 +323,30 @@ const LocationTapeLabel = ({ location, index }: { location: string, index: numbe
     );
 };
 
-// 📮 郵戳元件
+// 📮 郵戳元件 (New Realistic SVG Version) - Adjusted position to be cut off
 const PostalStamp = ({ status }: { status: string }) => {
     return (
-        <div className="absolute bottom-4 left-4 z-10 opacity-70 rotate-12 pointer-events-none mix-blend-multiply">
-            <div className="w-16 h-16 border-2 border-double border-red-800/40 rounded-full flex items-center justify-center p-1">
-                <div className="w-full h-full border border-dashed border-red-800/30 rounded-full flex flex-col items-center justify-center text-red-900/60">
-                    <span className="text-[9px] font-bold tracking-widest">FAMILY</span>
-                    <span className="text-xs font-black uppercase tracking-widest my-0.5">{status}</span>
-                    <div className="flex gap-0.5">
-                         <Star size={6} fill="currentColor" />
-                         <Star size={6} fill="currentColor" />
-                    </div>
-                </div>
-            </div>
+        <div className="absolute -top-4 -right-4 z-10 opacity-85 rotate-12 pointer-events-none mix-blend-multiply shrink-0">
+            <svg width="140" height="80" viewBox="0 0 120 70" className="w-32 h-auto">
+                <defs>
+                    <path id="curve" d="M 22,40 A 28,28 0 1,1 98,40" />
+                </defs>
+                
+                {/* 雙圈圓形日戳 */}
+                <circle cx="35" cy="35" r="28" stroke="#8B0000" strokeWidth="1.5" fill="none" />
+                <circle cx="35" cy="35" r="20" stroke="#8B0000" strokeWidth="0.8" fill="none" />
+                
+                {/* 圓圈內的文字 */}
+                <text x="35" y="25" textAnchor="middle" fill="#8B0000" fontSize="5" fontWeight="bold" fontFamily="Arial" letterSpacing="0.5">FAMILY JOURNAL</text>
+                <text x="35" y="38" textAnchor="middle" fill="#8B0000" fontSize="8" fontWeight="bold" fontFamily="Courier New">{status.toUpperCase()}</text>
+                <text x="35" y="48" textAnchor="middle" fill="#8B0000" fontSize="5" fontFamily="Arial">TAIWAN</text>
+
+                {/* 經典波浪消除線 */}
+                <path d="M68 20 Q 73 15, 78 20 T 88 20 T 98 20 T 108 20" stroke="#8B0000" strokeWidth="1.5" fill="none" />
+                <path d="M68 28 Q 73 23, 78 28 T 88 28 T 98 28 T 108 28" stroke="#8B0000" strokeWidth="1.5" fill="none" />
+                <path d="M68 36 Q 73 31, 78 36 T 88 36 T 98 36 T 108 36" stroke="#8B0000" strokeWidth="1.5" fill="none" />
+                <path d="M68 44 Q 73 39, 78 44 T 88 44 T 98 44 T 108 44" stroke="#8B0000" strokeWidth="1.5" fill="none" />
+            </svg>
         </div>
     );
 };
@@ -537,6 +539,7 @@ const App = () => {
                                 className="w-full h-full object-cover"
                                 referrerPolicy="no-referrer"
                              />
+                             {/* 郵戳 - 移到右上方並裁切 */}
                              <PostalStamp status={trip.status} />
                         </div>
                         
