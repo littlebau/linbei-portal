@@ -40,8 +40,8 @@ interface Trip {
 const allTrips: Trip[] = [
   { 
     year: 2025, season: "春假", title: "紐西蘭", location: "New Zealand", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.app.goo.gl/wdkc2EPX9ct4CTH58",
+    image: "https://photos.app.goo.gl/FseEzz5wsMSKQD6MA",
+    album: "https://photos.app.goo.gl/S1CzpJ9nt5PQgR7J7",
     plan: "https://docs.google.com/document/d/13Tg1tbjXMauMIuIlisPgrwgdt9h-0BF9/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", // 範例：可放入 Google Doc 連結
     vlog: "https://youtu.be/CeH0dgQCtPY" // 範例：可放入 YouTube 連結
   },
