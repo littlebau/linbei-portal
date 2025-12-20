@@ -23,86 +23,130 @@ const ASSETS = {
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
 
-const allTrips = [
+// 定義行程資料介面 (TypeScript Interface)
+interface Trip {
+  year: number;
+  season: string;
+  title: string;
+  location: string;
+  status: string;
+  type: string;
+  image: string;
+  album: string; // 相簿連結
+  plan: string;  // 新增：計畫連結
+  vlog: string;  // 新增：影片連結
+}
+
+const allTrips: Trip[] = [
   { 
     year: 2025, season: "春假", title: "紐西蘭", location: "New Zealand", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.app.goo.gl/wdkc2EPX9ct4CTH58" // 範例連結，請替換成您的相簿連結
+    album: "https://photos.app.goo.gl/wdkc2EPX9ct4CTH58",
+    plan: "https://docs.google.com/document/d/13Tg1tbjXMauMIuIlisPgrwgdt9h-0BF9/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", // 範例：可放入 Google Doc 連結
+    vlog: "https://youtu.be/CeH0dgQCtPY" // 範例：可放入 YouTube 連結
   },
   { 
     year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Planning", type: "future", 
     image: "https://images.unsplash.com/photo-1528360983277-13d9b152c6d7?auto=format&fit=crop&q=80&w=800",
-    album: "" 
+    album: "",
+    plan: "", 
+    vlog: ""
   },
   { 
     year: 2024, season: "秋假", title: "名古屋", location: "Nagoya, Japan", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1565619624098-e6598710b218?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8"
+    album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2024, season: "暑假", title: "泰國喀比島+芭達雅", location: "Krabi/Pattaya", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2024, season: "春假", title: "馬來西亞沙巴", location: "Sabah, Malaysia", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2023, season: "秋假", title: "東京富士山+輕井澤", location: "Tokyo/Karuizawa", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2023, season: "春假", title: "阿里山", location: "Alishan, Taiwan", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1627894451152-66352ae07b22?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2022, season: "秋假", title: "金門", location: "Kinmen, Taiwan", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1599827876288-299691b33e9e?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2021, season: "春假", title: "澎湖", location: "Penghu, Taiwan", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1590053912959-1d2279b9dd71?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2020, season: "秋假", title: "台東花蓮", location: "Hualien/Taitung", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1571474004502-c1def214ac6d?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2020, season: "寒假", title: "菲律賓長灘島", location: "Boracay, Philippines", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2019, season: "秋假", title: "花蓮", location: "Hualien, Taiwan", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1596716075908-7243c220263f?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2019, season: "春假", title: "小琉球", location: "Xiao Liuqiu", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1582963032768-466d739226eb?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2018, season: "秋假", title: "薄荷島", location: "Bohol, Philippines", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1542332205-4da5d5fa6184?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
   { 
     year: 2018, season: "春假", title: "京都大阪賞櫻", location: "Kyoto/Osaka", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/"
+    album: "https://photos.google.com/",
+    plan: "",
+    vlog: ""
   },
 ];
 
 // 🔧 圖片轉換器 (Google Drive Thumbnail Fix)
-const resolveImage = (url) => {
+const resolveImage = (url: string) => {
   if (!url || url.includes("Upload") || url.includes("Paste")) return url;
   if (url.includes("drive.google.com")) {
     const idMatch = url.match(/\/d\/([^/]+)/);
@@ -194,7 +238,7 @@ const App = () => {
              alt="Items" 
              className="drop-shadow-lg opacity-90 w-full h-auto" 
              referrerPolicy="no-referrer"
-             onError={(e) => e.currentTarget.style.opacity = '0.3'} 
+             onError={(e) => (e.currentTarget.style.opacity = '0.3')} 
            />
         </motion.div>
 
@@ -217,7 +261,7 @@ const App = () => {
                  alt="Linbei Logo" 
                  className="w-full h-full object-contain drop-shadow-xl cursor-pointer"
                  referrerPolicy="no-referrer"
-                 onError={(e) => e.currentTarget.style.opacity = '0.3'} 
+                 onError={(e) => (e.currentTarget.style.opacity = '0.3')} 
                />
             </motion.div>
 
@@ -236,7 +280,7 @@ const App = () => {
                    alt="Family" 
                    className="w-full h-full object-cover hover:scale-105 transition-all duration-700" 
                    referrerPolicy="no-referrer"
-                   onError={(e) => e.currentTarget.style.opacity = '0.3'} 
+                   onError={(e) => (e.currentTarget.style.opacity = '0.3')} 
                  />
                </div>
                <div className="absolute bottom-4 left-0 w-full text-center font-bold text-stone-500 font-['Patrick_Hand'] text-xl">
@@ -313,18 +357,24 @@ const App = () => {
 
                 {/* 質感按鈕區 */}
                 <div className="mt-auto flex gap-3 border-t border-dashed border-stone-200 pt-4">
-                  {/* PLAN BUTTON */}
+                  {/* PLAN BUTTON (UPDATED) */}
                   <a 
-                    href="#" 
-                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-blue-600 hover:bg-blue-50 rounded-md cursor-pointer"
-                    onClick={(e) => e.preventDefault()}
+                    href={trip.plan || "#"} 
+                    target={trip.plan ? "_blank" : "_self"}
+                    rel="noopener noreferrer"
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all rounded-md ${
+                      trip.plan 
+                        ? "text-stone-600 hover:text-blue-600 hover:bg-blue-50 cursor-pointer" 
+                        : "text-stone-300 cursor-not-allowed"
+                    }`}
+                    onClick={(e) => !trip.plan && e.preventDefault()}
                   >
                     <Map size={16} /> <span className="tracking-widest hidden sm:inline">旅行計畫</span>
                   </a>
                   
                   <div className="w-px bg-stone-200 my-1"></div>
                   
-                  {/* ALBUM BUTTON (New!) */}
+                  {/* ALBUM BUTTON */}
                   <a 
                     href={trip.album || "#"} 
                     target={trip.album ? "_blank" : "_self"}
@@ -334,17 +384,24 @@ const App = () => {
                         ? "text-stone-600 hover:text-amber-600 hover:bg-amber-50 cursor-pointer" 
                         : "text-stone-300 cursor-not-allowed"
                     }`}
+                    onClick={(e) => !trip.album && e.preventDefault()}
                   >
                     <Images size={16} /> <span className="tracking-widest hidden sm:inline">相簿</span>
                   </a>
 
                   <div className="w-px bg-stone-200 my-1"></div>
 
-                  {/* VLOG BUTTON */}
+                  {/* VLOG BUTTON (UPDATED) */}
                   <a 
-                    href="#" 
-                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-md cursor-pointer"
-                    onClick={(e) => e.preventDefault()}
+                    href={trip.vlog || "#"} 
+                    target={trip.vlog ? "_blank" : "_self"}
+                    rel="noopener noreferrer"
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all rounded-md ${
+                      trip.vlog 
+                        ? "text-stone-600 hover:text-red-600 hover:bg-red-50 cursor-pointer" 
+                        : "text-stone-300 cursor-not-allowed"
+                    }`}
+                    onClick={(e) => !trip.vlog && e.preventDefault()}
                   >
                     <Video size={16} /> <span className="tracking-widest hidden sm:inline">旅遊影片</span>
                   </a>
