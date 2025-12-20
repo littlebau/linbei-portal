@@ -66,7 +66,7 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2024, season: "春假", title: "馬來西亞沙巴", location: "馬來西亞 沙巴", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白：等待您上傳
     album: "https://photos.app.goo.gl/xVrTKHo2T2uYLkHx6",
     plan: "https://docs.google.com/document/d/1kTI_pd3t2UpaU1F-seRqsN4tftGl2ZIy/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/1pxgzINsQkg"
@@ -80,63 +80,63 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2023, season: "春假", title: "阿里山", location: "台灣 阿里山", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1627894451152-66352ae07b22?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "https://docs.google.com/document/d/1PYevx-l8pimaWODh2JkjZLyz-8xXUVX9/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/H3iL7GCYOCo"
   },
   { 
     year: 2022, season: "秋假", title: "金門", location: "台灣 金門", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1599827876288-299691b33e9e?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "https://docs.google.com/document/d/19ejwcXm1rbVKTpVYrv3bB0djDR7FpDbL/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/qgYisyxXANc"
   },
   { 
     year: 2021, season: "春假", title: "澎湖", location: "台灣 澎湖", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1590053912959-1d2279b9dd71?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ/edit?usp=drive_link",
     vlog: ""
   },
   { 
     year: 2020, season: "秋假", title: "台東花蓮", location: "台灣 花東", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1571474004502-c1def214ac6d?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2020, season: "寒假", title: "菲律賓長灘島", location: "菲律賓 長灘島", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2019, season: "秋假", title: "花蓮", location: "台灣 花蓮", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1596716075908-7243c220263f?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2019, season: "春假", title: "小琉球", location: "台灣 小琉球", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1582963032768-466d739226eb?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2018, season: "秋假", title: "薄荷島", location: "菲律賓 薄荷島", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1542332205-4da5d5fa6184?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2018, season: "春假", title: "京都大阪賞櫻", location: "日本 京都/大阪", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800",
+    image: "", // 空白
     album: "",
     plan: "",
     vlog: ""
@@ -323,7 +323,7 @@ const LocationTapeLabel = ({ location, index }: { location: string, index: numbe
     );
 };
 
-// 📮 郵戳元件 (New Realistic SVG Version) - Adjusted position to be cut off
+// 📮 郵戳元件
 const PostalStamp = ({ status }: { status: string }) => {
     return (
         <div className="absolute -top-4 -right-4 z-10 opacity-85 rotate-12 pointer-events-none mix-blend-multiply shrink-0">
@@ -332,16 +332,13 @@ const PostalStamp = ({ status }: { status: string }) => {
                     <path id="curve" d="M 22,40 A 28,28 0 1,1 98,40" />
                 </defs>
                 
-                {/* 雙圈圓形日戳 */}
                 <circle cx="35" cy="35" r="28" stroke="#8B0000" strokeWidth="1.5" fill="none" />
                 <circle cx="35" cy="35" r="20" stroke="#8B0000" strokeWidth="0.8" fill="none" />
                 
-                {/* 圓圈內的文字 */}
                 <text x="35" y="25" textAnchor="middle" fill="#8B0000" fontSize="5" fontWeight="bold" fontFamily="Arial" letterSpacing="0.5">FAMILY JOURNAL</text>
                 <text x="35" y="38" textAnchor="middle" fill="#8B0000" fontSize="8" fontWeight="bold" fontFamily="Courier New">{status.toUpperCase()}</text>
                 <text x="35" y="48" textAnchor="middle" fill="#8B0000" fontSize="5" fontFamily="Arial">TAIWAN</text>
 
-                {/* 經典波浪消除線 */}
                 <path d="M68 20 Q 73 15, 78 20 T 88 20 T 98 20 T 108 20" stroke="#8B0000" strokeWidth="1.5" fill="none" />
                 <path d="M68 28 Q 73 23, 78 28 T 88 28 T 98 28 T 108 28" stroke="#8B0000" strokeWidth="1.5" fill="none" />
                 <path d="M68 36 Q 73 31, 78 36 T 88 36 T 98 36 T 108 36" stroke="#8B0000" strokeWidth="1.5" fill="none" />
@@ -533,12 +530,24 @@ const App = () => {
                     <div className="card-front absolute inset-0 bg-white p-3 shadow-md border border-stone-200 flex flex-col">
                         {/* 照片區域：高度調整為 85%，留白給下方的地點標籤 */}
                         <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
-                             <img 
-                                src={resolveImage(trip.image)} 
-                                alt={trip.title} 
-                                className="w-full h-full object-cover"
-                                referrerPolicy="no-referrer"
-                             />
+                             {/* 照片或「照片挑選中」佔位符 */}
+                             {trip.image ? (
+                                <img 
+                                    src={resolveImage(trip.image)} 
+                                    alt={trip.title} 
+                                    className="w-full h-full object-cover"
+                                    referrerPolicy="no-referrer"
+                                />
+                             ) : (
+                                <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300" 
+                                     style={{backgroundImage: `url(${ASSETS.paper})`}}>
+                                    <div className="w-[80%] h-[70%] border-2 border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center gap-3">
+                                        <Camera size={40} className="text-stone-300/80" />
+                                        <span className="text-sm font-bold tracking-widest text-stone-400 font-['Patrick_Hand']">正在挑選照片中...</span>
+                                    </div>
+                                </div>
+                             )}
+                             
                              {/* 郵戳 - 移到右上方並裁切 */}
                              <PostalStamp status={trip.status} />
                         </div>
@@ -568,16 +577,18 @@ const App = () => {
                                     href={trip.plan || "#"} 
                                     target={trip.plan ? "_blank" : "_self"}
                                     rel="noopener noreferrer"
-                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn bg-white ${
+                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
                                         trip.plan 
-                                        ? "border-blue-300 text-stone-600 hover:bg-blue-50" 
-                                        : "border-stone-200 text-stone-300 cursor-not-allowed"
+                                        ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50" 
+                                        : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                                     }`}
                                     onClick={(e) => !trip.plan && e.preventDefault()}
                                 >
                                     <div className="flex items-center gap-3">
                                         <Map size={20} className={trip.plan ? "text-blue-500" : "text-stone-300"} />
-                                        <span className="text-sm font-bold tracking-widest">旅行計畫</span>
+                                        <span className="text-sm font-bold tracking-widest">
+                                            {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
+                                        </span>
                                     </div>
                                     <Dog size={24} className={`transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
                                 </a>
@@ -587,16 +598,18 @@ const App = () => {
                                     href={trip.album || "#"} 
                                     target={trip.album ? "_blank" : "_self"}
                                     rel="noopener noreferrer"
-                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn bg-white ${
+                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
                                         trip.album 
-                                        ? "border-amber-300 text-stone-600 hover:bg-amber-50" 
-                                        : "border-stone-200 text-stone-300 cursor-not-allowed"
+                                        ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50" 
+                                        : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                                     }`}
                                     onClick={(e) => !trip.album && e.preventDefault()}
                                 >
                                     <div className="flex items-center gap-3">
                                         <Images size={20} className={trip.album ? "text-amber-500" : "text-stone-300"} />
-                                        <span className="text-sm font-bold tracking-widest">相簿</span>
+                                        <span className="text-sm font-bold tracking-widest">
+                                            {trip.album ? "相簿" : "照片整理中..."}
+                                        </span>
                                     </div>
                                     <Cat size={24} className={`transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
                                 </a>
@@ -606,16 +619,18 @@ const App = () => {
                                     href={trip.vlog || "#"} 
                                     target={trip.vlog ? "_blank" : "_self"}
                                     rel="noopener noreferrer"
-                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn bg-white ${
+                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
                                         trip.vlog 
-                                        ? "border-red-300 text-stone-600 hover:bg-red-50" 
-                                        : "border-stone-200 text-stone-300 cursor-not-allowed"
+                                        ? "border-red-300 bg-white text-stone-600 hover:bg-red-50" 
+                                        : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                                     }`}
                                     onClick={(e) => !trip.vlog && e.preventDefault()}
                                 >
                                     <div className="flex items-center gap-3">
                                         <Video size={20} className={trip.vlog ? "text-red-500" : "text-stone-300"} />
-                                        <span className="text-sm font-bold tracking-widest">旅遊影片</span>
+                                        <span className="text-sm font-bold tracking-widest">
+                                            {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
+                                        </span>
                                     </div>
                                     <PawPrint size={24} className={`transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
                                 </a>
