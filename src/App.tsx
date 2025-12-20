@@ -79,9 +79,9 @@ const allTrips: Trip[] = [
     vlog: "https://youtu.be/ZDzI_i8r54E"
   },
   { 
-    year: 2023, season: "春假", title: "阿里山", location: "台灣 阿里山", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    year: 2023, season: "春假", title: "阿里山+墾丁", location: "台灣 阿里山+墾丁", status: "Done", type: "past",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczOk9eL_jzkrwIC7pPXMC1DNleQ1Ao7OOX2243CAUqNCcsldAqGk5XoRJz069GwzJfZicfirmBb_9-guYimYzRJB62fys2oj2OjWzdYmgfXMI4HcbXl_kHwBpNVTGKMSo-_ikRXhbpTdfS-g-DoJC0BlOQ=w1080-h810-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/6Tm4xnSpEiMQKpFD9",
     plan: "https://docs.google.com/document/d/1PYevx-l8pimaWODh2JkjZLyz-8xXUVX9/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/H3iL7GCYOCo"
   },
