@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { MapPin, Camera, Backpack, Plane, Sun, PawPrint, Dog, Cat, Star, Heart, Smile, Coffee, Map, Images, Video, Calendar } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Sun, PawPrint, Dog, Cat, Star, Heart, Smile, Coffee, Map, Images, Video, ArrowRight, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // ==========================================
@@ -14,7 +14,7 @@ const ASSETS = {
   
   // 4. 背景紋理
   paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
-  // 5. 吉祥物 (貓咪)
+  // 5. 吉祥物 (貓咪/柴犬)
   shiba: "https://drive.google.com/file/d/1tYjdUz0LIbeJJYSv7WOe1Eq2AkrZYfz6/view?usp=sharing" 
 };
 
@@ -401,11 +401,20 @@ const App = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
         .hand-drawn-border { stroke-linecap: round; stroke-linejoin: round; filter: url(#wobble); }
-        /* 質感升級：更細緻的陰影和邊框 */
-        .journal-card { 
-          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-          border: 1px solid #e7e5e4;
+        
+        /* 3D Flip Styles */
+        .card-perspective { perspective: 1000px; }
+        .card-inner { transform-style: preserve-3d; }
+        .card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .card-back { transform: rotateY(180deg); }
+        .group:hover .card-inner { transform: rotateY(180deg); }
+        
+        /* Slight bounce for peeking pets */
+        @keyframes bounce-slight {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
+        .animate-bounce-slight { animation: bounce-slight 2s ease-in-out infinite; }
       `}</style>
       
       <svg style={{position: 'absolute', width: 0, height: 0}}>
@@ -425,12 +434,12 @@ const App = () => {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="flex flex-col items-center md:items-start text-center md:text-left flex-1 md:-mt-12"
+              className="flex flex-col items-center md:items-start text-center md:text-left flex-1 md:-mt-24"
             >
                 {/* Logo (大幅放大，匹配右側照片尺寸) */}
                 <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className="w-80 h-80 md:w-[500px] md:h-[500px] relative mb-6"
+                    className="w-80 h-80 md:w-[480px] md:h-[480px] relative mb-2"
                 >
                     <img 
                         src={resolveImage(ASSETS.logo)} 
@@ -484,98 +493,147 @@ const App = () => {
         </div>
       </header>
 
-      {/* Main Content: Trip Cards (質感升級) */}
+      {/* Main Content: Trip Cards (Flip Restored) */}
       <main className="max-w-6xl mx-auto px-6 z-10 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {allTrips.map((trip, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="group relative bg-white p-4 flex flex-col journal-card rounded-sm transition-all duration-300 hover:shadow-xl"
-            >
-              {/* 紙膠帶裝飾 */}
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-blue-100/80 shadow-sm rotate-1 z-20 backdrop-blur-[1px]"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+          {allTrips.map((trip, index) => {
+            const randomRotate = (index % 5) - 2; 
 
-              {/* 拍立得風格圖片區 */}
-              <div className="relative aspect-[4/3] overflow-hidden mb-5 bg-stone-100 p-1 border border-stone-100 shadow-inner">
-                 <div className="w-full h-full overflow-hidden relative">
-                   <img 
-                     src={resolveImage(trip.image)} 
-                     alt={trip.title} 
-                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                     referrerPolicy="no-referrer"
-                   />
-                   {/* 狀態戳章 */}
-                   <div className="absolute top-2 right-2">
-                      <span className={`inline-block px-2 py-1 text-xs font-black tracking-widest uppercase border-2 bg-white/90 -rotate-6 shadow-md ${trip.status === 'Done' ? 'border-blue-500 text-blue-500' : 'border-emerald-500 text-emerald-500'}`}>
-                        {trip.status}
-                      </span>
-                   </div>
-                 </div>
-              </div>
+            return (
+              <motion.div 
+                key={index}
+                initial={{ opacity: 0, y: 50, rotate: randomRotate }}
+                whileInView={{ opacity: 1, y: 0, rotate: randomRotate }}
+                whileHover={{ y: -5, rotate: 0, zIndex: 10 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
+                className="group relative w-full h-[26rem] card-perspective cursor-pointer"
+              >
+                {/* 裝飾性元素 (不會跟著翻轉) */}
+                <CuteWashiTape index={index} />
+                <MascotLabel trip={trip} />
 
-              {/* 卡片內容 */}
-              <div className="flex flex-col flex-grow px-2">
-                <div className="flex items-center gap-2 mb-3 text-stone-400 text-xs font-bold uppercase tracking-wider">
-                  <span className="flex items-center gap-1">
-                    <Calendar size={12} /> {trip.year} {trip.season}
-                  </span>
-                  <div className="h-px bg-stone-300 flex-grow"></div>
+                {/* 翻轉容器 */}
+                <div className="card-inner relative w-full h-full transition-all duration-700 ease-in-out">
+                    
+                    {/* ========= 正面 (FRONT) ========= */}
+                    <div className="card-front absolute inset-0 bg-white p-3 shadow-md border border-stone-200 flex flex-col">
+                        {/* 照片區域 */}
+                        <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
+                             {/* 照片或「照片挑選中」佔位符 */}
+                             {trip.image ? (
+                                <img 
+                                    src={resolveImage(trip.image)} 
+                                    alt={trip.title} 
+                                    className="w-full h-full object-cover"
+                                    referrerPolicy="no-referrer"
+                                />
+                             ) : (
+                                <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
+                                    {/* 背景紋理 */}
+                                    <div className="absolute inset-0 opacity-30" style={{backgroundImage: `url(${ASSETS.paper})`}}></div>
+                                    
+                                    <div className="relative z-10 w-[80%] h-[70%] border-2 border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center gap-3 bg-white/50 backdrop-blur-sm">
+                                        <Camera size={40} className="text-stone-300/80" />
+                                        <span className="text-sm font-bold tracking-widest text-stone-400 font-['Patrick_Hand']">正在挑選照片中...</span>
+                                    </div>
+                                </div>
+                             )}
+                             
+                             {/* 郵戳 - 移到右上方並裁切 */}
+                             <PostalStamp status={trip.status} />
+                        </div>
+                        
+                        {/* 地點紙膠帶 (橘色版) */}
+                        <LocationTapeLabel location={trip.location} index={index} />
+                    </div>
+
+                    {/* ========= 背面 (BACK) ========= */}
+                    <div className="card-back absolute inset-0 bg-[#fffdf5] p-5 shadow-md border border-stone-200 flex flex-col items-center text-center relative overflow-hidden"
+                         style={{backgroundImage: `url(${ASSETS.paper})`}}>
+                        
+                        <RandomSticker index={index} />
+                        <div className="absolute top-0 left-0 bottom-0 w-3 border-r-2 border-dashed border-stone-300"></div>
+
+                        <div className="flex-1 flex flex-col items-center justify-center w-full pl-4">
+                            <motion.h3 
+                                className="text-3xl font-black mb-6 text-stone-800 leading-tight"
+                            >
+                                {trip.title}
+                            </motion.h3>
+
+                            {/* 質感按鈕區 */}
+                            <div className="w-full flex flex-col gap-3 px-2">
+                                {/* PLAN BUTTON */}
+                                <a 
+                                    href={trip.plan || "#"} 
+                                    target={trip.plan ? "_blank" : "_self"}
+                                    rel="noopener noreferrer"
+                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
+                                        trip.plan 
+                                        ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50" 
+                                        : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
+                                    }`}
+                                    onClick={(e) => !trip.plan && e.preventDefault()}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <Map size={20} className={trip.plan ? "text-blue-500" : "text-stone-300"} />
+                                        <span className="text-sm font-bold tracking-widest">
+                                            {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
+                                        </span>
+                                    </div>
+                                    <Dog size={24} className={`transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
+                                </a>
+                                
+                                {/* ALBUM BUTTON */}
+                                <a 
+                                    href={trip.album || "#"} 
+                                    target={trip.album ? "_blank" : "_self"}
+                                    rel="noopener noreferrer"
+                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
+                                        trip.album 
+                                        ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50" 
+                                        : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
+                                    }`}
+                                    onClick={(e) => !trip.album && e.preventDefault()}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <Images size={20} className={trip.album ? "text-amber-500" : "text-stone-300"} />
+                                        <span className="text-sm font-bold tracking-widest">
+                                            {trip.album ? "相簿" : "照片整理中..."}
+                                        </span>
+                                    </div>
+                                    <Cat size={24} className={`transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
+                                </a>
+
+                                {/* VLOG BUTTON */}
+                                <a 
+                                    href={trip.vlog || "#"} 
+                                    target={trip.vlog ? "_blank" : "_self"}
+                                    rel="noopener noreferrer"
+                                    className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
+                                        trip.vlog 
+                                        ? "border-red-300 bg-white text-stone-600 hover:bg-red-50" 
+                                        : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
+                                    }`}
+                                    onClick={(e) => !trip.vlog && e.preventDefault()}
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <Video size={20} className={trip.vlog ? "text-red-500" : "text-stone-300"} />
+                                        <span className="text-sm font-bold tracking-widest">
+                                            {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
+                                        </span>
+                                    </div>
+                                    <PawPrint size={24} className={`transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-                <h3 className="text-2xl font-bold mb-2 text-stone-800 group-hover:text-stone-600 transition-colors leading-tight">
-                  {trip.title}
-                </h3>
-                
-                <div className="flex items-center gap-1 text-stone-500 font-bold mb-6 text-sm">
-                   <MapPin size={14} className="text-stone-400" /> {trip.location}
-                </div>
-
-                {/* 質感按鈕區 */}
-                <div className="mt-auto flex gap-3 border-t border-dashed border-stone-200 pt-4">
-                  {/* PLAN BUTTON */}
-                  <a 
-                    href="#" 
-                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-blue-600 hover:bg-blue-50 rounded-md cursor-pointer"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <Map size={16} /> <span className="tracking-widest hidden sm:inline">旅行計畫</span>
-                  </a>
-                  
-                  <div className="w-px bg-stone-200 my-1"></div>
-                  
-                  {/* ALBUM BUTTON (New!) */}
-                  <a 
-                    href={trip.album || "#"} 
-                    target={trip.album ? "_blank" : "_self"}
-                    rel="noopener noreferrer"
-                    className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all rounded-md ${
-                      trip.album 
-                        ? "text-stone-600 hover:text-amber-600 hover:bg-amber-50 cursor-pointer" 
-                        : "text-stone-300 cursor-not-allowed"
-                    }`}
-                  >
-                    <Images size={16} /> <span className="tracking-widest hidden sm:inline">相簿</span>
-                  </a>
-
-                  <div className="w-px bg-stone-200 my-1"></div>
-
-                  {/* VLOG BUTTON */}
-                  <a 
-                    href="#" 
-                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-md cursor-pointer"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <Video size={16} /> <span className="tracking-widest hidden sm:inline">旅遊影片</span>
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </main>
 
