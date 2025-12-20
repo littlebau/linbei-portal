@@ -454,8 +454,8 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
               {/* 地點紙膠帶 */}
               <LocationTapeLabel location={trip.location} index={index} />
               
-              {/* 翻轉提示 (Flip Hint) - 顯眼設計 (左下角) */}
-              <div className="absolute bottom-2 left-3 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+              {/* 翻轉提示 (Flip Hint) - 顯眼設計 (左下角) - 常駐顯示 */}
+              <div className="absolute bottom-2 left-3 z-20">
                   <div className="flex items-center gap-1.5 text-rose-500 font-black tracking-widest font-['Patrick_Hand'] bg-rose-50 px-3 py-1.5 rounded-lg border-2 border-rose-200 shadow-md">
                       <RotateCw size={14} className="animate-spin" style={{ animationDuration: '3s' }} />
                       <span className="text-xs">點擊翻面</span>
