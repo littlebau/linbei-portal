@@ -152,50 +152,50 @@ const allTrips: Trip[] = [
   // 新增：早期行程
   { 
     year: 2017, season: "10月", title: "日本九州", location: "日本 九州", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczNw2V4r-AZlrxXikyE8f-ydCdR-fQpfTazFARMpZAQb9NyqOJEumziV29fkdw0DZufBYHPMcmDHwcOpWxjlmnMlzV2BzWAtqbBPZot8HSCrAT5nBtygTYjhP41aNzeT-zy_Ixv0emZquRPBf1S2R1IzGA=w960-h720-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/6PFYDGzFEp7fkHem7",
     plan: "",
     vlog: ""
   },
   { 
     year: 2017, season: "228連假", title: "泰國曼谷", location: "泰國 曼谷", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://photos.fife.usercontent.google.com/pw/AP1GczOb657Qxa4OdJRVDV3k6TBMlca4FJOgOjXH0lC_u9Zka2IzqDTxffWALw=w1298-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/YnM12nnp4eM2DbLA6",
     plan: "",
     vlog: ""
   },
   { 
     year: 2016, season: "12月", title: "泰國普吉島", location: "泰國 普吉島", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczMhhy_tboy1m7o-aLb7_bxVGK14AxIPmVCmz8o-9BFAt3r_Oi1VgFJ8Z0yMC3e-KS9jr1V7lDhjx771AK59RSHNIp0W4DPFZjZ0FwDOq6qSBx0TPm5_X9qUYJD_BqD-AvMoBydvWA29kY-bMvrZnCHwJw=w1298-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/bgacpnskapAws9jf7",
     plan: "",
     vlog: ""
   },
   { 
     year: 2015, season: "10月", title: "菲律賓長灘島", location: "菲律賓 長灘島", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczP2-YWeZHX1KEDGC5XCjt9oqQm2iZo9Es3AmbJAB-xc9czoagV6o3iHURgCB4dBfwAqKuCiq2FSeoiRdldx-Vx9LYjGZmMyWHwomAfCSPqVpKBPPhcnvOJbBi8bhFTlEFFiMJJ3YnBE9kzwJsFFeZ1A1g=w1159-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/nJ2vXrskDPPyaBp68",
     plan: "",
     vlog: ""
   },
   { 
     year: 2015, season: "7月", title: "日本沖繩", location: "日本 沖繩", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczPSNpysGxf-PY4Ci1_fEdAn1b7Lfq-a9Fhrw2nA1ePppSmbGIpVEaGkFHIgAS0EvRBrfHmMMEgFPl-M5_0KNlHV7gmH9o1t7Wv_VzNcaSiAoBIVyVUTarpfdhkp1N1vpzCh_PqrcaFo8d5747Lw49pvhQ=w651-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/3rPEuj87yJeaKGm69",
     plan: "",
     vlog: ""
   },
   { 
     year: 2015, season: "5月", title: "日本關西", location: "日本 關西", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczNIVwTZiGqboCln-rcM57PvfYkNEhhD6Ed0WBEUn1Cs0iFlbimJgeB41fSBczbXAZHwW7IbffpIHFMk_2ErT_I7gnhiwoqNWl_qeftdLFaXxUo52faqj_z-u1bYHF8SeEADcHoOr5jqg0xXQi6D7zCy0g=w1159-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/TFgis9BccSoP2VxJ7",
     plan: "",
     vlog: ""
   },
   { 
     year: 2014, season: "暑假", title: "韓國首爾", location: "韓國 首爾", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczOFvT0MwE9z5-L3dCYqQTf8g-wEmyZ5ntyUPpw52loItuxZ3uXfYIvY7ybT3DPB4GJ7q-a1f0XzaAohanG_ghlMikM9H7vAXP6cIh7Cy2dRrTLfswklTKAkk_ttccbTfPCorUagdyY5p17fjH29Ky8JhA=w581-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/w5g9ZzY2wkhnqV7j9",
     plan: "",
     vlog: ""
   },
