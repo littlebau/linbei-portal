@@ -160,7 +160,7 @@ const allTrips: Trip[] = [
   { 
     year: 2017, season: "228連假", title: "泰國曼谷", location: "泰國 曼谷", status: "Done", type: "past",
     image: "https://photos.fife.usercontent.google.com/pw/AP1GczMNjowRoI5d_ewrl_GVHxLE2gR_202wYi8JKO2zKSMCxzNOYIwOWQayUQ=w1298-h869-s-no-gm?authuser=0", // 空白
-    album: "https://photos.app.goo.gl/YnM12nnp4eM2DbLA6",
+    album: "https://photos.app.goo.gl/o4vCZhmEFurrUcGV8",
     plan: "",
     vlog: ""
   },
