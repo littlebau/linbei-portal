@@ -159,7 +159,7 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2017, season: "228連假", title: "泰國曼谷", location: "泰國 曼谷", status: "Done", type: "past",
-    image: "https://photos.fife.usercontent.google.com/pw/AP1GczMNjowRoI5d_ewrl_GVHxLE2gR_202wYi8JKO2zKSMCxzNOYIwOWQayUQ=w1298-h869-s-no-gm?authuser=0", // 空白
+    image: "https://lh3.googleusercontent.com/pw/AP1GczMqonmhIgRP57SEtQU1uxFweQbS6gJjv0dy-ZpmVlEIWmMXY3wmgj4_TzsDFCBYTXWB2mwP8-3t6Y6bJ_2-3aGJf0-wGsU_sDx1vR6TsQP8BejYT_DubWfPW1KxC48v8ZYK8mFCaG382gNwKH7cn2zXRg=w1298-h869-s-no-gm?authuser=0", // 空白
     album: "https://photos.app.goo.gl/o4vCZhmEFurrUcGV8",
     plan: "",
     vlog: ""
