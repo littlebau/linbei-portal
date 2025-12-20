@@ -675,7 +675,7 @@ const App = () => {
                         林北三人成團
                     </h1>
                     <p className="text-xl text-stone-500 leading-relaxed font-bold tracking-wide">
-                        從 2018 到 2025<br/>
+                        從 2012 到 2025<br/>
                         收集世界的角落，紀錄我們一起長大的時光。
                     </p>
                 </div>
