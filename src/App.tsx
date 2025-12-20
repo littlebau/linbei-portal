@@ -101,43 +101,43 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2020, season: "秋假", title: "台東花蓮", location: "台灣 花東", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczO8aEmmVsL3vbj2KkKhniAZGxub7WwkJ1jkBkuUawv3jmNr0N87uztf5kdR91-KV3XT8IsTMTFzMwrTkTCxy7pfcJoI2Mcr5CQn4MWd8_CVIpetFMaHvxcy_D-692cAeIaVWa_mCr2svMzK8VwE5FgNNA=w1159-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/H4HsyqcSfXYi9UW16",
     plan: "",
     vlog: ""
   },
   { 
     year: 2020, season: "寒假", title: "菲律賓長灘島", location: "菲律賓 長灘島", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczO0HaHno8XLHt-qnazf8Q74IxSZV5tHE7s82NklL_1DFQYJYR4qrJGE7FhTUoWs12q1qR5sSXXFlGbforUyAlg3D43ciaOP96y97hZ2jBoftVEtO4BTBjlocl4tt2YMP63cH8qH2aIUPZ_m88qbYPgUQw=w1159-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/YUQtZiJngPJp8iF59",
     plan: "",
     vlog: ""
   },
   { 
     year: 2019, season: "秋假", title: "花蓮", location: "台灣 花蓮", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/mk2rstVdxmKUcjas8",
     plan: "",
     vlog: ""
   },
   { 
     year: 2019, season: "春假", title: "小琉球", location: "台灣 小琉球", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczNoGNobycQ8s94-o1u_DsTktFGTrH4aD-f1Vdfjp87KcdQnwYZLteq61H_nFYjgsXz5TQG-AMJ1rIuVs_ESwnbr-T-2VzfAdPr44OcGYdK15OEfkbF6cqyCqoADJKLuPL4Hj-RzqkxzESm5WdtjttvFPw=w651-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/Qui7FURUHiCYfZ7B6",
     plan: "",
     vlog: ""
   },
   { 
     year: 2018, season: "秋假", title: "薄荷島", location: "菲律賓 薄荷島", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczNEnT1ehdcVZHZnDFnepYVonSsp7PiUHYMJbguR-RU9lsvV3jGyuoNl0W7iikhg10yTRXlARhqXVIVjt-Cz-D5wxwAsWD0mF3t8152_0fDu3hzl9Uzns7bTcHJQNEJBAa3atLBLiqVMzmCKH7ObQ3Wjhw=w651-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/mXKfaKRST6oYDsdt5",
     plan: "",
     vlog: ""
   },
   { 
     year: 2018, season: "春假", title: "京都大阪賞櫻", location: "日本 京都/大阪", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczMBFJ5NhFXesNNylOJMy4fLvTVOEliBuvw1Jvr7Tx8lZywNVrmxlbrksijkOytvm-UeZk52q76FDuP7_uYiG7KcYFDVsVJUW3AuLyYF_9ecFQObPQQNQX32ktcb40nzdL4UUOmshlfOyvE9JvbCHGdE3A=w1159-h869-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/6RT3wDj3LRJrLQjK7",
     plan: "",
     vlog: ""
   },
