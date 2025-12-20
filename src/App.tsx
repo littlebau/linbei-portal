@@ -27,7 +27,7 @@ const allTrips = [
   { 
     year: 2025, season: "春假", title: "紐西蘭", location: "New Zealand", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/" // 範例連結，請替換成您的相簿連結
+    album: "https://photos.app.goo.gl/wdkc2EPX9ct4CTH58" // 範例連結，請替換成您的相簿連結
   },
   { 
     year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Planning", type: "future", 
