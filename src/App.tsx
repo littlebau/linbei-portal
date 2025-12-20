@@ -46,7 +46,7 @@ const allTrips: Trip[] = [
     vlog: "https://youtu.be/CeH0dgQCtPY" // 範例：可放入 YouTube 連結
   },
   { 
-    year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Planning", type: "future", 
+    year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Done", type: "future", 
     image: "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
     album: "https://photos.app.goo.gl/hP631FQAmCgxUpoL8",
     plan: "https://docs.google.com/document/d/1BAFg8ngF0yvULcSp7SLqvflTe6oxSSRZ/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
@@ -61,24 +61,24 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2024, season: "暑假", title: "泰國喀比島+芭達雅", location: "Krabi/Pattaya", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
-    plan: "",
-    vlog: ""
+    image: "https://lh3.googleusercontent.com/pw/AP1GczPKvJcz_f0SRhyXpaJ1WiCVcFUt4svjVKuisrnUd1m9JwsIIhnVRNyOguE-OjR1HtjqyLcjm8b_WlXQQDsb7z7HNC9IpxCU2cdx9O2R3qhqfscs9MvCs0i-Bmo9gqO7ZQyGCKMk6IJudwbohdSv-f1EkQ=w683-h911-s-no-gm?authuser=0",
+    album: "https://photos.app.goo.gl/Pewtpp8aaH5Jt3vL7",
+    plan: "https://docs.google.com/document/d/1BgiWNLVZqKV3Wzj-spiHTA9RLL7lMf3u/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
+    vlog: "https://youtu.be/QDROySj-56A"
   },
   { 
     year: 2024, season: "春假", title: "馬來西亞沙巴", location: "Sabah, Malaysia", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
-    plan: "",
-    vlog: ""
+    album: "https://photos.app.goo.gl/xVrTKHo2T2uYLkHx6",
+    plan: "https://docs.google.com/document/d/1kTI_pd3t2UpaU1F-seRqsN4tftGl2ZIy/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
+    vlog: "https://youtu.be/1pxgzINsQkg"
   },
   { 
     year: 2023, season: "秋假", title: "東京富士山+輕井澤", location: "Tokyo/Karuizawa", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
-    plan: "",
-    vlog: ""
+    image: "https://lh3.googleusercontent.com/pw/AP1GczOSXA2NRjXKyroJ_Np5KA2cJ0RjMYqyFEugErbZ-vXu1r43BYkAcWKzS0b3GAmnDuiv0yAIQJcsZ7bfbBSf6U0KeGftcss_E4WR3OCri_8aSQyX0WrCjmm15lJE8bw2Kn674bTmez_Y38f0lpFDvVISwg=w683-h911-s-no-gm?authuser=0",
+    album: "https://photos.app.goo.gl/LRERnQ9bv16G1wUw7",
+    plan: "https://docs.google.com/document/d/1lidmmVOxq7J52-pA-eSYQXTdHtc4hTMn/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
+    vlog: "https://youtu.be/ZDzI_i8r54E"
   },
   { 
     year: 2023, season: "春假", title: "阿里山", location: "Alishan, Taiwan", status: "Done", type: "past",
