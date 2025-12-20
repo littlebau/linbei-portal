@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Map, Video, Calendar, MapPin, Camera, Backpack, Star, X, PawPrint, Plane, Music, Sun, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Map, Video, Calendar, MapPin, Camera, Backpack, Star, X, PawPrint, Plane, Music, Sun, ArrowRight, Utensils, Images } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ==========================================
@@ -12,7 +12,7 @@ const ASSETS = {
   // 2. 一家三口照片
   family: "https://drive.google.com/file/d/16iZWeAVFG3PYDGCmWQi_HqS_bkcffDQd/view?usp=drive_link", 
   
-  // 3. 旅遊裝備 (維持 Imgur 連結或佔位)
+  // 3. 旅遊裝備 (使用 placeholder 確保顯示)
   items: "https://placehold.co/600x300/png?text=Travel+Items",
   
   // 4. 背景紋理
@@ -23,72 +23,86 @@ const ASSETS = {
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
 
-// 這裡將所有行程都設為 'past' (已完成)，並更新了穩定的圖片連結
 const allTrips = [
   { 
     year: 2025, season: "春假", title: "紐西蘭", location: "New Zealand", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800"
+    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/" // 範例連結，請替換成您的相簿連結
   },
   { 
-    year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1528360983277-13d9b152c6d7?auto=format&fit=crop&q=80&w=800" // 日本秋景
+    year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Planning", type: "future", 
+    image: "https://images.unsplash.com/photo-1528360983277-13d9b152c6d7?auto=format&fit=crop&q=80&w=800",
+    album: "" 
   },
   { 
     year: 2024, season: "秋假", title: "名古屋", location: "Nagoya, Japan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1565619624098-e6598710b218?auto=format&fit=crop&q=80&w=800" // 名古屋城概念
+    image: "https://images.unsplash.com/photo-1565619624098-e6598710b218?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8"
   },
   { 
     year: 2024, season: "暑假", title: "泰國喀比島+芭達雅", location: "Krabi/Pattaya", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800" // 泰國海灘
+    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2024, season: "春假", title: "馬來西亞沙巴", location: "Sabah, Malaysia", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80&w=800" // 沙巴海景
+    image: "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2023, season: "秋假", title: "東京富士山+輕井澤", location: "Tokyo/Karuizawa", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&q=80&w=800" // 富士山
+    image: "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2023, season: "春假", title: "阿里山", location: "Alishan, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1627894451152-66352ae07b22?auto=format&fit=crop&q=80&w=800" // 台灣山林
+    image: "https://images.unsplash.com/photo-1627894451152-66352ae07b22?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2022, season: "秋假", title: "金門", location: "Kinmen, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1599827876288-299691b33e9e?auto=format&fit=crop&q=80&w=800" // 閩式建築
+    image: "https://images.unsplash.com/photo-1599827876288-299691b33e9e?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2021, season: "春假", title: "澎湖", location: "Penghu, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1590053912959-1d2279b9dd71?auto=format&fit=crop&q=80&w=800" // 澎湖跨海大橋概念
+    image: "https://images.unsplash.com/photo-1590053912959-1d2279b9dd71?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2020, season: "秋假", title: "台東花蓮", location: "Hualien/Taitung", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1571474004502-c1def214ac6d?auto=format&fit=crop&q=80&w=800" // 東海岸
+    image: "https://images.unsplash.com/photo-1571474004502-c1def214ac6d?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2020, season: "寒假", title: "菲律賓長灘島", location: "Boracay, Philippines", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&q=80&w=800" // 長灘島帆船
+    image: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2019, season: "秋假", title: "花蓮", location: "Hualien, Taiwan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1596716075908-7243c220263f?auto=format&fit=crop&q=80&w=800" // 太魯閣峽谷
+    image: "https://images.unsplash.com/photo-1596716075908-7243c220263f?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2019, season: "春假", title: "小琉球", location: "Xiao Liuqiu", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1582963032768-466d739226eb?auto=format&fit=crop&q=80&w=800" // 海龜/海島
+    image: "https://images.unsplash.com/photo-1582963032768-466d739226eb?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2018, season: "秋假", title: "薄荷島", location: "Bohol, Philippines", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1542332205-4da5d5fa6184?auto=format&fit=crop&q=80&w=800" // 巧克力山
+    image: "https://images.unsplash.com/photo-1542332205-4da5d5fa6184?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
   { 
     year: 2018, season: "春假", title: "京都大阪賞櫻", location: "Kyoto/Osaka", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800" // 櫻花
+    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800",
+    album: "https://photos.google.com/"
   },
 ];
 
-// 🔧 圖片轉換器
-const resolveImage = (url: string) => {
+// 🔧 圖片轉換器 (Google Drive Thumbnail Fix)
+const resolveImage = (url) => {
   if (!url || url.includes("Upload") || url.includes("Paste")) return url;
   if (url.includes("drive.google.com")) {
     const idMatch = url.match(/\/d\/([^/]+)/);
@@ -271,10 +285,10 @@ const App = () => {
                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                      referrerPolicy="no-referrer"
                    />
-                   {/* 狀態戳章 (所有行程都顯示 Completed) */}
+                   {/* 狀態戳章 */}
                    <div className="absolute top-2 right-2">
-                      <span className="inline-block px-2 py-1 text-xs font-black tracking-widest uppercase border-2 bg-white/90 border-blue-500 text-blue-500 -rotate-6 shadow-md">
-                        Done
+                      <span className={`inline-block px-2 py-1 text-xs font-black tracking-widest uppercase border-2 bg-white/90 -rotate-6 shadow-md ${trip.status === 'Done' ? 'border-blue-500 text-blue-500' : 'border-emerald-500 text-emerald-500'}`}>
+                        {trip.status}
                       </span>
                    </div>
                  </div>
@@ -297,15 +311,43 @@ const App = () => {
                    <MapPin size={14} className="text-stone-400" /> {trip.location}
                 </div>
 
-                {/* 質感按鈕區 (全部啟用) */}
+                {/* 質感按鈕區 */}
                 <div className="mt-auto flex gap-3 border-t border-dashed border-stone-200 pt-4">
-                  <button className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-blue-600 hover:bg-blue-50 rounded-md">
-                    <Map size={16} /> <span className="tracking-widest">PLAN</span>
-                  </button>
+                  {/* PLAN BUTTON */}
+                  <a 
+                    href="#" 
+                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-blue-600 hover:bg-blue-50 rounded-md cursor-pointer"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Map size={16} /> <span className="tracking-widest hidden sm:inline">旅行計畫</span>
+                  </a>
+                  
                   <div className="w-px bg-stone-200 my-1"></div>
-                  <button className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-md">
-                    <Video size={16} /> <span className="tracking-widest">VLOG</span>
-                  </button>
+                  
+                  {/* ALBUM BUTTON (New!) */}
+                  <a 
+                    href={trip.album || "#"} 
+                    target={trip.album ? "_blank" : "_self"}
+                    rel="noopener noreferrer"
+                    className={`flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all rounded-md ${
+                      trip.album 
+                        ? "text-stone-600 hover:text-amber-600 hover:bg-amber-50 cursor-pointer" 
+                        : "text-stone-300 cursor-not-allowed"
+                    }`}
+                  >
+                    <Images size={16} /> <span className="tracking-widest hidden sm:inline">相簿</span>
+                  </a>
+
+                  <div className="w-px bg-stone-200 my-1"></div>
+
+                  {/* VLOG BUTTON */}
+                  <a 
+                    href="#" 
+                    className="flex-1 flex items-center justify-center gap-2 py-2 text-sm font-bold transition-all text-stone-600 hover:text-red-600 hover:bg-red-50 rounded-md cursor-pointer"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Video size={16} /> <span className="tracking-widest hidden sm:inline">旅遊影片</span>
+                  </a>
                 </div>
               </div>
             </motion.div>
