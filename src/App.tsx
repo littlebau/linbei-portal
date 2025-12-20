@@ -94,8 +94,8 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2021, season: "春假", title: "澎湖", location: "台灣 澎湖", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczOWyPeiR_92g04FqjWeg2EUS3XsyNGZSoxZBVDtGaNzUVadlOplFiFKFOcmj_lQpY0Z9VtVO5-iIKboJQeRL_OjvhPHwk2rHV6PW5bUqYsYald_ytBhjwCkS3fL2usU4fy-qTM1IVn3Z8tH9JFNJL0t_g=w1215-h911-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/VDvduGyLpJrJRWvK9",
     plan: "https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ/edit?usp=drive_link",
     vlog: ""
   },
