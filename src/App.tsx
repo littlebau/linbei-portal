@@ -47,16 +47,16 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2025, season: "秋假", title: "日本東北", location: "Tohoku, Japan", status: "Planning", type: "future", 
-    image: "https://images.unsplash.com/photo-1528360983277-13d9b152c6d7?auto=format&fit=crop&q=80&w=800",
-    album: "",
-    plan: "", 
+    image: "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
+    album: "https://photos.app.goo.gl/hP631FQAmCgxUpoL8",
+    plan: "https://docs.google.com/document/d/1BAFg8ngF0yvULcSp7SLqvflTe6oxSSRZ/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
     vlog: ""
   },
   { 
     year: 2024, season: "秋假", title: "名古屋", location: "Nagoya, Japan", status: "Done", type: "past",
-    image: "https://images.unsplash.com/photo-1565619624098-e6598710b218?auto=format&fit=crop&q=80&w=800",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczOIFpXM83TMg3kiA0lHJfb7s9QrYCqMQgGF9TU5CTXqohr_yM9YwOwW7--G9xvVAMYKRyd1ZOkTpZCAhhyoBrPGHHX4SU9Z07Je3jJTLppWkExKICFejgU5UKItNM-JcS2AiWhDgL2vZmHLZYK8-kXJbw=w683-h911-s-no-gm?authuser=0",
     album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8",
-    plan: "",
+    plan: "https://docs.google.com/document/d/19k4b5TZ9R-bfBAuEMlQUkMOWeYpSjVz4/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: ""
   },
   { 
