@@ -81,63 +81,63 @@ const allTrips: Trip[] = [
   { 
     year: 2023, season: "春假", title: "阿里山", location: "台灣 阿里山", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1627894451152-66352ae07b22?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "https://docs.google.com/document/d/1PYevx-l8pimaWODh2JkjZLyz-8xXUVX9/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/H3iL7GCYOCo"
   },
   { 
     year: 2022, season: "秋假", title: "金門", location: "台灣 金門", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1599827876288-299691b33e9e?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "https://docs.google.com/document/d/19ejwcXm1rbVKTpVYrv3bB0djDR7FpDbL/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/qgYisyxXANc"
   },
   { 
     year: 2021, season: "春假", title: "澎湖", location: "台灣 澎湖", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1590053912959-1d2279b9dd71?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ/edit?usp=drive_link",
     vlog: ""
   },
   { 
     year: 2020, season: "秋假", title: "台東花蓮", location: "台灣 花東", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1571474004502-c1def214ac6d?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2020, season: "寒假", title: "菲律賓長灘島", location: "菲律賓 長灘島", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1540206351-d6465b3ac5c1?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2019, season: "秋假", title: "花蓮", location: "台灣 花蓮", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1596716075908-7243c220263f?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2019, season: "春假", title: "小琉球", location: "台灣 小琉球", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1582963032768-466d739226eb?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2018, season: "秋假", title: "薄荷島", location: "菲律賓 薄荷島", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1542332205-4da5d5fa6184?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "",
     vlog: ""
   },
   { 
     year: 2018, season: "春假", title: "京都大阪賞櫻", location: "日本 京都/大阪", status: "Done", type: "past",
     image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800",
-    album: "https://photos.google.com/",
+    album: "",
     plan: "",
     vlog: ""
   },
