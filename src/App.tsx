@@ -109,8 +109,8 @@ const allTrips: Trip[] = [
   // 新增：2020春假 台中薰衣草森林 (插入在 2020秋假 與 2020寒假 之間)
   { 
     year: 2020, season: "春假", title: "台中薰衣草森林", location: "台灣 台中", status: "Done", type: "past",
-    image: "", // 空白
-    album: "",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczPhREnlHCM8UJg1Rg52QkzsJNi7hK7NCdgKMvltsqeQJdKvkSHlTc6Y3TQM97UewCgI3CyEFQk-D3ANvuLRwUNur3VTsqOpzCezC4P-J476NTabFjliJrQHVBilEUYCmB9b11WwGCqw7Y8J3X0X83aRaQ=w960-h720-s-no-gm?authuser=0", // 空白
+    album: "https://photos.app.goo.gl/wa3ED2e4aEUU27kt7",
     plan: "",
     vlog: ""
   },
