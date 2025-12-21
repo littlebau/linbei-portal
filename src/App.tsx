@@ -6,18 +6,25 @@ import { motion, useScroll, useAnimation, AnimatePresence } from 'framer-motion'
 // 🎨 素材層 (ASSETS LAYER)
 // ==========================================
 const ASSETS = {
-  // 1. Logo
-  logo: "https://drive.google.com/file/d/1M-U8vr_LZXM56NQDNb5sDPZyQdwPN31f/view?usp=drive_link",
-  // 2. 一家三口照片
-  family: "https://drive.google.com/file/d/16iZWeAVFG3PYDGCmWQi_HqS_bkcffDQd/view?usp=drive_link", 
-  // 3. 旅遊裝備 (Placeholder)
+  // 1. 全新主題 Logo
+  mainTheme: "https://drive.google.com/file/d/1DkyWE7T3BSV5PGyYiRCaHlCeaR-kskBO/view?usp=drive_link",
+  
+  // 2. 旅遊裝備 (Placeholder)
   items: "https://placehold.co/600x300/png?text=Travel+Items",
-  // 4. 背景紋理
+  // 3. 背景紋理
   paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
-  // 5. 卡片上的吉祥物裝飾 (貓咪)
-  shiba: "https://drive.google.com/file/d/1tYjdUz0LIbeJJYSv7WOe1Eq2AkrZYfz6/view?usp=sharing",
+  
+  // 4. 卡片吉祥物 (左上角)
+  mascot1: "https://drive.google.com/file/d/1BUuXbcVZexXoOK-Kic-Jdy-8LrlH_HWi/view?usp=drive_link",
+  mascot2: "https://drive.google.com/file/d/1Jo-EP05_m7XtYllT29tQ2FNhKJiiSY-B/view?usp=drive_link",
+
+  // 5. 卡片郵戳 (右上角)
+  stamp1: "https://drive.google.com/file/d/1A7Zc3ZqsP3oJ528Jzq3D1SOt6T0Z0mLl/view?usp=drive_link",
+  stamp2: "https://drive.google.com/file/d/1BS652qurVrAzMF21_7NdA9-fs9CLj2tW/view?usp=drive_link",
+
   // 6. 右下角三人成團吉祥物
   groupMascot: "https://drive.google.com/file/d/14Q2vRY9Entm6z7aH507IQhh9GUmSOty-/view?usp=drive_link",
+  
   // 7. 按鈕圖示 (Icons)
   iconPlan: "https://drive.google.com/file/d/1YH6f9ksA-5VaXa_seCnnzdxZ1bZpO29z/view?usp=drive_link",
   iconAlbum: "https://drive.google.com/file/d/1gIIZ5F3Hb2G7sSiSSNLUxijSSdR9TapP/view?usp=drive_link",
@@ -218,75 +225,43 @@ const resolveImage = (url: string) => {
 };
 
 // ==========================================
-// 🐶🐱 客製化可愛圖示 (Back of Card)
-// ==========================================
-
-const DogMapIcon = ({ size = 28, className = "" }: { size?: number, className?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M3 6l9-4 9 4v16l-9-4-9 4V6z" className="text-blue-600" />
-    <circle cx="12" cy="10" r="4" fill="white" stroke="currentColor" />
-    <path d="M10.5 9.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" fill="currentColor" stroke="none" />
-    <path d="M13.5 9.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" fill="currentColor" stroke="none" />
-    <path d="M11 11.5s.5.5 1 .5 1-.5 1-.5" />
-    <path d="M8.5 7L7.5 5.5" />
-    <path d="M15.5 7L16.5 5.5" />
-  </svg>
-);
-
-const CatAlbumIcon = ({ size = 28, className = "" }: { size?: number, className?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" className="text-amber-600" />
-    <circle cx="8.5" cy="8.5" r="1.5" />
-    <path d="M21 15l-5-5L5 21" />
-    <path d="M14 16c0-1.5 1-2.5 2.5-2.5S19 14.5 19 16" fill="white" stroke="currentColor"/>
-    <path d="M14 16v5" />
-    <path d="M19 16v5" />
-    <path d="M14.5 13.5L13 12" />
-    <path d="M18.5 13.5L20 12" />
-    <circle cx="15.5" cy="16.5" r="0.5" fill="currentColor" stroke="none"/>
-    <circle cx="17.5" cy="16.5" r="0.5" fill="currentColor" stroke="none"/>
-  </svg>
-);
-
-const PawVlogIcon = ({ size = 28, className = "" }: { size?: number, className?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <rect x="2" y="6" width="14" height="12" rx="2" className="text-red-600" />
-    <path d="M16 16l6 2V6l-6 2" />
-    <circle cx="9" cy="12" r="4" fill="white" stroke="currentColor"/>
-    <circle cx="7.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
-    <circle cx="10.5" cy="10.5" r="0.9" fill="currentColor" stroke="none"/>
-    <circle cx="9" cy="9" r="0.9" fill="currentColor" stroke="none"/>
-    <path d="M7.5 13c.5 1 2.5 1 3 0" strokeLinecap="round" />
-  </svg>
-);
-
-// ==========================================
 // 🐕 吉祥物舉牌日期標籤 (Mascot Sign Label)
 // ==========================================
-const MascotLabel = ({ trip }: { trip: Trip }) => (
-  <div className="absolute -top-[52px] -left-[10px] z-30 group-hover:animate-bounce-slight origin-bottom-left w-[100px] h-[100px]">
-      <div className="relative w-full h-full flex flex-col items-center justify-end">
-          <img 
-            src={resolveImage(ASSETS.shiba)} 
-            alt="Mascot"
-            className="w-16 h-16 object-contain absolute bottom-[25px] left-[15px] z-10"
-            style={{ transform: "rotate(-5deg)" }}
-          />
-          <div 
-            className="relative z-20 bg-[#fff9c4] border-2 border-[#d6c0ae] px-3 py-1.5 rounded-md shadow-md text-center min-w-[70px] -rotate-3 transform translate-y-2 translate-x-1"
-            style={{ boxShadow: "2px 2px 0px rgba(0,0,0,0.1)" }}
-          >
-              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#d6c0ae] rounded-full opacity-50"></div>
-              <span className="block text-base font-black text-stone-600 font-['Patrick_Hand'] leading-none">
-                  {trip.year}
-              </span>
-              <span className="block text-[10px] font-bold text-stone-400 uppercase tracking-widest leading-tight font-['Patrick_Hand'] mt-0.5">
-                  {trip.season}
-              </span>
-          </div>
-      </div>
-  </div>
-);
+// [Modified] Scaled up mascot image and container by approx 2x
+const MascotLabel = ({ trip, index }: { trip: Trip, index: number }) => {
+  
+  // 交錯使用 Mascot 1 和 Mascot 2
+  const mascotImg = index % 2 === 0 ? ASSETS.mascot1 : ASSETS.mascot2;
+
+  return (
+    // Container size increased from w-[100px] h-[100px] to w-[160px] h-[160px]
+    // Position adjusted from -top-[52px] to -top-[80px]
+    <div className="absolute -top-[80px] -left-[20px] z-30 group-hover:animate-bounce-slight origin-bottom-left w-[160px] h-[160px]">
+        <div className="relative w-full h-full flex flex-col items-center justify-end">
+            <img 
+              src={resolveImage(mascotImg)} 
+              alt="Mascot"
+              // Image size increased from w-16 h-16 (64px) to w-32 h-32 (128px) - 2X size
+              className="w-32 h-32 object-contain absolute bottom-[30px] left-[10px] z-10"
+              style={{ transform: "rotate(-5deg)" }}
+            />
+            {/* Board also scaled slightly and repositioned to fit larger mascot */}
+            <div 
+              className="relative z-20 bg-[#fff9c4] border-2 border-[#d6c0ae] px-4 py-2 rounded-md shadow-md text-center min-w-[90px] -rotate-3 transform translate-y-4 translate-x-4"
+              style={{ boxShadow: "3px 3px 0px rgba(0,0,0,0.1)" }}
+            >
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#d6c0ae] rounded-full opacity-50"></div>
+                <span className="block text-xl font-black text-stone-600 font-['Patrick_Hand'] leading-none">
+                    {trip.year}
+                </span>
+                <span className="block text-xs font-bold text-stone-400 uppercase tracking-widest leading-tight font-['Patrick_Hand'] mt-0.5">
+                    {trip.season}
+                </span>
+            </div>
+        </div>
+    </div>
+  );
+};
 
 // 🌟 隨機貼紙元件
 const RandomSticker = ({ index }: { index: number }) => {
@@ -385,27 +360,18 @@ const LocationTapeLabel = ({ location, index }: { location: string, index: numbe
     );
 };
 
-// 📮 郵戳元件
-const PostalStamp = ({ status }: { status: string }) => {
-    return (
-        <div className="absolute -top-4 -right-4 z-10 opacity-85 rotate-12 pointer-events-none mix-blend-multiply shrink-0">
-            <svg width="140" height="80" viewBox="0 0 120 70" className="w-32 h-auto">
-                <defs>
-                    <path id="curve" d="M 22,40 A 28,28 0 1,1 98,40" />
-                </defs>
-                
-                <circle cx="35" cy="35" r="28" stroke="#8B0000" strokeWidth="1.5" fill="none" />
-                <circle cx="35" cy="35" r="20" stroke="#8B0000" strokeWidth="0.8" fill="none" />
-                
-                <text x="35" y="25" textAnchor="middle" fill="#8B0000" fontSize="5" fontWeight="bold" fontFamily="Arial" letterSpacing="0.5">FAMILY JOURNAL</text>
-                <text x="35" y="38" textAnchor="middle" fill="#8B0000" fontSize="8" fontWeight="bold" fontFamily="Courier New">{status.toUpperCase()}</text>
-                <text x="35" y="48" textAnchor="middle" fill="#8B0000" fontSize="5" fontFamily="Arial">TAIWAN</text>
+// 📮 郵戳元件 (New: Image Based)
+const PostalStamp = ({ status, index }: { status: string, index: number }) => {
+    // 交錯使用 Stamp 1 和 Stamp 2
+    const stampImg = index % 2 === 0 ? ASSETS.stamp1 : ASSETS.stamp2;
 
-                <path d="M68 20 Q 73 15, 78 20 T 88 20 T 98 20 T 108 20" stroke="#8B0000" strokeWidth="1.5" fill="none" />
-                <path d="M68 28 Q 73 23, 78 28 T 88 28 T 98 28 T 108 28" stroke="#8B0000" strokeWidth="1.5" fill="none" />
-                <path d="M68 36 Q 73 31, 78 36 T 88 36 T 98 36 T 108 36" stroke="#8B0000" strokeWidth="1.5" fill="none" />
-                <path d="M68 44 Q 73 39, 78 44 T 88 44 T 98 44 T 108 44" stroke="#8B0000" strokeWidth="1.5" fill="none" />
-            </svg>
+    return (
+        <div className="absolute -top-4 -right-4 z-10 opacity-90 rotate-12 pointer-events-none mix-blend-multiply shrink-0 w-32 h-auto">
+             <img 
+               src={resolveImage(stampImg)} 
+               alt="Stamp"
+               className="w-full h-full object-contain drop-shadow-sm opacity-80"
+             />
         </div>
     );
 };
@@ -542,12 +508,15 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
       whileHover={{ y: -5, rotate: 0, zIndex: 10 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
-      className="group relative w-full h-[26rem] card-perspective cursor-pointer"
+      // Increased height to h-[32rem] to accommodate larger buttons
+      className="group relative w-full h-[32rem] card-perspective cursor-pointer"
       onClick={handleFlip}
     >
       {/* 裝飾性元素 (不會跟著翻轉) */}
       <CuteWashiTape index={index} />
-      <MascotLabel trip={trip} />
+      
+      {/* 吉祥物標籤 (交錯顯示) */}
+      <MascotLabel trip={trip} index={index} />
 
       {/* 翻轉容器 (CSS class + Style Control) */}
       <div 
@@ -579,8 +548,8 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                       </div>
                    )}
                    
-                   {/* 郵戳 */}
-                   <PostalStamp status={trip.status} />
+                   {/* 郵戳 (New: 交錯顯示) */}
+                   <PostalStamp status={trip.status} index={index} />
               </div>
               
               {/* 地點紙膠帶 */}
@@ -610,31 +579,34 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                   </motion.h3>
 
                   {/* 質感按鈕區 */}
-                  <div className="w-full flex flex-col gap-3 px-2">
+                  <div className="w-full flex flex-col gap-4 px-2">
                       {/* PLAN BUTTON */}
                       <a 
                           href={trip.plan || "#"} 
                           target={trip.plan ? "_blank" : "_self"}
                           rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
+                          // Increased padding (py-3) to handle larger icons
+                          className={`relative flex items-center justify-between px-4 py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
                               trip.plan 
                               ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50" 
                               : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                           }`}
                           onClick={(e) => !trip.plan && e.preventDefault()}
                       >
-                          <div className="flex items-center gap-3">
-                              {/* Replaced Icon: Plan - Size Increased to w-12 h-12 */}
+                          <div className="flex items-center gap-4">
+                              {/* Left Icon: Scaled to w-20 h-20 (approx 80px, 3x original) */}
                               <img 
                                 src={resolveImage(ASSETS.iconPlan)} 
                                 alt="Plan" 
-                                className={`w-12 h-12 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`}
+                                className={`w-20 h-20 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`}
                               />
-                              <span className="text-sm font-bold tracking-widest">
+                              {/* Middle Text: Increased to text-xl */}
+                              <span className="text-xl font-black tracking-widest">
                                   {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
                               </span>
                           </div>
-                          <Dog size={24} className={`transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
+                          {/* Right Icon: Scaled to size={40} (approx 2x original) */}
+                          <Dog size={40} className={`transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                       
                       {/* ALBUM BUTTON */}
@@ -642,25 +614,27 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                           href={trip.album || "#"} 
                           target={trip.album ? "_blank" : "_self"}
                           rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
+                          className={`relative flex items-center justify-between px-4 py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
                               trip.album 
                               ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50" 
                               : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                           }`}
                           onClick={(e) => !trip.album && e.preventDefault()}
                       >
-                          <div className="flex items-center gap-3">
-                              {/* Replaced Icon: Album - Size Increased to w-12 h-12 */}
+                          <div className="flex items-center gap-4">
+                              {/* Left Icon: Scaled to w-20 h-20 */}
                               <img 
                                 src={resolveImage(ASSETS.iconAlbum)} 
                                 alt="Album" 
-                                className={`w-12 h-12 object-contain ${trip.album ? "" : "grayscale opacity-50"}`}
+                                className={`w-20 h-20 object-contain ${trip.album ? "" : "grayscale opacity-50"}`}
                               />
-                              <span className="text-sm font-bold tracking-widest">
+                              {/* Middle Text: Increased to text-xl */}
+                              <span className="text-xl font-black tracking-widest">
                                   {trip.album ? "相簿" : "照片整理中..."}
                               </span>
                           </div>
-                          <Cat size={24} className={`transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
+                          {/* Right Icon: Scaled to size={40} */}
+                          <Cat size={40} className={`transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
 
                       {/* VLOG BUTTON */}
@@ -668,25 +642,27 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                           href={trip.vlog || "#"} 
                           target={trip.vlog ? "_blank" : "_self"}
                           rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-4 py-2 border-2 border-dashed rounded-lg transition-all group/btn ${
+                          className={`relative flex items-center justify-between px-4 py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
                               trip.vlog 
                               ? "border-red-300 bg-white text-stone-600 hover:bg-red-50" 
                               : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                           }`}
                           onClick={(e) => !trip.vlog && e.preventDefault()}
                       >
-                          <div className="flex items-center gap-3">
-                              {/* Replaced Icon: Vlog - Size Increased to w-12 h-12 */}
+                          <div className="flex items-center gap-4">
+                              {/* Left Icon: Scaled to w-20 h-20 */}
                               <img 
                                 src={resolveImage(ASSETS.iconVlog)} 
                                 alt="Vlog" 
-                                className={`w-12 h-12 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`}
+                                className={`w-20 h-20 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`}
                               />
-                              <span className="text-sm font-bold tracking-widest">
+                              {/* Middle Text: Increased to text-xl */}
+                              <span className="text-xl font-black tracking-widest">
                                   {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
                               </span>
                           </div>
-                          <PawPrint size={24} className={`transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
+                          {/* Right Icon: Scaled to size={40} */}
+                          <PawPrint size={40} className={`transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                   </div>
               </div>
@@ -734,69 +710,39 @@ const App = () => {
       {/* 🐶 新增：右下角吉祥物 (Travel Mascot) */}
       <TravelMascot />
 
-      {/* Header (Adjusted Layout) */}
+      {/* Header (Changed to Center Layout with New Logo) */}
       <header className="relative pt-10 pb-12 px-6 text-center z-10 max-w-6xl mx-auto">
         
-        <div className="flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 w-full mt-4 relative z-10">
+        <div className="flex flex-col items-center justify-center w-full mt-4 relative z-10">
             
-            {/* 左側：Logo 與 文字 */}
+            {/* New Main Theme Logo */}
             <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="flex flex-col items-center md:items-start text-center md:text-left flex-1 md:-mt-24"
+              initial={{ opacity: 0, y: -20, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.8, type: 'spring', bounce: 0.4 }}
+              className="w-full max-w-2xl relative mb-2"
             >
-                {/* Logo (大幅放大) */}
-                <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    className="w-80 h-80 md:w-[480px] md:h-[480px] relative mb-2"
-                >
-                    <img 
-                        src={resolveImage(ASSETS.logo)} 
-                        alt="Linbei Logo" 
-                        className="w-full h-full object-contain drop-shadow-xl"
-                        referrerPolicy="no-referrer"
-                        onError={(e) => (e.currentTarget.style.opacity = '0.3')} 
-                    />
-                </motion.div>
-
-                {/* 文字區塊 */}
-                <div className="relative pl-2">
-                    <div className="h-1 w-16 bg-orange-400 mb-4 rounded-full mx-auto md:mx-0"></div>
-                    <h1 className="text-3xl md:text-4xl text-stone-700 font-black tracking-wide mb-2 font-['Patrick_Hand']">
-                        林北三人成團
-                    </h1>
-                    <p className="text-xl text-stone-500 leading-relaxed font-bold tracking-wide">
-                        從 2012 到 2025<br/>
-                        收集世界的角落，紀錄我們一起長大的時光。
-                    </p>
-                </div>
+                <img 
+                    src={resolveImage(ASSETS.mainTheme)} 
+                    alt="Linbei Theme Logo" 
+                    className="w-full h-auto object-contain drop-shadow-xl"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => (e.currentTarget.style.opacity = '0.3')} 
+                />
             </motion.div>
 
-            {/* 右側：家庭照片 */}
-            <motion.div 
-              initial={{ opacity: 0, x: 30, rotate: 3 }}
-              animate={{ opacity: 1, x: 0, rotate: 2 }}
-              transition={{ duration: 0.8, delay: 0.2 }} 
-              className="relative flex-1 w-full max-w-md"
+            {/* Subtitle Text */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }} 
+              className="relative"
             >
-               <div className="bg-white p-4 pb-16 shadow-2xl border border-stone-200 transform rotate-2 hover:rotate-0 transition-transform duration-500">
-                   <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-32 h-8 bg-yellow-200/80 -rotate-2 shadow-sm backdrop-blur-sm z-20"></div>
-                   
-                   <div className="aspect-square w-full overflow-hidden bg-stone-100 border border-stone-100">
-                     <img 
-                       src={resolveImage(ASSETS.family)} 
-                       alt="Family" 
-                       className="w-full h-full object-cover" 
-                       referrerPolicy="no-referrer"
-                       onError={(e) => (e.currentTarget.style.opacity = '0.3')} 
-                     />
-                   </div>
-                   <div className="absolute bottom-6 right-6 text-right">
-                        <span className="block text-2xl font-bold text-stone-600 font-['Patrick_Hand']">Since 2018</span>
-                        <span className="block text-sm text-stone-400 tracking-wider">Our Journey Begins</span>
-                   </div>
-               </div>
+                <div className="h-1 w-16 bg-orange-400 mb-4 rounded-full mx-auto"></div>
+                <p className="text-xl md:text-2xl text-stone-500 leading-relaxed font-bold tracking-wide">
+                    從 2012 到 2025<br/>
+                    收集世界的角落，紀錄我們一起長大的時光。
+                </p>
             </motion.div>
 
         </div>
