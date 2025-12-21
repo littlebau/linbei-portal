@@ -92,7 +92,9 @@ const allTrips: Trip[] = [
     image: "https://lh3.googleusercontent.com/pw/AP1GczPKvJcz_f0SRhyXpaJ1WiCVcFUt4svjVKuisrnUd1m9JwsIIhnVRNyOguE-OjR1HtjqyLcjm8b_WlXQQDsb7z7HNC9IpxCU2cdx9O2R3qhqfscs9MvCs0i-Bmo9gqO7ZQyGCKMk6IJudwbohdSv-f1EkQ=w683-h911-s-no-gm?authuser=0",
     images: [
         "https://lh3.googleusercontent.com/pw/AP1GczPKvJcz_f0SRhyXpaJ1WiCVcFUt4svjVKuisrnUd1m9JwsIIhnVRNyOguE-OjR1HtjqyLcjm8b_WlXQQDsb7z7HNC9IpxCU2cdx9O2R3qhqfscs9MvCs0i-Bmo9gqO7ZQyGCKMk6IJudwbohdSv-f1EkQ=w683-h911-s-no-gm?authuser=0",
-        "" // 預留空間
+        "https://lh3.googleusercontent.com/pw/AP1GczN0jmzGq7CCW0DhNxFFrYMJet2FayNpmI3o-LfDMnW5eONmakSleffVGnaRLZdV_7Pe_OivFoSO5g6Ya8fGe_AvOG_CJADNQHV_hholKlfbFRaqEk8b_A0MnyA4LwTTO5UcqvwPjCFveX7kpOxf0hVG3g=w579-h869-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczMFKma_kbCBpzrBger9lolr6gVMi21dmkiDc7qASqCi7E65n_2FtTHULoVFedwwaBC11YzznmUcparrrxeatrx0Dl-AFCmtQorGf1NXKustXa2YChYLWavWGsYmHQdr4p7sBkk4ErOvyeWBe_z7FWpXBg=w579-h869-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczNunvS_OvOo_VRBMdTfQhyx5gkH80MBhxYKLp7eThPPk1e6iY3P4Bp4KptqJx74-SfcH4CAS0YVzCrMOYsB1qMMsKoxW5InN984yKvdDwpS4fDJclc683ZTcV9rgW2XYCQPjQeJkAczWN0Np1IPYa8ylQ=w651-h869-s-no-gm?authuser=0" // 預留空間
     ],
     album: "https://photos.app.goo.gl/Pewtpp8aaH5Jt3vL7",
     plan: "https://docs.google.com/document/d/1BgiWNLVZqKV3Wzj-spiHTA9RLL7lMf3u/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
