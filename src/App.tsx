@@ -28,7 +28,17 @@ const ASSETS = {
   // 7. 按鈕圖示 (Icons)
   iconPlan: "https://drive.google.com/file/d/1YH6f9ksA-5VaXa_seCnnzdxZ1bZpO29z/view?usp=drive_link",
   iconAlbum: "https://drive.google.com/file/d/1gIIZ5F3Hb2G7sSiSSNLUxijSSdR9TapP/view?usp=drive_link",
-  iconVlog: "https://drive.google.com/file/d/1RbE-fHvsqodQBBNw9ozPGaNYWcj0-TUD/view?usp=drive_link"
+  iconVlog: "https://drive.google.com/file/d/1RbE-fHvsqodQBBNw9ozPGaNYWcj0-TUD/view?usp=drive_link",
+
+  // 8. 漂浮背景小圖示 (Floating Background Icons)
+  floating: [
+    "https://drive.google.com/file/d/1dO5qnrh7GG1OPTVUUhLjoIAPsiOqWVGT/view?usp=drive_link",
+    "https://drive.google.com/file/d/1DWPEAX7BjRQbPXxa4v4nOlr6U9N-Q5qU/view?usp=drive_link",
+    "https://drive.google.com/file/d/13PocXFe_v9QQdN_d40Escp7Pw7rxjVTV/view?usp=drive_link",
+    "https://drive.google.com/file/d/1kcft3exVqfp-xcAtCX4Ak99XAhHJMNw6/view?usp=drive_link",
+    "https://drive.google.com/file/d/1JftJqTtVi1YlTNQ3LCdIl1kxuE7cViSk/view?usp=drive_link",
+    "https://drive.google.com/file/d/1YpG-WAJwcnPnaxdc6hCZeupFeAiaVwd-/view?usp=drive_link"
+  ]
 };
 
 // ==========================================
@@ -67,7 +77,7 @@ const allTrips: Trip[] = [
     image: "https://lh3.googleusercontent.com/pw/AP1GczOnC_qyPEENGBXm9a2ztYIwfFwSD3yrdoenrXKPllvVVj0IpQgAOeXjU6fE4d2TofZUac99-3MhUXbHIZcTnsNNY4KNr8Sn5fneQeWTzH9OEWpIEM3gbQwIC2EtbemZxFDwUqUxOCJDr_OV6bnfXV47Xg=w1367-h911-s-no-gm?authuser=0",
     images: [
         "https://lh3.googleusercontent.com/pw/AP1GczOnC_qyPEENGBXm9a2ztYIwfFwSD3yrdoenrXKPllvVVj0IpQgAOeXjU6fE4d2TofZUac99-3MhUXbHIZcTnsNNY4KNr8Sn5fneQeWTzH9OEWpIEM3gbQwIC2EtbemZxFDwUqUxOCJDr_OV6bnfXV47Xg=w1367-h911-s-no-gm?authuser=0",
-        "https://lh3.googleusercontent.com/pw/AP1GczPn3BVBzWeSz_V5w6MKhABjBOLhk5COrdbobL2ojgoxD1MrG_MnOjHNK7YGDEULxnqEKAbCLKWlvAMyKo_78o7lkuigJEKPkyLnhTGYHt3BEC9VdvEgvKuoVdwnVTWq-4pd1YYyvZ6yOuKFSurfCtuwhA=w1303-h869-s-no-gm?authuser=0", // 預留空間
+        "https://lh3.googleusercontent.com/pw/AP1GczPn3BVBzWeSz_V5w6MKhABjBOLhk5COrdbobL2ojgoxD1MrG_MnOjHNK7YGDEULxnqEKAbCLKWlvAMyKo_78o7lkuigJEKPkyLnhTGYHt3BEC9VdvEgvKuoVdwnVTWq-4pd1YYyvZ6yOuKFSurfCtuwhA=w1303-h869-s-no-gm?authuser=0", 
         "https://lh3.googleusercontent.com/pw/AP1GczMm71Q_JbSbKDo2bPZe54dH7spuiD7G5UlIi9gP4oKuKsju9q4nMmSyJi4XSPYXl9E5oG4LpqutxxensaVMvGrvjOsiubHYx6cFhH76beCgjcUwTHkct4XdC5TKoyAfaXyvx9ORzk8jnvug19XrDu5dVQ=w1304-h869-s-no-gm?authuser=0",
         "https://lh3.googleusercontent.com/pw/AP1GczOpcvQuovtghwu_66m2V6bJApPyRt_qnjoUO7kHtBYGtwdR2GOhN8B7MnF6WWYXDgpHgjJ65LRm2seWnZt_2Yn4ReJIsYtj_FcsVkAspOp0DrDbGnu27b6iPvpmOneQOvRv1jNepfy3CthVY_cWEigfGg=w1304-h869-s-no-gm?authuser=0",
         "https://lh3.googleusercontent.com/pw/AP1GczNYJ2LHUSUqyJtS91ZfIEaaiKhcrDfuHGeed6oFuTtUlJBPuSLfypgYzSdaAZj-7KQlhLma-2tk14Dr_us_566vAKaUHUa8iG2ygULtgAhotdUFOsdSKH0C7e0w35n6KMlVtRJufs5SPoaX7EaPz859zQ=w1304-h869-s-no-gm?authuser=0"
@@ -358,25 +368,25 @@ const MascotLabel = ({ trip, index }: { trip: Trip, index: number }) => {
   return (
     // Container size increased from w-[100px] h-[100px] to w-[160px] h-[160px]
     // Position adjusted from -top-[52px] to -top-[80px]
-    <div className="absolute -top-[80px] -left-[20px] z-30 group-hover:animate-bounce-slight origin-bottom-left w-[160px] h-[160px]">
+    <div className="absolute -top-[52px] md:-top-[80px] -left-[10px] md:-left-[20px] z-30 group-hover:animate-bounce-slight origin-bottom-left w-[120px] h-[120px] md:w-[160px] md:h-[160px]">
         <div className="relative w-full h-full flex flex-col items-center justify-end">
             <img 
               src={resolveImage(mascotImg)} 
               alt="Mascot"
               // Image size increased from w-16 h-16 (64px) to w-32 h-32 (128px) - 2X size
-              className="w-32 h-32 object-contain absolute bottom-[30px] left-[10px] z-10"
+              className="w-24 h-24 md:w-32 md:h-32 object-contain absolute bottom-[20px] md:bottom-[30px] left-[5px] md:left-[10px] z-10"
               style={{ transform: "rotate(-5deg)" }}
             />
             {/* Board also scaled slightly and repositioned to fit larger mascot */}
             <div 
-              className="relative z-20 bg-[#fff9c4] border-2 border-[#d6c0ae] px-4 py-2 rounded-md shadow-md text-center min-w-[90px] -rotate-3 transform translate-y-4 translate-x-4"
+              className="relative z-20 bg-[#fff9c4] border-2 border-[#d6c0ae] px-3 py-1.5 md:px-4 md:py-2 rounded-md shadow-md text-center min-w-[70px] md:min-w-[90px] -rotate-3 transform translate-y-3 md:translate-y-4 translate-x-3 md:translate-x-4"
               style={{ boxShadow: "3px 3px 0px rgba(0,0,0,0.1)" }}
             >
                 <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#d6c0ae] rounded-full opacity-50"></div>
-                <span className="block text-xl font-black text-stone-600 font-['Patrick_Hand'] leading-none">
+                <span className="block text-lg md:text-xl font-black text-stone-600 font-['Patrick_Hand'] leading-none">
                     {trip.year}
                 </span>
-                <span className="block text-xs font-bold text-stone-400 uppercase tracking-widest leading-tight font-['Patrick_Hand'] mt-0.5">
+                <span className="block text-[10px] md:text-xs font-bold text-stone-400 uppercase tracking-widest leading-tight font-['Patrick_Hand'] mt-0.5">
                     {trip.season}
                 </span>
             </div>
@@ -573,13 +583,13 @@ const TravelMascot = () => {
 // ==========================================
 const FloatingBackground = () => {
   const floatingItems = [
-    { icon: <PawPrint size={24} />, left: '10%', top: '20%', delay: 0, duration: 15 },
-    { icon: <Plane size={30} />, left: '85%', top: '15%', delay: 2, duration: 20 },
-    { icon: <span className="text-2xl">🐶</span>, left: '5%', top: '60%', delay: 5, duration: 18 },
-    { icon: <span className="text-2xl">🐱</span>, left: '90%', top: '50%', delay: 1, duration: 16 },
-    { icon: <Camera size={28} />, left: '15%', top: '85%', delay: 3, duration: 22 },
-    { icon: <Sun size={32} className="text-orange-400" />, left: '80%', top: '80%', delay: 4, duration: 25 },
-    { icon: <span className="text-2xl">🐾</span>, left: '50%', top: '5%', delay: 6, duration: 30 },
+    { src: ASSETS.floating[0], left: '10%', top: '20%', delay: 0, duration: 15, size: 'w-20' }, // Increased size slightly
+    { src: ASSETS.floating[1], left: '85%', top: '15%', delay: 2, duration: 20, size: 'w-24' },
+    { src: ASSETS.floating[2], left: '5%', top: '60%', delay: 5, duration: 18, size: 'w-20' },
+    { src: ASSETS.floating[3], left: '90%', top: '50%', delay: 1, duration: 16, size: 'w-28' },
+    { src: ASSETS.floating[4], left: '15%', top: '85%', delay: 3, duration: 22, size: 'w-24' },
+    { src: ASSETS.floating[5], left: '80%', top: '80%', delay: 4, duration: 25, size: 'w-20' },
+    { src: ASSETS.floating[0], left: '50%', top: '5%', delay: 6, duration: 30, size: 'w-16' }, 
   ];
 
   return (
@@ -587,11 +597,11 @@ const FloatingBackground = () => {
       {floatingItems.map((item, index) => (
         <motion.div
           key={index}
-          initial={{ y: 0, opacity: 0.2 }}
+          initial={{ y: 0, opacity: 0.6 }} // Increased initial opacity
           animate={{ 
             y: [0, -20, 0], 
             rotate: [0, 10, -10, 0],
-            opacity: [0.2, 0.5, 0.2] 
+            opacity: [0.6, 1, 0.6] // Much higher opacity range
           }}
           transition={{ 
             duration: item.duration, 
@@ -599,10 +609,14 @@ const FloatingBackground = () => {
             ease: "easeInOut",
             delay: item.delay
           }}
-          className="absolute text-stone-400"
+          className="absolute"
           style={{ left: item.left, top: item.top }}
         >
-          {item.icon}
+          <img 
+            src={resolveImage(item.src)} 
+            alt="floating-icon" 
+            className={`${item.size} h-auto object-contain drop-shadow-md`} // Removed opacity-70, added shadow for pop
+          />
         </motion.div>
       ))}
     </div>
@@ -649,7 +663,7 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
       // Increased height to h-[32rem] to accommodate larger buttons
-      className="group relative w-full h-[32rem] card-perspective cursor-pointer"
+      className="group relative w-full h-[28rem] md:h-[32rem] card-perspective cursor-pointer"
       onClick={handleFlip}
     >
       {/* 裝飾性元素 (不會跟著翻轉) */}
@@ -672,22 +686,45 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                    {/* [NEW] Photo Logic: Slideshow or Ken Burns Single Image */}
                    <AnimatePresence mode="popLayout">
                       {displayImages[0] ? (
-                          <motion.img 
-                              key={currentImageIndex} // Key change triggers animation
-                              src={resolveImage(displayImages[currentImageIndex])} 
-                              alt={trip.title} 
-                              className="absolute inset-0 w-full h-full object-contain bg-stone-200" // Modified: object-contain + bg
-                              referrerPolicy="no-referrer"
-                              
-                              // [NEW] Ken Burns Effect (Slow Zoom) & Crossfade
-                              initial={{ opacity: 0, scale: 1 }}
-                              animate={{ opacity: 1, scale: 1.1 }}
-                              exit={{ opacity: 0 }}
-                              transition={{ 
-                                  opacity: { duration: 1 }, // Crossfade duration
-                                  scale: { duration: 20, ease: "linear" } // Slow zoom over 20s
-                              }}
-                          />
+                          <>
+                             {/* 1. [NEW] 模糊背景層 (Blurred Background Layer) 
+                                 解決留白問題，但不裁切主體
+                             */}
+                             <motion.div
+                                key={`bg-${currentImageIndex}`}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 1 }}
+                                className="absolute inset-0 z-0"
+                             >
+                                <img 
+                                    src={resolveImage(displayImages[currentImageIndex])} 
+                                    alt="Background Blur"
+                                    className="w-full h-full object-cover filter blur-xl opacity-60 scale-110" // scale-110 to hide blur edges
+                                />
+                             </motion.div>
+
+                             {/* 2. 主圖片層 (Main Image Layer) 
+                                 維持 object-contain 以確保不被裁切
+                             */}
+                             <motion.img 
+                                  key={currentImageIndex} // Key change triggers animation
+                                  src={resolveImage(displayImages[currentImageIndex])} 
+                                  alt={trip.title} 
+                                  className="absolute inset-0 w-full h-full object-contain z-10 shadow-sm" // z-10 on top
+                                  referrerPolicy="no-referrer"
+                                  
+                                  // [NEW] Ken Burns Effect (Slow Zoom) & Crossfade
+                                  initial={{ opacity: 0, scale: 1 }}
+                                  animate={{ opacity: 1, scale: 1.05 }} // Slight zoom
+                                  exit={{ opacity: 0 }}
+                                  transition={{ 
+                                      opacity: { duration: 1 }, // Crossfade duration
+                                      scale: { duration: 20, ease: "linear" } // Slow zoom over 20s
+                                  }}
+                              />
+                          </>
                        ) : (
                           // Placeholder if NO image at all
                           <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
@@ -725,40 +762,40 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
 
               <div className="flex-1 flex flex-col items-center justify-center w-full pl-4">
                   <motion.h3 
-                      className="text-3xl font-black mb-6 text-stone-800 leading-tight"
+                      className="text-2xl md:text-3xl font-black mb-4 md:mb-6 text-stone-800 leading-tight"
                   >
                       {trip.title}
                   </motion.h3>
 
                   {/* 質感按鈕區 */}
-                  <div className="w-full flex flex-col gap-4 px-2">
+                  <div className="w-full flex flex-col gap-3 md:gap-4 px-1 md:px-2">
                       {/* PLAN BUTTON */}
                       <a 
                           href={trip.plan || "#"} 
                           target={trip.plan ? "_blank" : "_self"}
                           rel="noopener noreferrer"
                           // Increased padding (py-3) to handle larger icons
-                          className={`relative flex items-center justify-between px-4 py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
+                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
                               trip.plan 
                               ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50" 
                               : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                           }`}
                           onClick={(e) => !trip.plan && e.preventDefault()}
                       >
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-3 md:gap-4">
                               {/* Left Icon: Scaled to w-20 h-20 (approx 80px, 3x original) */}
                               <img 
                                 src={resolveImage(ASSETS.iconPlan)} 
                                 alt="Plan" 
-                                className={`w-20 h-20 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`}
+                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`}
                               />
                               {/* Middle Text: Increased to text-xl */}
-                              <span className="text-xl font-black tracking-widest">
+                              <span className="text-lg md:text-xl font-black tracking-widest">
                                   {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
                               </span>
                           </div>
                           {/* Right Icon: Scaled to size={40} (approx 2x original) */}
-                          <Dog size={40} className={`transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
+                          <Dog size={32} className={`md:w-10 md:h-10 transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                       
                       {/* ALBUM BUTTON */}
@@ -766,27 +803,27 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                           href={trip.album || "#"} 
                           target={trip.album ? "_blank" : "_self"}
                           rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-4 py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
+                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
                               trip.album 
                               ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50" 
                               : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                           }`}
                           onClick={(e) => !trip.album && e.preventDefault()}
                       >
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-3 md:gap-4">
                               {/* Left Icon: Scaled to w-20 h-20 */}
                               <img 
                                 src={resolveImage(ASSETS.iconAlbum)} 
                                 alt="Album" 
-                                className={`w-20 h-20 object-contain ${trip.album ? "" : "grayscale opacity-50"}`}
+                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.album ? "" : "grayscale opacity-50"}`}
                               />
                               {/* Middle Text: Increased to text-xl */}
-                              <span className="text-xl font-black tracking-widest">
+                              <span className="text-lg md:text-xl font-black tracking-widest">
                                   {trip.album ? "相簿" : "照片整理中..."}
                               </span>
                           </div>
                           {/* Right Icon: Scaled to size={40} */}
-                          <Cat size={40} className={`transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
+                          <Cat size={32} className={`md:w-10 md:h-10 transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
 
                       {/* VLOG BUTTON */}
@@ -794,27 +831,27 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                           href={trip.vlog || "#"} 
                           target={trip.vlog ? "_blank" : "_self"}
                           rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-4 py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
+                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn ${
                               trip.vlog 
                               ? "border-red-300 bg-white text-stone-600 hover:bg-red-50" 
                               : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
                           }`}
                           onClick={(e) => !trip.vlog && e.preventDefault()}
                       >
-                          <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-3 md:gap-4">
                               {/* Left Icon: Scaled to w-20 h-20 */}
                               <img 
                                 src={resolveImage(ASSETS.iconVlog)} 
                                 alt="Vlog" 
-                                className={`w-20 h-20 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`}
+                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`}
                               />
                               {/* Middle Text: Increased to text-xl */}
-                              <span className="text-xl font-black tracking-widest">
+                              <span className="text-lg md:text-xl font-black tracking-widest">
                                   {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
                               </span>
                           </div>
                           {/* Right Icon: Scaled to size={40} */}
-                          <PawPrint size={40} className={`transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
+                          <PawPrint size={32} className={`md:w-10 md:h-10 transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                   </div>
               </div>
@@ -863,7 +900,7 @@ const App = () => {
       <TravelMascot />
 
       {/* Header (Changed to Center Layout with New Logo) */}
-      <header className="relative pt-10 pb-12 px-6 text-center z-10 max-w-6xl mx-auto">
+      <header className="relative pt-10 pb-12 px-4 md:px-6 text-center z-10 max-w-6xl mx-auto">
         
         <div className="flex flex-col items-center justify-center w-full mt-4 relative z-10">
             
@@ -891,7 +928,7 @@ const App = () => {
               className="relative"
             >
                 <div className="h-1 w-16 bg-orange-400 mb-4 rounded-full mx-auto"></div>
-                <p className="text-xl md:text-2xl text-stone-500 leading-relaxed font-bold tracking-wide">
+                <p className="text-lg md:text-2xl text-stone-500 leading-relaxed font-bold tracking-wide">
                     從 2012 到 2025<br/>
                     收集世界的角落，紀錄我們一起長大的時光。
                 </p>
@@ -901,8 +938,8 @@ const App = () => {
       </header>
 
       {/* Main Content: Trip Cards */}
-      <main className="max-w-6xl mx-auto px-6 z-10 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+      <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
           {allTrips.map((trip, index) => (
             <TripCard key={index} trip={trip} index={index} />
           ))}
