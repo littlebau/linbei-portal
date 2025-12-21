@@ -16,8 +16,12 @@ const ASSETS = {
   paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
   // 5. 卡片上的吉祥物裝飾 (貓咪)
   shiba: "https://drive.google.com/file/d/1tYjdUz0LIbeJJYSv7WOe1Eq2AkrZYfz6/view?usp=sharing",
-  // 6. [NEW] 右下角三人成團吉祥物
-  groupMascot: "https://drive.google.com/file/d/14Q2vRY9Entm6z7aH507IQhh9GUmSOty-/view?usp=drive_link"
+  // 6. 右下角三人成團吉祥物
+  groupMascot: "https://drive.google.com/file/d/14Q2vRY9Entm6z7aH507IQhh9GUmSOty-/view?usp=drive_link",
+  // 7. 按鈕圖示 (Icons)
+  iconPlan: "https://drive.google.com/file/d/1YH6f9ksA-5VaXa_seCnnzdxZ1bZpO29z/view?usp=drive_link",
+  iconAlbum: "https://drive.google.com/file/d/1gIIZ5F3Hb2G7sSiSSNLUxijSSdR9TapP/view?usp=drive_link",
+  iconVlog: "https://drive.google.com/file/d/1RbE-fHvsqodQBBNw9ozPGaNYWcj0-TUD/view?usp=drive_link"
 };
 
 // ==========================================
@@ -620,7 +624,12 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                           onClick={(e) => !trip.plan && e.preventDefault()}
                       >
                           <div className="flex items-center gap-3">
-                              <Map size={20} className={trip.plan ? "text-blue-500" : "text-stone-300"} />
+                              {/* Replaced Icon: Plan - Size Increased to w-12 h-12 */}
+                              <img 
+                                src={resolveImage(ASSETS.iconPlan)} 
+                                alt="Plan" 
+                                className={`w-12 h-12 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`}
+                              />
                               <span className="text-sm font-bold tracking-widest">
                                   {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
                               </span>
@@ -641,7 +650,12 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                           onClick={(e) => !trip.album && e.preventDefault()}
                       >
                           <div className="flex items-center gap-3">
-                              <Images size={20} className={trip.album ? "text-amber-500" : "text-stone-300"} />
+                              {/* Replaced Icon: Album - Size Increased to w-12 h-12 */}
+                              <img 
+                                src={resolveImage(ASSETS.iconAlbum)} 
+                                alt="Album" 
+                                className={`w-12 h-12 object-contain ${trip.album ? "" : "grayscale opacity-50"}`}
+                              />
                               <span className="text-sm font-bold tracking-widest">
                                   {trip.album ? "相簿" : "照片整理中..."}
                               </span>
@@ -662,7 +676,12 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                           onClick={(e) => !trip.vlog && e.preventDefault()}
                       >
                           <div className="flex items-center gap-3">
-                              <Video size={20} className={trip.vlog ? "text-red-500" : "text-stone-300"} />
+                              {/* Replaced Icon: Vlog - Size Increased to w-12 h-12 */}
+                              <img 
+                                src={resolveImage(ASSETS.iconVlog)} 
+                                alt="Vlog" 
+                                className={`w-12 h-12 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`}
+                              />
                               <span className="text-sm font-bold tracking-widest">
                                   {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
                               </span>
