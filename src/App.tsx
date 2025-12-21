@@ -81,7 +81,7 @@ const allTrips: Trip[] = [
     image: "https://lh3.googleusercontent.com/pw/AP1GczOIFpXM83TMg3kiA0lHJfb7s9QrYCqMQgGF9TU5CTXqohr_yM9YwOwW7--G9xvVAMYKRyd1ZOkTpZCAhhyoBrPGHHX4SU9Z07Je3jJTLppWkExKICFejgU5UKItNM-JcS2AiWhDgL2vZmHLZYK8-kXJbw=w683-h911-s-no-gm?authuser=0",
     images: [
         "https://lh3.googleusercontent.com/pw/AP1GczOIFpXM83TMg3kiA0lHJfb7s9QrYCqMQgGF9TU5CTXqohr_yM9YwOwW7--G9xvVAMYKRyd1ZOkTpZCAhhyoBrPGHHX4SU9Z07Je3jJTLppWkExKICFejgU5UKItNM-JcS2AiWhDgL2vZmHLZYK8-kXJbw=w683-h911-s-no-gm?authuser=0",
-        "" // 預留空間
+        "https://lh3.googleusercontent.com/pw/AP1GczNVcHdQ0RDuhBqcj0LTUKN-xo9PxqhlmzEJ7jYghJuiQ91_ev5CWpGrtYtDT48npTj3j5Tx6w2Swjhvb9Y5xpPrntgZJaNNcNmaKf8ECxGYjJ7hqr3EkNh-mhD09GiGLQguCYtRR3juNEsUwZ8vbIUJ1g=w1159-h869-s-no-gm?authuser=0" // 預留空間
     ],
     album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8",
     plan: "https://docs.google.com/document/d/19k4b5TZ9R-bfBAuEMlQUkMOWeYpSjVz4/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
