@@ -42,7 +42,8 @@ interface Trip {
   location: string;
   status: string;
   type: string;
-  image: string;
+  image: string;     // 主要封面圖 (兼容舊資料)
+  images?: string[]; // [NEW] 支援多張輪播圖片
   album: string;
   plan: string;
   vlog: string;
@@ -52,6 +53,10 @@ const allTrips: Trip[] = [
   { 
     year: 2025, season: "秋假", title: "日本東北", location: "日本 東北", status: "Done", type: "future", 
     image: "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczODjmS_gW43khZYdutZC57zearwSwMszt_XfUhy7cxbDbAcFRwHg4rwmo0IiV1nEXqGbcg843zDGoDoYgi-uE0ADLECT-S8zA5gVUnecy7i8u7N5EfozjGzgzSORANTF0WsxKC-0hq7sGvyhVNeu3-w_A=w1304-h869-s-no-gm?authuser=0" // 預留空間：請在此填入第二張照片網址
+    ],
     album: "https://photos.app.goo.gl/hP631FQAmCgxUpoL8",
     plan: "https://docs.google.com/document/d/1BAFg8ngF0yvULcSp7SLqvflTe6oxSSRZ/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
     vlog: ""
@@ -59,6 +64,10 @@ const allTrips: Trip[] = [
   { 
     year: 2025, season: "春假", title: "紐西蘭", location: "紐西蘭", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOnC_qyPEENGBXm9a2ztYIwfFwSD3yrdoenrXKPllvVVj0IpQgAOeXjU6fE4d2TofZUac99-3MhUXbHIZcTnsNNY4KNr8Sn5fneQeWTzH9OEWpIEM3gbQwIC2EtbemZxFDwUqUxOCJDr_OV6bnfXV47Xg=w1367-h911-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczOnC_qyPEENGBXm9a2ztYIwfFwSD3yrdoenrXKPllvVVj0IpQgAOeXjU6fE4d2TofZUac99-3MhUXbHIZcTnsNNY4KNr8Sn5fneQeWTzH9OEWpIEM3gbQwIC2EtbemZxFDwUqUxOCJDr_OV6bnfXV47Xg=w1367-h911-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/S1CzpJ9nt5PQgR7J7",
     plan: "https://docs.google.com/document/d/13Tg1tbjXMauMIuIlisPgrwgdt9h-0BF9/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
     vlog: "https://youtu.be/CeH0dgQCtPY" 
@@ -66,6 +75,10 @@ const allTrips: Trip[] = [
   { 
     year: 2024, season: "秋假", title: "名古屋", location: "日本 名古屋", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOIFpXM83TMg3kiA0lHJfb7s9QrYCqMQgGF9TU5CTXqohr_yM9YwOwW7--G9xvVAMYKRyd1ZOkTpZCAhhyoBrPGHHX4SU9Z07Je3jJTLppWkExKICFejgU5UKItNM-JcS2AiWhDgL2vZmHLZYK8-kXJbw=w683-h911-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczOIFpXM83TMg3kiA0lHJfb7s9QrYCqMQgGF9TU5CTXqohr_yM9YwOwW7--G9xvVAMYKRyd1ZOkTpZCAhhyoBrPGHHX4SU9Z07Je3jJTLppWkExKICFejgU5UKItNM-JcS2AiWhDgL2vZmHLZYK8-kXJbw=w683-h911-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8",
     plan: "https://docs.google.com/document/d/19k4b5TZ9R-bfBAuEMlQUkMOWeYpSjVz4/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: ""
@@ -73,6 +86,10 @@ const allTrips: Trip[] = [
   { 
     year: 2024, season: "暑假", title: "泰國喀比島+芭達雅", location: "泰國 喀比/芭達雅", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczPKvJcz_f0SRhyXpaJ1WiCVcFUt4svjVKuisrnUd1m9JwsIIhnVRNyOguE-OjR1HtjqyLcjm8b_WlXQQDsb7z7HNC9IpxCU2cdx9O2R3qhqfscs9MvCs0i-Bmo9gqO7ZQyGCKMk6IJudwbohdSv-f1EkQ=w683-h911-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczPKvJcz_f0SRhyXpaJ1WiCVcFUt4svjVKuisrnUd1m9JwsIIhnVRNyOguE-OjR1HtjqyLcjm8b_WlXQQDsb7z7HNC9IpxCU2cdx9O2R3qhqfscs9MvCs0i-Bmo9gqO7ZQyGCKMk6IJudwbohdSv-f1EkQ=w683-h911-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/Pewtpp8aaH5Jt3vL7",
     plan: "https://docs.google.com/document/d/1BgiWNLVZqKV3Wzj-spiHTA9RLL7lMf3u/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/QDROySj-56A"
@@ -80,6 +97,10 @@ const allTrips: Trip[] = [
   { 
     year: 2024, season: "春假", title: "馬來西亞沙巴", location: "馬來西亞 沙巴", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNTgX4qaWhKMk4AZNpHVcodVcZp48JRv83RiIukQOZGsRCYijVXYmV9Vmd-4jsio22l9W8El-9GUpqlhgzPLTtJz-U6vqGyaFXrQfSpDgGbb7gsej5KkZkVaMe--YaYc5UVLR9S8FqS7FrHtONGiNEE6g=w683-h911-s-no-gm?authuser=0", 
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczNTgX4qaWhKMk4AZNpHVcodVcZp48JRv83RiIukQOZGsRCYijVXYmV9Vmd-4jsio22l9W8El-9GUpqlhgzPLTtJz-U6vqGyaFXrQfSpDgGbb7gsej5KkZkVaMe--YaYc5UVLR9S8FqS7FrHtONGiNEE6g=w683-h911-s-no-gm?authuser=0", 
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/xVrTKHo2T2uYLkHx6",
     plan: "https://docs.google.com/document/d/1kTI_pd3t2UpaU1F-seRqsN4tftGl2ZIy/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/1pxgzINsQkg"
@@ -87,6 +108,10 @@ const allTrips: Trip[] = [
   { 
     year: 2023, season: "秋假", title: "東京富士山+輕井澤", location: "日本 東京/輕井澤", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOSXA2NRjXKyroJ_Np5KA2cJ0RjMYqyFEugErbZ-vXu1r43BYkAcWKzS0b3GAmnDuiv0yAIQJcsZ7bfbBSf6U0KeGftcss_E4WR3OCri_8aSQyX0WrCjmm15lJE8bw2Kn674bTmez_Y38f0lpFDvVISwg=w683-h911-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczOSXA2NRjXKyroJ_Np5KA2cJ0RjMYqyFEugErbZ-vXu1r43BYkAcWKzS0b3GAmnDuiv0yAIQJcsZ7bfbBSf6U0KeGftcss_E4WR3OCri_8aSQyX0WrCjmm15lJE8bw2Kn674bTmez_Y38f0lpFDvVISwg=w683-h911-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/LRERnQ9bv16G1wUw7",
     plan: "https://docs.google.com/document/d/1lidmmVOxq7J52-pA-eSYQXTdHtc4hTMn/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/ZDzI_i8r54E"
@@ -94,6 +119,10 @@ const allTrips: Trip[] = [
   { 
     year: 2023, season: "春假", title: "阿里山+墾丁", location: "台灣 阿里山+墾丁", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOk9eL_jzkrwIC7pPXMC1DNleQ1Ao7OOX2243CAUqNCcsldAqGk5XoRJz069GwzJfZicfirmBb_9-guYimYzRJB62fys2oj2OjWzdYmgfXMI4HcbXl_kHwBpNVTGKMSo-_ikRXhbpTdfS-g-DoJC0BlOQ=w1080-h810-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczOk9eL_jzkrwIC7pPXMC1DNleQ1Ao7OOX2243CAUqNCcsldAqGk5XoRJz069GwzJfZicfirmBb_9-guYimYzRJB62fys2oj2OjWzdYmgfXMI4HcbXl_kHwBpNVTGKMSo-_ikRXhbpTdfS-g-DoJC0BlOQ=w1080-h810-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/6Tm4xnSpEiMQKpFD9",
     plan: "https://docs.google.com/document/d/1PYevx-l8pimaWODh2JkjZLyz-8xXUVX9/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/H3iL7GCYOCo"
@@ -101,6 +130,10 @@ const allTrips: Trip[] = [
   { 
     year: 2022, season: "秋假", title: "金門", location: "台灣 金門", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNCZqyKu69Abqg8PsMWI0liXB0CN_eCpW5tMQwR8YCzTXSN77IDC8os1s6CEpDrufxVRBaYo_HkK8uiG1c428dY7UB7fEEBnFX9Efmqe31NtNyjdJqOeRuiZDowU8728TOv3JQkdeKMIFUP-JBpGEUhCg=w1080-h810-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczNCZqyKu69Abqg8PsMWI0liXB0CN_eCpW5tMQwR8YCzTXSN77IDC8os1s6CEpDrufxVRBaYo_HkK8uiG1c428dY7UB7fEEBnFX9Efmqe31NtNyjdJqOeRuiZDowU8728TOv3JQkdeKMIFUP-JBpGEUhCg=w1080-h810-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/mzw2SFgtotUeyvuQA",
     plan: "https://docs.google.com/document/d/19ejwcXm1rbVKTpVYrv3bB0djDR7FpDbL/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/qgYisyxXANc"
@@ -108,6 +141,10 @@ const allTrips: Trip[] = [
   { 
     year: 2021, season: "春假", title: "澎湖", location: "台灣 澎湖", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOWyPeiR_92g04FqjWeg2EUS3XsyNGZSoxZBVDtGaNzUVadlOplFiFKFOcmj_lQpY0Z9VtVO5-iIKboJQeRL_OjvhPHwk2rHV6PW5bUqYsYald_ytBhjwCkS3fL2usU4fy-qTM1IVn3Z8tH9JFNJL0t_g=w1215-h911-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczOWyPeiR_92g04FqjWeg2EUS3XsyNGZSoxZBVDtGaNzUVadlOplFiFKFOcmj_lQpY0Z9VtVO5-iIKboJQeRL_OjvhPHwk2rHV6PW5bUqYsYald_ytBhjwCkS3fL2usU4fy-qTM1IVn3Z8tH9JFNJL0t_g=w1215-h911-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/VDvduGyLpJrJRWvK9",
     plan: "https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ/edit?usp=drive_link",
     vlog: ""
@@ -115,6 +152,10 @@ const allTrips: Trip[] = [
   { 
     year: 2020, season: "秋假", title: "台東花蓮", location: "台灣 花東", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczO8aEmmVsL3vbj2KkKhniAZGxub7WwkJ1jkBkuUawv3jmNr0N87uztf5kdR91-KV3XT8IsTMTFzMwrTkTCxy7pfcJoI2Mcr5CQn4MWd8_CVIpetFMaHvxcy_D-692cAeIaVWa_mCr2svMzK8VwE5FgNNA=w1159-h869-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczO8aEmmVsL3vbj2KkKhniAZGxub7WwkJ1jkBkuUawv3jmNr0N87uztf5kdR91-KV3XT8IsTMTFzMwrTkTCxy7pfcJoI2Mcr5CQn4MWd8_CVIpetFMaHvxcy_D-692cAeIaVWa_mCr2svMzK8VwE5FgNNA=w1159-h869-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/H4HsyqcSfXYi9UW16",
     plan: "",
     vlog: ""
@@ -122,6 +163,10 @@ const allTrips: Trip[] = [
   { 
     year: 2020, season: "春假", title: "台中薰衣草森林", location: "台灣 台中", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczPhREnlHCM8UJg1Rg52QkzsJNi7hK7NCdgKMvltsqeQJdKvkSHlTc6Y3TQM97UewCgI3CyEFQk-D3ANvuLRwUNur3VTsqOpzCezC4P-J476NTabFjliJrQHVBilEUYCmB9b11WwGCqw7Y8J3X0X83aRaQ=w960-h720-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczPhREnlHCM8UJg1Rg52QkzsJNi7hK7NCdgKMvltsqeQJdKvkSHlTc6Y3TQM97UewCgI3CyEFQk-D3ANvuLRwUNur3VTsqOpzCezC4P-J476NTabFjliJrQHVBilEUYCmB9b11WwGCqw7Y8J3X0X83aRaQ=w960-h720-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/wa3ED2e4aEUU27kt7",
     plan: "",
     vlog: ""
@@ -129,6 +174,10 @@ const allTrips: Trip[] = [
   { 
     year: 2020, season: "寒假", title: "菲律賓長灘島", location: "菲律賓 長灘島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczO0HaHno8XLHt-qnazf8Q74IxSZV5tHE7s82NklL_1DFQYJYR4qrJGE7FhTUoWs12q1qR5sSXXFlGbforUyAlg3D43ciaOP96y97hZ2jBoftVEtO4BTBjlocl4tt2YMP63cH8qH2aIUPZ_m88qbYPgUQw=w1159-h869-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczO0HaHno8XLHt-qnazf8Q74IxSZV5tHE7s82NklL_1DFQYJYR4qrJGE7FhTUoWs12q1qR5sSXXFlGbforUyAlg3D43ciaOP96y97hZ2jBoftVEtO4BTBjlocl4tt2YMP63cH8qH2aIUPZ_m88qbYPgUQw=w1159-h869-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/YUQtZiJngPJp8iF59",
     plan: "",
     vlog: ""
@@ -136,6 +185,10 @@ const allTrips: Trip[] = [
   { 
     year: 2019, season: "秋假", title: "花蓮", location: "台灣 花蓮", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/mk2rstVdxmKUcjas8",
     plan: "",
     vlog: ""
@@ -143,6 +196,10 @@ const allTrips: Trip[] = [
   { 
     year: 2019, season: "春假", title: "小琉球", location: "台灣 小琉球", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNoGNobycQ8s94-o1u_DsTktFGTrH4aD-f1Vdfjp87KcdQnwYZLteq61H_nFYjgsXz5TQG-AMJ1rIuVs_ESwnbr-T-2VzfAdPr44OcGYdK15OEfkbF6cqyCqoADJKLuPL4Hj-RzqkxzESm5WdtjttvFPw=w651-h869-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczNoGNobycQ8s94-o1u_DsTktFGTrH4aD-f1Vdfjp87KcdQnwYZLteq61H_nFYjgsXz5TQG-AMJ1rIuVs_ESwnbr-T-2VzfAdPr44OcGYdK15OEfkbF6cqyCqoADJKLuPL4Hj-RzqkxzESm5WdtjttvFPw=w651-h869-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/Qui7FURUHiCYfZ7B6",
     plan: "",
     vlog: ""
@@ -150,6 +207,10 @@ const allTrips: Trip[] = [
   { 
     year: 2018, season: "秋假", title: "薄荷島", location: "菲律賓 薄荷島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNEnT1ehdcVZHZnDFnepYVonSsp7PiUHYMJbguR-RU9lsvV3jGyuoNl0W7iikhg10yTRXlARhqXVIVjt-Cz-D5wxwAsWD0mF3t8152_0fDu3hzl9Uzns7bTcHJQNEJBAa3atLBLiqVMzmCKH7ObQ3Wjhw=w651-h869-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczNEnT1ehdcVZHZnDFnepYVonSsp7PiUHYMJbguR-RU9lsvV3jGyuoNl0W7iikhg10yTRXlARhqXVIVjt-Cz-D5wxwAsWD0mF3t8152_0fDu3hzl9Uzns7bTcHJQNEJBAa3atLBLiqVMzmCKH7ObQ3Wjhw=w651-h869-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/mXKfaKRST6oYDsdt5",
     plan: "",
     vlog: ""
@@ -157,6 +218,10 @@ const allTrips: Trip[] = [
   { 
     year: 2018, season: "春假", title: "京都大阪賞櫻", location: "日本 京都/大阪", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczMBFJ5NhFXesNNylOJMy4fLvTVOEliBuvw1Jvr7Tx8lZywNVrmxlbrksijkOytvm-UeZk52q76FDuP7_uYiG7KcYFDVsVJUW3AuLyYF_9ecFQObPQQNQX32ktcb40nzdL4UUOmshlfOyvE9JvbCHGdE3A=w1159-h869-s-no-gm?authuser=0",
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczMBFJ5NhFXesNNylOJMy4fLvTVOEliBuvw1Jvr7Tx8lZywNVrmxlbrksijkOytvm-UeZk52q76FDuP7_uYiG7KcYFDVsVJUW3AuLyYF_9ecFQObPQQNQX32ktcb40nzdL4UUOmshlfOyvE9JvbCHGdE3A=w1159-h869-s-no-gm?authuser=0",
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/6RT3wDj3LRJrLQjK7",
     plan: "",
     vlog: ""
@@ -164,6 +229,10 @@ const allTrips: Trip[] = [
   { 
     year: 2017, season: "10月", title: "日本九州", location: "日本 九州", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNw2V4r-AZlrxXikyE8f-ydCdR-fQpfTazFARMpZAQb9NyqOJEumziV29fkdw0DZufBYHPMcmDHwcOpWxjlmnMlzV2BzWAtqbBPZot8HSCrAT5nBtygTYjhP41aNzeT-zy_Ixv0emZquRPBf1S2R1IzGA=w960-h720-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczNw2V4r-AZlrxXikyE8f-ydCdR-fQpfTazFARMpZAQb9NyqOJEumziV29fkdw0DZufBYHPMcmDHwcOpWxjlmnMlzV2BzWAtqbBPZot8HSCrAT5nBtygTYjhP41aNzeT-zy_Ixv0emZquRPBf1S2R1IzGA=w960-h720-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/6PFYDGzFEp7fkHem7",
     plan: "",
     vlog: ""
@@ -171,6 +240,10 @@ const allTrips: Trip[] = [
   { 
     year: 2017, season: "228連假", title: "泰國曼谷", location: "泰國 曼谷", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczMqonmhIgRP57SEtQU1uxFweQbS6gJjv0dy-ZpmVlEIWmMXY3wmgj4_TzsDFCBYTXWB2mwP8-3t6Y6bJ_2-3aGJf0-wGsU_sDx1vR6TsQP8BejYT_DubWfPW1KxC48v8ZYK8mFCaG382gNwKH7cn2zXRg=w1298-h869-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczMqonmhIgRP57SEtQU1uxFweQbS6gJjv0dy-ZpmVlEIWmMXY3wmgj4_TzsDFCBYTXWB2mwP8-3t6Y6bJ_2-3aGJf0-wGsU_sDx1vR6TsQP8BejYT_DubWfPW1KxC48v8ZYK8mFCaG382gNwKH7cn2zXRg=w1298-h869-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/o4vCZhmEFurrUcGV8",
     plan: "",
     vlog: ""
@@ -178,6 +251,10 @@ const allTrips: Trip[] = [
   { 
     year: 2016, season: "12月", title: "泰國普吉島", location: "泰國 普吉島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczMhhy_tboy1m7o-aLb7_bxVGK14AxIPmVCmz8o-9BFAt3r_Oi1VgFJ8Z0yMC3e-KS9jr1V7lDhjx771AK59RSHNIp0W4DPFZjZ0FwDOq6qSBx0TPm5_X9qUYJD_BqD-AvMoBydvWA29kY-bMvrZnCHwJw=w1298-h869-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczMhhy_tboy1m7o-aLb7_bxVGK14AxIPmVCmz8o-9BFAt3r_Oi1VgFJ8Z0yMC3e-KS9jr1V7lDhjx771AK59RSHNIp0W4DPFZjZ0FwDOq6qSBx0TPm5_X9qUYJD_BqD-AvMoBydvWA29kY-bMvrZnCHwJw=w1298-h869-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/bgacpnskapAws9jf7",
     plan: "",
     vlog: ""
@@ -185,6 +262,10 @@ const allTrips: Trip[] = [
   { 
     year: 2015, season: "10月", title: "菲律賓長灘島", location: "菲律賓 長灘島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczP2-YWeZHX1KEDGC5XCjt9oqQm2iZo9Es3AmbJAB-xc9czoagV6o3iHURgCB4dBfwAqKuCiq2FSeoiRdldx-Vx9LYjGZmMyWHwomAfCSPqVpKBPPhcnvOJbBi8bhFTlEFFiMJJ3YnBE9kzwJsFFeZ1A1g=w1159-h869-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczP2-YWeZHX1KEDGC5XCjt9oqQm2iZo9Es3AmbJAB-xc9czoagV6o3iHURgCB4dBfwAqKuCiq2FSeoiRdldx-Vx9LYjGZmMyWHwomAfCSPqVpKBPPhcnvOJbBi8bhFTlEFFiMJJ3YnBE9kzwJsFFeZ1A1g=w1159-h869-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/nJ2vXrskDPPyaBp68",
     plan: "",
     vlog: ""
@@ -192,6 +273,10 @@ const allTrips: Trip[] = [
   { 
     year: 2015, season: "7月", title: "日本沖繩", location: "日本 沖繩", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczPSNpysGxf-PY4Ci1_fEdAn1b7Lfq-a9Fhrw2nA1ePppSmbGIpVEaGkFHIgAS0EvRBrfHmMMEgFPl-M5_0KNlHV7gmH9o1t7Wv_VzNcaSiAoBIVyVUTarpfdhkp1N1vpzCh_PqrcaFo8d5747Lw49pvhQ=w651-h869-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczPSNpysGxf-PY4Ci1_fEdAn1b7Lfq-a9Fhrw2nA1ePppSmbGIpVEaGkFHIgAS0EvRBrfHmMMEgFPl-M5_0KNlHV7gmH9o1t7Wv_VzNcaSiAoBIVyVUTarpfdhkp1N1vpzCh_PqrcaFo8d5747Lw49pvhQ=w651-h869-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/3rPEuj87yJeaKGm69",
     plan: "",
     vlog: ""
@@ -199,6 +284,10 @@ const allTrips: Trip[] = [
   { 
     year: 2015, season: "5月", title: "日本關西", location: "日本 關西", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNIVwTZiGqboCln-rcM57PvfYkNEhhD6Ed0WBEUn1Cs0iFlbimJgeB41fSBczbXAZHwW7IbffpIHFMk_2ErT_I7gnhiwoqNWl_qeftdLFaXxUo52faqj_z-u1bYHF8SeEADcHoOr5jqg0xXQi6D7zCy0g=w1159-h869-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczNIVwTZiGqboCln-rcM57PvfYkNEhhD6Ed0WBEUn1Cs0iFlbimJgeB41fSBczbXAZHwW7IbffpIHFMk_2ErT_I7gnhiwoqNWl_qeftdLFaXxUo52faqj_z-u1bYHF8SeEADcHoOr5jqg0xXQi6D7zCy0g=w1159-h869-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/TFgis9BccSoP2VxJ7",
     plan: "",
     vlog: ""
@@ -206,6 +295,10 @@ const allTrips: Trip[] = [
   { 
     year: 2014, season: "暑假", title: "韓國首爾", location: "韓國 首爾", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOFvT0MwE9z5-L3dCYqQTf8g-wEmyZ5ntyUPpw52loItuxZ3uXfYIvY7ybT3DPB4GJ7q-a1f0XzaAohanG_ghlMikM9H7vAXP6cIh7Cy2dRrTLfswklTKAkk_ttccbTfPCorUagdyY5p17fjH29Ky8JhA=w581-h869-s-no-gm?authuser=0", // 空白
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczOFvT0MwE9z5-L3dCYqQTf8g-wEmyZ5ntyUPpw52loItuxZ3uXfYIvY7ybT3DPB4GJ7q-a1f0XzaAohanG_ghlMikM9H7vAXP6cIh7Cy2dRrTLfswklTKAkk_ttccbTfPCorUagdyY5p17fjH29Ky8JhA=w581-h869-s-no-gm?authuser=0", // 空白
+        "" // 預留空間
+    ],
     album: "https://photos.app.goo.gl/w5g9ZzY2wkhnqV7j9",
     plan: "",
     vlog: ""
@@ -494,6 +587,24 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const randomRotate = (index % 5) - 2;
 
+  // 1. [NEW] Images Logic (Slideshow)
+  // 如果 trip.images 存在就用它，否則就用單張的 trip.image
+  // 過濾掉空字串，避免輪播到空白圖片
+  const validImages = trip.images ? trip.images.filter(img => img && img.trim() !== "") : [];
+  const displayImages = validImages.length > 0 ? validImages : [trip.image];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 2. [NEW] Auto-cycle slideshow effect if multiple images exist
+  useEffect(() => {
+    if (displayImages.length <= 1) return;
+    
+    const interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [displayImages.length]);
+
   // 點擊翻轉處理
   const handleFlip = (e: React.MouseEvent) => {
      // 如果點擊的是連結(按鈕)，不要翻轉
@@ -528,25 +639,37 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
           <div className="card-front absolute inset-0 bg-white p-3 shadow-md border border-stone-200 flex flex-col">
               {/* 照片區域 */}
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
-                   {/* 照片或「照片挑選中」佔位符 */}
-                   {trip.image ? (
-                      <img 
-                          src={resolveImage(trip.image)} 
-                          alt={trip.title} 
-                          className="w-full h-full object-cover"
-                          referrerPolicy="no-referrer"
-                      />
-                   ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
-                          {/* 背景紋理 */}
-                          <div className="absolute inset-0 opacity-30" style={{backgroundImage: `url(${ASSETS.paper})`}}></div>
-                          
-                          <div className="relative z-10 w-[80%] h-[70%] border-2 border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center gap-3 bg-white/50 backdrop-blur-sm">
-                              <Camera size={40} className="text-stone-300/80" />
-                              <span className="text-sm font-bold tracking-widest text-stone-400 font-['Patrick_Hand']">正在挑選照片中...</span>
+                   
+                   {/* [NEW] Photo Logic: Slideshow or Ken Burns Single Image */}
+                   <AnimatePresence mode="popLayout">
+                      {displayImages[0] ? (
+                          <motion.img 
+                              key={currentImageIndex} // Key change triggers animation
+                              src={resolveImage(displayImages[currentImageIndex])} 
+                              alt={trip.title} 
+                              className="absolute inset-0 w-full h-full object-cover"
+                              referrerPolicy="no-referrer"
+                              
+                              // [NEW] Ken Burns Effect (Slow Zoom) & Crossfade
+                              initial={{ opacity: 0, scale: 1 }}
+                              animate={{ opacity: 1, scale: 1.1 }}
+                              exit={{ opacity: 0 }}
+                              transition={{ 
+                                  opacity: { duration: 1 }, // Crossfade duration
+                                  scale: { duration: 20, ease: "linear" } // Slow zoom over 20s
+                              }}
+                          />
+                       ) : (
+                          // Placeholder if NO image at all
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
+                              <div className="absolute inset-0 opacity-30" style={{backgroundImage: `url(${ASSETS.paper})`}}></div>
+                              <div className="relative z-10 w-[80%] h-[70%] border-2 border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center gap-3 bg-white/50 backdrop-blur-sm">
+                                  <Camera size={40} className="text-stone-300/80" />
+                                  <span className="text-sm font-bold tracking-widest text-stone-400 font-['Patrick_Hand']">正在挑選照片中...</span>
+                              </div>
                           </div>
-                      </div>
-                   )}
+                       )}
+                   </AnimatePresence>
                    
                    {/* 郵戳 (New: 交錯顯示) */}
                    <PostalStamp status={trip.status} index={index} />
