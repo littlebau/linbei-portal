@@ -1,6 +1,6 @@
-import React, { useMemo, useState } from 'react';
-import { MapPin, Camera, Backpack, Plane, Sun, PawPrint, Dog, Cat, Star, Heart, Smile, Coffee, Map, Images, Video, ArrowRight, Calendar, RotateCw } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useMemo, useState, useEffect } from 'react';
+import { MapPin, Camera, Backpack, Plane, Sun, PawPrint, Dog, Cat, Star, Heart, Smile, Coffee, Map, Images, Video, ArrowRight, Calendar, RotateCw, ArrowUp } from 'lucide-react';
+import { motion, useScroll, useAnimation, AnimatePresence } from 'framer-motion';
 
 // ==========================================
 // 🎨 素材層 (ASSETS LAYER)
@@ -10,12 +10,14 @@ const ASSETS = {
   logo: "https://drive.google.com/file/d/1M-U8vr_LZXM56NQDNb5sDPZyQdwPN31f/view?usp=drive_link",
   // 2. 一家三口照片
   family: "https://drive.google.com/file/d/16iZWeAVFG3PYDGCmWQi_HqS_bkcffDQd/view?usp=drive_link", 
-  // 3. 旅遊裝備
+  // 3. 旅遊裝備 (Placeholder)
   items: "https://placehold.co/600x300/png?text=Travel+Items",
   // 4. 背景紋理
   paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
-  // 5. 吉祥物 (貓咪)
-  shiba: "https://drive.google.com/file/d/1tYjdUz0LIbeJJYSv7WOe1Eq2AkrZYfz6/view?usp=sharing" 
+  // 5. 卡片上的吉祥物裝飾 (貓咪)
+  shiba: "https://drive.google.com/file/d/1tYjdUz0LIbeJJYSv7WOe1Eq2AkrZYfz6/view?usp=sharing",
+  // 6. [NEW] 右下角三人成團吉祥物
+  groupMascot: "https://drive.google.com/file/d/14Q2vRY9Entm6z7aH507IQhh9GUmSOty-/view?usp=drive_link"
 };
 
 // ==========================================
@@ -106,7 +108,6 @@ const allTrips: Trip[] = [
     plan: "",
     vlog: ""
   },
-  // 新增：2020春假 台中薰衣草森林 (插入在 2020秋假 與 2020寒假 之間)
   { 
     year: 2020, season: "春假", title: "台中薰衣草森林", location: "台灣 台中", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczPhREnlHCM8UJg1Rg52QkzsJNi7hK7NCdgKMvltsqeQJdKvkSHlTc6Y3TQM97UewCgI3CyEFQk-D3ANvuLRwUNur3VTsqOpzCezC4P-J476NTabFjliJrQHVBilEUYCmB9b11WwGCqw7Y8J3X0X83aRaQ=w960-h720-s-no-gm?authuser=0", // 空白
@@ -149,7 +150,6 @@ const allTrips: Trip[] = [
     plan: "",
     vlog: ""
   },
-  // 新增：早期行程
   { 
     year: 2017, season: "10月", title: "日本九州", location: "日本 九州", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNw2V4r-AZlrxXikyE8f-ydCdR-fQpfTazFARMpZAQb9NyqOJEumziV29fkdw0DZufBYHPMcmDHwcOpWxjlmnMlzV2BzWAtqbBPZot8HSCrAT5nBtygTYjhP41aNzeT-zy_Ixv0emZquRPBf1S2R1IzGA=w960-h720-s-no-gm?authuser=0", // 空白
@@ -407,6 +407,76 @@ const PostalStamp = ({ status }: { status: string }) => {
 };
 
 // ==========================================
+// 🐶 NEW: 旅行吉祥物元件 (右下角固定)
+// ==========================================
+const TravelMascot = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
+  return (
+    <motion.div
+      initial={{ x: 200, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 80, 
+        damping: 15, 
+        delay: 1.5 // 稍微晚一點進場，像是在追趕行程
+      }}
+      className="fixed bottom-2 right-4 z-50 cursor-pointer group flex flex-col items-end"
+      onClick={scrollToTop}
+    >
+      {/* 💭 對話氣泡 (Speech Bubble) */}
+      <motion.div 
+        initial={{ scale: 0, opacity: 0, y: 10 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ delay: 2.5, type: "spring" }}
+        className="relative bg-white border-2 border-stone-800 rounded-2xl py-2 px-4 shadow-lg mb-1 mr-4 origin-bottom-right"
+      >
+          <span className="text-stone-800 font-black text-sm md:text-base whitespace-nowrap tracking-wider font-['Patrick_Hand'] flex items-center gap-1">
+            林北三人成團 GO! 🚀
+          </span>
+          {/* Bubble Tail */}
+          <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-stone-800 transform rotate-45"></div>
+      </motion.div>
+
+      {/* 🚙 吉祥物本體 (上下顛簸動畫) */}
+      <motion.div
+        animate={{ y: [0, -5, 0] }} // 模擬車子/走路的顛簸感 (Bobbing)
+        transition={{ 
+          duration: 2, 
+          repeat: Infinity, 
+          ease: "easeInOut" 
+        }}
+        className="relative"
+      >
+        <motion.img 
+          whileHover={{ 
+            scale: 1.1, 
+            rotate: -10, // 歪頭
+            transition: { type: "spring", stiffness: 300 } 
+          }}
+          src={resolveImage(ASSETS.groupMascot)} 
+          alt="Group Mascot" 
+          className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
+        />
+        
+        {/* Hover Hint: Back to Top Arrow */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <div className="bg-yellow-400/90 text-white rounded-full p-2 shadow-sm animate-bounce">
+                <ArrowUp size={20} strokeWidth={3} />
+            </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// ==========================================
 // 🧩 元件：漂浮背景圖示
 // ==========================================
 const FloatingBackground = () => {
@@ -641,6 +711,9 @@ const App = () => {
       </svg>
 
       <FloatingBackground />
+      
+      {/* 🐶 新增：右下角吉祥物 (Travel Mascot) */}
+      <TravelMascot />
 
       {/* Header (Adjusted Layout) */}
       <header className="relative pt-10 pb-12 px-6 text-center z-10 max-w-6xl mx-auto">
