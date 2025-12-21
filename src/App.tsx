@@ -643,7 +643,7 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
     
     const interval = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
-    }, 5000); // Change every 5 seconds
+    }, 8000); // Change every 5 seconds
 
     return () => clearInterval(interval);
   }, [displayImages.length]);
