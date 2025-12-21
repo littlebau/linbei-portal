@@ -56,6 +56,7 @@ const allTrips: Trip[] = [
     images: [
         "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
         "https://lh3.googleusercontent.com/pw/AP1GczODjmS_gW43khZYdutZC57zearwSwMszt_XfUhy7cxbDbAcFRwHg4rwmo0IiV1nEXqGbcg843zDGoDoYgi-uE0ADLECT-S8zA5gVUnecy7i8u7N5EfozjGzgzSORANTF0WsxKC-0hq7sGvyhVNeu3-w_A=w1304-h869-s-no-gm?authuser=0" // 預留空間：請在此填入第二張照片網址
+        "https://lh3.googleusercontent.com/pw/AP1GczNgkhapuKI3ZWZ_igxIXGYyD8izRa5_q6wMIl6UOY9qD3qdYYfs08wH7tmi8_481iyf76HWyFoY4Z51Dhtv71dwyUTYbWaZo_-cF-sukYWTZqLXhGatZFbS-j9ZHndVSAsfvoy2WwwctxfPSa__QYR4YA=w1304-h869-s-no-gm?authuser=0"
     ],
     album: "https://photos.app.goo.gl/hP631FQAmCgxUpoL8",
     plan: "https://docs.google.com/document/d/1BAFg8ngF0yvULcSp7SLqvflTe6oxSSRZ/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
