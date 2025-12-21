@@ -684,7 +684,8 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
                    
                    {/* [NEW] Photo Logic: Slideshow or Ken Burns Single Image */}
-                   <AnimatePresence mode="popLayout">
+                   {/* Removed mode="popLayout" to enable cross-dissolve effect */}
+                   <AnimatePresence>
                       {displayImages[0] ? (
                           <>
                              {/* 1. [NEW] 模糊背景層 (Blurred Background Layer) 
@@ -695,7 +696,7 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                transition={{ duration: 1 }}
+                                transition={{ duration: 2, ease: "easeInOut" }} // Increased duration and smoother ease
                                 className="absolute inset-0 z-0"
                              >
                                 <img 
@@ -720,8 +721,8 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                                   animate={{ opacity: 1, scale: 1.05 }} // Slight zoom
                                   exit={{ opacity: 0 }}
                                   transition={{ 
-                                      opacity: { duration: 1 }, // Crossfade duration
-                                      scale: { duration: 20, ease: "linear" } // Slow zoom over 20s
+                                      opacity: { duration: 1.5, ease: "easeInOut" }, // Smoother crossfade (1.5s)
+                                      scale: { duration: 8, ease: "linear" } // Faster zoom feel
                                   }}
                               />
                           </>
