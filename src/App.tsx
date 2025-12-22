@@ -594,7 +594,7 @@ const TripCard = ({ trip, index }) => {
     // 設定 4秒 換圖
     const interval = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
-    }, 4000); 
+    }, 6000); 
 
     return () => clearInterval(interval);
   }, [displayImages.length]);
@@ -624,7 +624,14 @@ const TripCard = ({ trip, index }) => {
       >
           
           {/* ========= 正面 (FRONT) ========= */}
-          <div className="card-front absolute inset-0 bg-white p-3 shadow-md border border-stone-200 flex flex-col">
+          <div 
+            className="card-front absolute inset-0 bg-white p-3 shadow-md border border-stone-200 flex flex-col"
+            style={{ 
+              backfaceVisibility: 'hidden', 
+              WebkitBackfaceVisibility: 'hidden',
+              pointerEvents: isFlipped ? 'none' : 'auto' // 當翻到背面時，正面不接收點擊
+            }}
+          >
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
                    
                    {/* [FIXED] 移除了 mode="wait"，改用預設的堆疊模式
@@ -696,8 +703,16 @@ const TripCard = ({ trip, index }) => {
           </div>
 
           {/* ========= 背面 (BACK) ========= */}
-          <div className="card-back absolute inset-0 bg-[#fffdf5] p-5 shadow-md border border-stone-200 flex flex-col items-center text-center relative overflow-hidden"
-               style={{backgroundImage: `url(${ASSETS.paper})`}}>
+          <div 
+            className="card-back absolute inset-0 bg-[#fffdf5] p-5 shadow-md border border-stone-200 flex flex-col items-center text-center relative overflow-hidden"
+            style={{
+              backgroundImage: `url(${ASSETS.paper})`,
+              backfaceVisibility: 'hidden', 
+              WebkitBackfaceVisibility: 'hidden',
+              transform: 'rotateY(180deg)',
+              pointerEvents: isFlipped ? 'auto' : 'none' // 只有翻到背面時才接收點擊
+            }}
+          >
               
               <RandomSticker index={index} />
               <div className="absolute top-0 left-0 bottom-0 w-3 border-r-2 border-dashed border-stone-300"></div>
