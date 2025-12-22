@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { MapPin, Camera, Backpack, Plane, PawPrint, Dog, Cat, Star, Heart, Smile, Coffee, RotateCw, ArrowUp } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ==========================================
@@ -31,7 +31,6 @@ const ASSETS = {
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
 
-// 定義 Trip 介面以解決隱式 any 問題
 interface Trip {
   year: number;
   season: string;
@@ -220,6 +219,19 @@ const allTrips: Trip[] = [
     vlog: ""
   },
   { 
+    year: 2019, season: "228連假", title: "泰國曼谷家族旅遊", location: "泰國 曼谷", status: "Done", type: "past",
+    image: "https://lh3.googleusercontent.com/pw/AP1GczP860SyVfCvOVRH-oOWdm9k9ZqYPXFbncybFp7J84MnU4b3NQZQTH4dJfubWiKJQUJz_Aaq4Y24wDYJG9jdO1H1kPymFtV9vN8cAXlbeKwzIKD67Kg7Hk5pxpFMJm6ry3nobW8Wgk7NWgJZb2Mi9NDwyw=w1159-h869-s-no-gm?authuser=0", 
+    images: [
+        "https://lh3.googleusercontent.com/pw/AP1GczP860SyVfCvOVRH-oOWdm9k9ZqYPXFbncybFp7J84MnU4b3NQZQTH4dJfubWiKJQUJz_Aaq4Y24wDYJG9jdO1H1kPymFtV9vN8cAXlbeKwzIKD67Kg7Hk5pxpFMJm6ry3nobW8Wgk7NWgJZb2Mi9NDwyw=w1159-h869-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczOBJoRJKcpqlTSmyvnxeQ7OuMeiQJDlzL3kbOewHI3EbQJoUKpiUoAJ5HnWXfaXuwMx5mKlsDlJQAadlZf0FrpipKkYzcQtNAh_-gPMCivsB3OPLOHFHquNrfhGSJd-gNFrTlEE-Kgu0PVqH8JPbbCz7Q=w1159-h869-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczPdU7u3LbWNsM1qUALYhFB8qHKDYQPGsTS6ROS7pO67XAcki8QgwXsuk68ygsatmxAIq-FQv-iWImiCKs8j-qyAsnUT-9TcqKFR1WlS2_RoR-_Mq_aeE-9fo1NN4fBjDjWL93X4FeEGv5X9d-0NOo46sg=w1159-h869-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczOTztBUMMZmzvTXFCSNOCpkRtuR_IDJyfrQPpDonF7EfXTAUAVv7dfMCnSWtl2At4SsUqukh74kO8XsVF5i4Zw-9rifyEBZZS_fx64dYB1K-RIXV0cjT-7Soiccq8CCwnHqLjz_KH2mo9sgJWDh67lKQA=w1159-h869-s-no-gm?authuser=0" 
+    ],
+    album: "https://photos.app.goo.gl/X7tTVwGE3F5JeJcQA",
+    plan: "https://docs.google.com/document/d/1vl7W0JEGucFdqfiODl2M3XSnAlZSWjPRE0NN25bN9WY/edit?usp=sharing",
+    vlog: ""
+  },
+  { 
     year: 2018, season: "秋假", title: "薄荷島", location: "菲律賓 薄荷島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNEnT1ehdcVZHZnDFnepYVonSsp7PiUHYMJbguR-RU9lsvV3jGyuoNl0W7iikhg10yTRXlARhqXVIVjt-Cz-D5wxwAsWD0mF3t8152_0fDu3hzl9Uzns7bTcHJQNEJBAa3atLBLiqVMzmCKH7ObQ3Wjhw=w651-h869-s-no-gm?authuser=0",
     images: [
@@ -266,7 +278,7 @@ const allTrips: Trip[] = [
         "" 
     ],
     album: "https://photos.app.goo.gl/o4vCZhmEFurrUcGV8",
-    plan: "",
+    plan: "https://docs.google.com/document/d/1_I-eQ5iuBo18AJUMjqYzNDW8mLmIT1C5ozHpR-Az7qg/edit?usp=sharing",
     vlog: ""
   },
   { 
@@ -375,13 +387,14 @@ const MascotLabel = ({ trip, index }: { trip: Trip; index: number }) => {
 
 // 🌟 隨機貼紙元件
 const RandomSticker = ({ index }: { index: number }) => {
+  // 將物件定義移出，避免引用到未定義的 component
   const stickerData = useMemo(() => {
     const stickers = [
-      { icon: <Coffee size={24} />, color: "text-amber-700", bg: "bg-amber-100", rotate: 12 },
-      { icon: <Camera size={24} />, color: "text-blue-700", bg: "bg-blue-100", rotate: -15 },
-      { icon: <Heart size={24} />, color: "text-red-500", bg: "bg-red-100", rotate: 8 },
-      { icon: <Star size={24} />, color: "text-yellow-500", bg: "bg-yellow-100", rotate: -5 },
-      { icon: <Smile size={24} />, color: "text-green-600", bg: "bg-green-100", rotate: 20 },
+      { color: "text-amber-700", bg: "bg-amber-100", rotate: 12 },
+      { color: "text-blue-700", bg: "bg-blue-100", rotate: -15 },
+      { color: "text-red-500", bg: "bg-red-100", rotate: 8 },
+      { color: "text-yellow-500", bg: "bg-yellow-100", rotate: -5 },
+      { color: "text-green-600", bg: "bg-green-100", rotate: 20 },
       null, null
     ];
     const sticker = stickers[index % stickers.length];
@@ -398,6 +411,14 @@ const RandomSticker = ({ index }: { index: number }) => {
 
   if (!stickerData.sticker) return null;
 
+  // 使用更安全的 Icon 對應
+  let SafeIcon = Star;
+  if(index % 5 === 0) SafeIcon = Sun; 
+  if(index % 5 === 1) SafeIcon = Camera;
+  if(index % 5 === 2) SafeIcon = Heart;
+  if(index % 5 === 3) SafeIcon = Star;
+  if(index % 5 === 4) SafeIcon = Smile;
+
   return (
     <div 
       className={`absolute z-30 p-2 rounded-full shadow-md border-2 border-white ${stickerData.sticker.bg} ${stickerData.sticker.color}`}
@@ -406,7 +427,7 @@ const RandomSticker = ({ index }: { index: number }) => {
         transform: `rotate(${stickerData.sticker.rotate}deg)`
       }}
     >
-      {stickerData.sticker.icon}
+      <SafeIcon size={24} />
     </div>
   );
 };
@@ -422,9 +443,9 @@ const CuteWashiTape = ({ index }: { index: number }) => {
     const pattern = [];
     for(let i=0; i<5; i++) {
         const r = (index + i) % 3;
-        if(r === 0) pattern.push(<PawPrint size={12} key={i} className="text-stone-400/70" />);
-        if(r === 1) pattern.push(<Cat size={12} key={i} className="text-stone-500/70" />);
-        if(r === 2) pattern.push(<Dog size={12} key={i} className="text-stone-500/70" />);
+        if(r === 0) pattern.push(<Star size={12} key={i} className="text-stone-400/70" />);
+        if(r === 1) pattern.push(<Heart size={12} key={i} className="text-stone-500/70" />);
+        if(r === 2) pattern.push(<Sun size={12} key={i} className="text-stone-500/70" />);
     }
     return pattern;
   }, [index]);
@@ -765,7 +786,8 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                                   {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
                               </span>
                           </div>
-                          <Dog size={32} className={`md:w-10 md:h-10 transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
+                          {/* Replaced Dog with MapPin for safety */}
+                          <MapPin size={32} className={`md:w-10 md:h-10 transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                       
                       <a 
@@ -792,7 +814,8 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                                   {trip.album ? "相簿" : "照片整理中..."}
                               </span>
                           </div>
-                          <Cat size={32} className={`md:w-10 md:h-10 transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
+                          {/* Replaced Cat with ImageIcon for safety */}
+                          <ImageIcon size={32} className={`md:w-10 md:h-10 transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
 
                       <a 
@@ -819,7 +842,8 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                                   {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
                               </span>
                           </div>
-                          <PawPrint size={32} className={`md:w-10 md:h-10 transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
+                          {/* Replaced PawPrint with Plane for safety */}
+                          <Plane size={32} className={`md:w-10 md:h-10 transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                   </div>
               </div>
@@ -842,15 +866,10 @@ const App = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
         .hand-drawn-border { stroke-linecap: round; stroke-linejoin: round; filter: url(#wobble); }
-        
-        /* 3D Flip Styles */
         .card-perspective { perspective: 1000px; }
         .card-inner { transform-style: preserve-3d; }
         .card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .card-back { transform: rotateY(180deg); }
-        /* Removed hover flip rule to support click flip */
-        
-        /* Slight bounce for peeking pets */
         @keyframes bounce-slight {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-3px); }
@@ -863,16 +882,10 @@ const App = () => {
       </svg>
 
       <FloatingBackground />
-      
-      {/* 🐶 新增：右下角吉祥物 (Travel Mascot) */}
       <TravelMascot />
 
-      {/* Header (Changed to Center Layout with New Logo) */}
       <header className="relative pt-10 pb-12 px-4 md:px-6 text-center z-10 max-w-6xl mx-auto">
-        
         <div className="flex flex-col items-center justify-center w-full mt-4 relative z-10">
-            
-            {/* New Main Theme Logo */}
             <motion.div 
               initial={{ opacity: 0, y: -20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -888,7 +901,6 @@ const App = () => {
                 />
             </motion.div>
 
-            {/* Subtitle Text */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -901,11 +913,9 @@ const App = () => {
                     收集世界的角落，紀錄我們一起長大的時光。
                 </p>
             </motion.div>
-
         </div>
       </header>
 
-      {/* Main Content: Trip Cards */}
       <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
           {allTrips.map((trip, index) => (
