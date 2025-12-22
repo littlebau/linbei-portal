@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Firebase Imports
@@ -9,6 +9,8 @@ import {
   signInAnonymously, 
   onAuthStateChanged, 
   signInWithCustomToken,
+  signInWithEmailAndPassword,
+  signOut,
   User
 } from "firebase/auth";
 import { 
@@ -22,6 +24,7 @@ import {
   query, 
   orderBy, 
   serverTimestamp,
+  deleteDoc,
   DocumentSnapshot,
   QuerySnapshot
 } from "firebase/firestore";
@@ -43,11 +46,66 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-// [設定] 使用固定的 App ID
 const appId = 'family-travel-journal';
 
 // ==========================================
-// 🎨 素材層 (ASSETS LAYER)
+// 🛠️ 工具函式與介面定義
+// ==========================================
+
+// 定義資料介面
+interface Trip {
+  year: number;
+  season: string;
+  title: string;
+  location: string;
+  status: string;
+  type: string;
+  image: string;
+  images?: string[];
+  album: string;
+  plan: string;
+  vlog: string;
+}
+
+interface GuestMessage {
+    id: string;
+    name: string;
+    content: string;
+    timestamp: any; // Firestore timestamp 類型較複雜，暫用 any 處理顯示邏輯
+}
+
+const resolveImage = (url: string) => {
+  if (!url || typeof url !== 'string') return '';
+  if (url.includes("Upload") || url.includes("Paste")) return url;
+  if (url.includes("drive.google.com")) {
+    const idMatch = url.match(/\/d\/([^/]+)/);
+    if (idMatch && idMatch[1]) {
+      return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
+    }
+  }
+  return url;
+};
+
+const formatDate = (timestamp: any) => {
+    if (!timestamp) return '剛剛';
+    try {
+        if (typeof timestamp.toDate === 'function') {
+            return timestamp.toDate().toLocaleDateString();
+        }
+        if (timestamp instanceof Date) {
+            return timestamp.toLocaleDateString();
+        }
+        if (typeof timestamp.seconds === 'number') {
+            return new Date(timestamp.seconds * 1000).toLocaleDateString();
+        }
+    } catch (e) {
+        console.error("Date format error", e);
+    }
+    return '剛剛';
+};
+
+// ==========================================
+// 🎨 素材層
 // ==========================================
 const ASSETS = {
   mainTheme: "https://drive.google.com/file/d/1DkyWE7T3BSV5PGyYiRCaHlCeaR-kskBO/view?usp=drive_link",
@@ -72,23 +130,8 @@ const ASSETS = {
 };
 
 // ==========================================
-// 🗂️ 資料層 (DATA LAYER)
+// 🗂️ 資料層
 // ==========================================
-
-interface Trip {
-  year: number;
-  season: string;
-  title: string;
-  location: string;
-  status: string;
-  type: string;
-  image: string;
-  images?: string[];
-  album: string;
-  plan: string;
-  vlog: string;
-}
-
 const allTrips: Trip[] = [
   { 
     year: 2025, season: "秋假", title: "日本東北", location: "日本 東北", status: "Done", type: "future", 
@@ -245,8 +288,7 @@ const allTrips: Trip[] = [
     images: [
         "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0",
         "https://lh3.googleusercontent.com/pw/AP1GczN_mLa6r-jHwsCxo2uPp7xMyk3verZ8Xsvwryo3TmRT64ee7dBhtAYtlluFHjRCJ7mHtc6MtqUv6-GwWLXAWof_MOIaQNDq6RkUJ7CnZficWO6sp_gmJbk5UqJbINSOuycvWqxnKsEDdi3UJfkOiU7hjQ=w651-h869-s-no-gm?authuser=0",
-        "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0",
-        "https://lh3.googleusercontent.com/pw/AP1GczN_mLa6r-jHwsCxo2uPp7xMyk3verZ8Xsvwryo3TmRT64ee7dBhtAYtlluFHjRCJ7mHtc6MtqUv6-GwWLXAWof_MOIaQNDq6RkUJ7CnZficWO6sp_gmJbk5UqJbINSOuycvWqxnKsEDdi3UJfkOiU7hjQ=w651-h869-s-no-gm?authuser=0"
+        "" 
     ],
     album: "https://photos.app.goo.gl/mk2rstVdxmKUcjas8",
     plan: "",
@@ -388,19 +430,72 @@ const allTrips: Trip[] = [
   },
 ];
 
-const resolveImage = (url: string) => {
-  if (!url || url.includes("Upload") || url.includes("Paste")) return url;
-  if (url.includes("drive.google.com")) {
-    const idMatch = url.match(/\/d\/([^/]+)/);
-    if (idMatch && idMatch[1]) {
-      return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
-    }
-  }
-  return url;
+// ==========================================
+// 🐕 吉祥物元件 (TravelMascot)
+// ==========================================
+const TravelMascot = () => {
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    return (
+        <motion.div
+        initial={{ x: 200, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
+        className="fixed bottom-2 right-4 z-50 cursor-pointer group flex flex-col items-end"
+        onClick={scrollToTop}
+        >
+        <motion.div 
+            initial={{ scale: 0, opacity: 0, y: 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            transition={{ delay: 2.5, type: "spring" }}
+            className="relative bg-white border-2 border-stone-800 rounded-2xl py-2 px-4 shadow-lg mb-1 mr-4 origin-bottom-right"
+        >
+            <span className="text-stone-800 font-black text-sm md:text-base whitespace-nowrap tracking-wider font-['Patrick_Hand'] flex items-center gap-1">
+                林北三人成團 GO! 🚀
+            </span>
+            <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-stone-800 transform rotate-45"></div>
+        </motion.div>
+        <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+        >
+            <motion.img 
+            whileHover={{ scale: 1.1, rotate: -10, transition: { type: "spring", stiffness: 300 } }}
+            src={resolveImage(ASSETS.groupMascot)} 
+            alt="Group Mascot" 
+            className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
+            />
+        </motion.div>
+        </motion.div>
+    );
 };
 
 // ==========================================
-// 🐕 吉祥物元件 (只負責裝飾，不負責日期)
+// 🧩 漂浮背景 (FloatingBackground)
+// ==========================================
+const FloatingBackground = () => {
+    return (
+        <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {ASSETS.floating.map((src, index) => (
+            <motion.div
+            key={index}
+            initial={{ y: 0, opacity: 0.6 }} 
+            animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0], opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 15 + index * 2, repeat: Infinity, ease: "easeInOut", delay: index }}
+            className="absolute"
+            style={{ left: `${(index * 15) % 90}%`, top: `${(index * 20) % 80}%` }}
+            >
+            <img src={resolveImage(src)} alt="floating-icon" className={`w-${16 + index % 4 * 4} h-auto object-contain drop-shadow-md`} />
+            </motion.div>
+        ))}
+        </div>
+    );
+};
+
+// ==========================================
+// 🐕 吉祥物裝飾
 // ==========================================
 const MascotDecoration = ({ index }: { index: number }) => {
   const mascotImg = index % 2 === 0 ? ASSETS.mascot1 : ASSETS.mascot2;
@@ -418,7 +513,6 @@ const MascotDecoration = ({ index }: { index: number }) => {
 
 // 🌟 隨機貼紙元件
 const RandomSticker = ({ index }: { index: number }) => {
-  // 將物件定義移出，避免引用到未定義的 component
   const stickerData = useMemo(() => {
     const stickers = [
       { color: "text-amber-700", bg: "bg-amber-100", rotate: 12 },
@@ -442,7 +536,6 @@ const RandomSticker = ({ index }: { index: number }) => {
 
   if (!stickerData.sticker) return null;
 
-  // 使用更安全的 Icon 對應
   let SafeIcon = Star;
   if(index % 5 === 0) SafeIcon = Sun; 
   if(index % 5 === 1) SafeIcon = Camera;
@@ -464,7 +557,7 @@ const RandomSticker = ({ index }: { index: number }) => {
 };
 
 // 🏷️ 日期紙膠帶元件
-const DateTapeLabel = ({ trip, index }: { trip: Trip, index: number }) => {
+const DateTapeLabel = ({ trip, index }: { trip: Trip; index: number }) => {
   const tapeColors = [
     "bg-[#fdfcdc]", "bg-[#e0f7fa]", "bg-[#fce4ec]", "bg-[#e8f5e9]", 
   ];
@@ -536,65 +629,61 @@ const PostalStamp = ({ status, index }: { status: string; index: number }) => {
 // ==========================================
 // ❤️ 按讚按鈕元件
 // ==========================================
-const LikeButton = ({ tripId }: { tripId: string }) => {
-    const [likes, setLikes] = useState(0);
-    const [liked, setLiked] = useState(false);
+const LikeButton = ({ tripIndex, user }: { tripIndex: number, user: User | null }) => {
+  const [likes, setLikes] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
 
-    // [路徑修正] 路徑為: 'collection/docId/collection/docId' (偶數層)
-    const likeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'trip_likes', tripId);
+  // [修正] 使用偶數層級路徑: collection/doc/collection/doc
+  // artifacts/{appId}/public/data/trip_likes/{tripIndex}
+  const likeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'trip_likes', String(tripIndex));
 
-    useEffect(() => {
-        const unsubscribe = onSnapshot(likeDocRef, (doc: DocumentSnapshot) => {
-            if (doc.exists()) {
-                setLikes(doc.data().count || 0);
-            }
-        });
-        
-        const hasLiked = localStorage.getItem(`liked_${tripId}`);
-        if (hasLiked) setLiked(true);
-
-        return () => unsubscribe();
-    }, [tripId]);
-
-    const handleLike = async (e: React.MouseEvent) => {
-        e.stopPropagation();
-        
-        setLiked(true);
-        localStorage.setItem(`liked_${tripId}`, 'true');
-
-        try {
-            await setDoc(likeDocRef, { count: increment(1) }, { merge: true });
-        } catch (error) {
-            console.error("Error liking:", error);
+  useEffect(() => {
+    if (!user) return;
+    
+    // 監聽按讚數
+    const unsubscribe = onSnapshot(likeDocRef, (doc: DocumentSnapshot) => {
+        if (doc.exists()) {
+            setLikes(doc.data().count || 0);
         }
-    };
+    });
+    
+    return () => unsubscribe();
+  }, [user, tripIndex]);
 
-    return (
-        <motion.button
-            whileTap={{ scale: 0.8 }}
-            onClick={handleLike}
-            className="absolute bottom-2 right-4 z-30 flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-rose-100 hover:bg-rose-50 transition-colors"
-        >
-            <Heart 
-                size={16} 
-                className={`transition-colors ${liked ? "fill-rose-500 text-rose-500" : "text-rose-300"}`} 
-            />
-            <span className="text-xs font-bold text-rose-500 font-['Patrick_Hand']">
-                {likes > 0 ? likes : ''}
-            </span>
-        </motion.button>
-    );
+  const handleLike = (e: React.MouseEvent) => {
+    e.stopPropagation(); // 防止觸發翻牌
+    if (!user) return;
+    setIsLiked(true); // 本地立即回饋動畫
+    setTimeout(() => setIsLiked(false), 500);
+
+    setDoc(likeDocRef, { count: increment(1) }, { merge: true })
+      .catch(console.error);
+  };
+
+  return (
+    <div 
+      className="absolute bottom-2 right-2 md:bottom-3 md:right-3 z-30 cursor-pointer group/like"
+      onClick={handleLike}
+    >
+      <div className={`p-2 rounded-full backdrop-blur-sm border-2 transition-all duration-300 flex items-center gap-1.5 ${isLiked ? 'bg-rose-100 border-rose-300 scale-110' : 'bg-white/80 border-stone-200 hover:border-rose-200'}`}>
+        <Heart 
+            size={18} 
+            className={`transition-colors duration-300 ${isLiked ? 'text-rose-500 fill-rose-500' : 'text-stone-400 group-hover/like:text-rose-400'}`} 
+        />
+        <span className="text-xs font-black text-stone-500">{likes > 0 ? likes : ''}</span>
+      </div>
+    </div>
+  );
 };
-
 
 // ==========================================
 // 🎴 單一卡片元件 (TripCard)
 // ==========================================
-const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
+const TripCard = ({ trip, index, user }: { trip: Trip; index: number, user: User | null }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const randomRotate = (index % 5) - 2;
 
-  const validImages = trip.images ? trip.images.filter((img: string) => img && img.trim() !== "") : [];
+  const validImages = trip.images ? trip.images.filter((img) => img && img.trim() !== "") : [];
   const displayImages = validImages.length > 0 ? validImages : [trip.image];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -607,8 +696,9 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
   }, [displayImages.length]);
 
   const handleFlip = (e: React.MouseEvent) => {
+     // Check if click was on a link or button
      const target = e.target as HTMLElement;
-     if (target.closest('a') || target.closest('button')) return;
+     if (target.closest('a') || target.closest('button') || target.closest('.like-btn') || target.closest('.group\\/like')) return;
      setIsFlipped(!isFlipped);
   };
 
@@ -639,9 +729,11 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
             }}
           >
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
+                   
                    <AnimatePresence>
                       {displayImages[0] ? (
-                          <>
+                          <div key="image-container" className="absolute inset-0">
+                             {/* 背景模糊層 */}
                              <motion.div
                                 key={`bg-${currentImageIndex}`}
                                 initial={{ opacity: 0 }}
@@ -656,8 +748,10 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                                     className="w-full h-full object-cover filter blur-xl opacity-60 scale-110" 
                                 />
                              </motion.div>
+
+                             {/* 主圖片層 */}
                              <motion.img 
-                                  key={currentImageIndex} 
+                                  key={`img-${currentImageIndex}`}
                                   src={resolveImage(displayImages[currentImageIndex])} 
                                   alt={trip.title} 
                                   className="absolute inset-0 w-full h-full object-contain z-10 shadow-sm"
@@ -671,7 +765,7 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                                       scale: { duration: 6, ease: "linear" } 
                                   }}
                               />
-                          </>
+                          </div>
                        ) : (
                           <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
                               <div className="absolute inset-0 opacity-30" style={{backgroundImage: `url(${ASSETS.paper})`}}></div>
@@ -682,10 +776,13 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                           </div>
                        )}
                    </AnimatePresence>
+                   
                    <PostalStamp status={trip.status} index={index} />
                    
-                   {/* ❤️ 加入按讚按鈕 */}
-                   <LikeButton tripId={trip.title} />
+                   {/* ❤️ 新增：按讚按鈕 */}
+                   <div className="like-btn">
+                     <LikeButton tripIndex={index} user={user} />
+                   </div>
               </div>
               
               <LocationTapeLabel location={trip.location} index={index} />
@@ -713,37 +810,97 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
               <div className="absolute top-0 left-0 bottom-0 w-3 border-r-2 border-dashed border-stone-300"></div>
 
               <div className="flex-1 flex flex-col items-center justify-center w-full pl-4">
-                  <motion.h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 text-stone-800 leading-tight">
+                  <motion.h3 
+                      className="text-2xl md:text-3xl font-black mb-4 md:mb-6 text-stone-800 leading-tight"
+                  >
                       {trip.title}
                   </motion.h3>
 
                   <div className="w-full flex flex-col gap-3 md:gap-4 px-1 md:px-2">
-                      <a href={trip.plan || "#"} target={trip.plan ? "_blank" : "_self"} rel="noopener noreferrer" className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${trip.plan ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50 cursor-pointer" : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"}`} onClick={(e) => { e.stopPropagation(); if (!trip.plan) e.preventDefault(); }}>
+                      <a 
+                          href={trip.plan || "#"} 
+                          target={trip.plan ? "_blank" : "_self"}
+                          rel="noopener noreferrer"
+                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${
+                              trip.plan 
+                              ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50 cursor-pointer" 
+                              : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!trip.plan) e.preventDefault();
+                          }}
+                      >
                           <div className="flex items-center gap-3 md:gap-4">
-                              <img src={resolveImage(ASSETS.iconPlan)} alt="Plan" className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`} />
-                              <span className="text-lg md:text-xl font-black tracking-widest">{trip.plan ? "旅行計畫" : "計畫撰寫中..."}</span>
+                              <img 
+                                src={resolveImage(ASSETS.iconPlan)} 
+                                alt="Plan" 
+                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`}
+                              />
+                              <span className="text-lg md:text-xl font-black tracking-widest">
+                                  {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
+                              </span>
                           </div>
                           <MapPin size={32} className={`md:w-10 md:h-10 transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                       
-                      <a href={trip.album || "#"} target={trip.album ? "_blank" : "_self"} rel="noopener noreferrer" className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${trip.album ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50 cursor-pointer" : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"}`} onClick={(e) => { e.stopPropagation(); if (!trip.album) e.preventDefault(); }}>
+                      <a 
+                          href={trip.album || "#"} 
+                          target={trip.album ? "_blank" : "_self"}
+                          rel="noopener noreferrer"
+                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${
+                              trip.album 
+                              ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50 cursor-pointer" 
+                              : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!trip.album) e.preventDefault();
+                          }}
+                      >
                           <div className="flex items-center gap-3 md:gap-4">
-                              <img src={resolveImage(ASSETS.iconAlbum)} alt="Album" className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.album ? "" : "grayscale opacity-50"}`} />
-                              <span className="text-lg md:text-xl font-black tracking-widest">{trip.album ? "相簿" : "照片整理中..."}</span>
+                              <img 
+                                src={resolveImage(ASSETS.iconAlbum)} 
+                                alt="Album" 
+                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.album ? "" : "grayscale opacity-50"}`}
+                              />
+                              <span className="text-lg md:text-xl font-black tracking-widest">
+                                  {trip.album ? "相簿" : "照片整理中..."}
+                              </span>
                           </div>
                           <ImageIcon size={32} className={`md:w-10 md:h-10 transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
 
-                      <a href={trip.vlog || "#"} target={trip.vlog ? "_blank" : "_self"} rel="noopener noreferrer" className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${trip.vlog ? "border-red-300 bg-white text-stone-600 hover:bg-red-50 cursor-pointer" : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"}`} onClick={(e) => { e.stopPropagation(); if (!trip.vlog) e.preventDefault(); }}>
+                      <a 
+                          href={trip.vlog || "#"} 
+                          target={trip.vlog ? "_blank" : "_self"}
+                          rel="noopener noreferrer"
+                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${
+                              trip.vlog 
+                              ? "border-red-300 bg-white text-stone-600 hover:bg-red-50 cursor-pointer" 
+                              : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
+                          }`}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!trip.vlog) e.preventDefault();
+                          }}
+                      >
                           <div className="flex items-center gap-3 md:gap-4">
-                              <img src={resolveImage(ASSETS.iconVlog)} alt="Vlog" className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`} />
-                              <span className="text-lg md:text-xl font-black tracking-widest">{trip.vlog ? "旅遊影片" : "影片剪輯中..."}</span>
+                              <img 
+                                src={resolveImage(ASSETS.iconVlog)} 
+                                alt="Vlog" 
+                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`}
+                              />
+                              <span className="text-lg md:text-xl font-black tracking-widest">
+                                  {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
+                              </span>
                           </div>
                           <Plane size={32} className={`md:w-10 md:h-10 transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                   </div>
               </div>
           </div>
+
       </div>
     </motion.div>
   );
@@ -752,185 +909,190 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
 // ==========================================
 // 📝 留言板元件 (Guestbook)
 // ==========================================
-const Guestbook = () => {
-    const [messages, setMessages] = useState([]);
+const Guestbook = ({ user, isAdmin }: { user: User | null; isAdmin: boolean }) => {
+    const [messages, setMessages] = useState<GuestMessage[]>([]); // [修正] 使用明確的介面
     const [name, setName] = useState('');
-    const [msg, setMsg] = useState('');
+    const [content, setContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const scrollRef = useRef(null);
 
     useEffect(() => {
-        // 監聽留言 (按時間倒序)
+        if (!user) return;
         const q = query(
             collection(db, 'artifacts', appId, 'public', 'data', 'guestbook'), 
-            orderBy('createdAt', 'desc')
+            orderBy('timestamp', 'desc')
         );
         const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot) => {
-            const msgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const msgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as GuestMessage));
             setMessages(msgs);
         });
         return () => unsubscribe();
-    }, []);
+    }, [user]);
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name.trim() || !msg.trim()) return;
+        if (!name.trim() || !content.trim() || !user) return;
 
         setIsSubmitting(true);
         try {
             await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'guestbook'), {
-                name: name.trim(),
-                message: msg.trim(),
-                createdAt: serverTimestamp(),
+                name,
+                content,
+                timestamp: serverTimestamp(),
             });
-            setMsg(''); // 清空留言，保留名字方便繼續留
-        } catch (error) {
-            console.error("Error adding message:", error);
+            setContent('');
+            setName('');
+        } catch (err) {
+            console.error(err);
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    return (
-        <section className="max-w-4xl mx-auto mt-24 mb-10 px-4">
-            <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg relative overflow-hidden transform rotate-1 border border-stone-200">
-                {/* 頂部裝飾膠帶 */}
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-48 h-8 bg-rose-100/80 rotate-2 shadow-sm" style={{clipPath: "polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)"}}></div>
-                
-                <h2 className="text-2xl md:text-3xl font-black text-center text-stone-600 mb-8 flex items-center justify-center gap-2">
-                    <MessageCircle className="text-orange-400" />
-                    訪客留言板
-                </h2>
-
-                {/* 留言表單 */}
-                <form onSubmit={handleSubmit} className="mb-8 flex flex-col gap-4 bg-[#fdfdfd] p-4 rounded-lg border-2 border-dashed border-stone-200">
-                    <div className="flex flex-col md:flex-row gap-4">
-                        <input 
-                            type="text" 
-                            placeholder="你的暱稱" 
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            maxLength={20}
-                            className="flex-1 bg-transparent border-b-2 border-stone-300 focus:border-orange-400 outline-none px-2 py-1 text-lg font-bold text-stone-700 placeholder-stone-300 transition-colors"
-                        />
-                        <button 
-                            type="submit" 
-                            disabled={isSubmitting}
-                            className="bg-orange-400 text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-orange-500 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            <Send size={18} />
-                            {isSubmitting ? '傳送中...' : '送出留言'}
-                        </button>
-                    </div>
-                    <textarea 
-                        placeholder="留個言給我們吧！(例如：照片好美！)" 
-                        value={msg}
-                        onChange={(e) => setMsg(e.target.value)}
-                        maxLength={100}
-                        rows={2}
-                        className="w-full bg-transparent border-b-2 border-stone-300 focus:border-orange-400 outline-none px-2 py-1 text-lg text-stone-600 placeholder-stone-300 resize-none transition-colors"
-                    />
-                </form>
-
-                {/* 留言列表 */}
-                <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                    {messages.length === 0 ? (
-                        <div className="text-center text-stone-300 py-10 italic">還沒有留言，快來搶頭香！</div>
-                    ) : (
-                        messages.map((m: any) => (
-                            <motion.div 
-                                key={m.id}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="bg-[#fffdf5] p-3 rounded-md border border-stone-100 shadow-sm relative group"
-                            >
-                                <div className="flex justify-between items-start mb-1">
-                                    <span className="font-black text-stone-700 bg-yellow-100 px-2 rounded-sm transform -rotate-1 text-sm md:text-base">
-                                        {m.name}
-                                    </span>
-                                    <span className="text-[10px] text-stone-300">
-                                        {m.createdAt?.seconds ? new Date(m.createdAt.seconds * 1000).toLocaleDateString() : '剛剛'}
-                                    </span>
-                                </div>
-                                <p className="text-stone-600 text-base md:text-lg pl-1">{m.message}</p>
-                            </motion.div>
-                        ))
-                    )}
-                </div>
-            </div>
-            
-            <style>{`
-                .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-                .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-                .custom-scrollbar::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
-                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
-            `}</style>
-        </section>
-    );
-};
-
-// ==========================================
-// 🚀 主程式
-// ==========================================
-
-const TravelMascot = () => {
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+    const handleDelete = async (id: string) => {
+        if(!isAdmin) return;
+        if(confirm('確定要刪除這則留言嗎？')) {
+            await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'guestbook', id));
+        }
     };
+
     return (
-        <motion.div
-        initial={{ x: 200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
-        className="fixed bottom-2 right-4 z-50 cursor-pointer group flex flex-col items-end"
-        onClick={scrollToTop}
-        >
-        <motion.div 
-            initial={{ scale: 0, opacity: 0, y: 10 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            transition={{ delay: 2.5, type: "spring" }}
-            className="relative bg-white border-2 border-stone-800 rounded-2xl py-2 px-4 shadow-lg mb-1 mr-4 origin-bottom-right"
-        >
-            <span className="text-stone-800 font-black text-sm md:text-base whitespace-nowrap tracking-wider font-['Patrick_Hand'] flex items-center gap-1">
-                林北三人成團 GO! 🚀
-            </span>
-            <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-stone-800 transform rotate-45"></div>
-        </motion.div>
-        <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="relative"
-        >
-            <motion.img 
-            whileHover={{ scale: 1.1, rotate: -10, transition: { type: "spring", stiffness: 300 } }}
-            src={resolveImage(ASSETS.groupMascot)} 
-            alt="Group Mascot" 
-            className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
-            />
-        </motion.div>
-        </motion.div>
+        <div className="max-w-2xl mx-auto mt-20 px-4 mb-20">
+           <div className="bg-[#fffdf5] p-6 md:p-8 rounded-lg shadow-lg border-2 border-dashed border-stone-300 relative transform rotate-1">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-40 h-8 bg-stone-200/50 backdrop-blur-sm -rotate-2" style={{clipPath: "polygon(0% 0%, 100% 0%, 98% 50%, 100% 100%, 0% 100%, 2% 50%)"}}></div>
+              
+              <h2 className="text-2xl font-black text-center text-stone-600 mb-6 flex items-center justify-center gap-2">
+                <MessageCircle className="text-stone-400" />
+                訪客留言板
+              </h2>
+
+              <div className="space-y-4 mb-8 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar" ref={scrollRef}>
+                 {messages.length === 0 ? (
+                     <p className="text-center text-stone-400 italic py-10">還沒有人留言，來搶頭香吧！</p>
+                 ) : (
+                     messages.map((msg) => (
+                        <div key={msg.id} className="bg-white p-4 rounded-md border border-stone-100 shadow-sm relative group">
+                            <div className="flex justify-between items-start mb-2">
+                                <span className="font-bold text-stone-700 bg-yellow-100 px-2 rounded-sm transform -rotate-1 inline-block">{msg.name}</span>
+                                <span className="text-xs text-stone-400">
+                                    {formatDate(msg.timestamp)}
+                                </span>
+                            </div>
+                            <p className="text-stone-600 leading-relaxed text-sm md:text-base">{msg.content}</p>
+                            {isAdmin && (
+                                <button 
+                                    onClick={() => handleDelete(msg.id)}
+                                    className="absolute top-2 right-2 text-stone-300 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            )}
+                        </div>
+                     ))
+                 )}
+              </div>
+
+              <form onSubmit={handleSubmit} className="border-t-2 border-stone-100 pt-6">
+                  <div className="flex flex-col gap-3">
+                      <input 
+                        type="text" 
+                        placeholder="你的名字 / 綽號"
+                        className="w-full p-2 bg-stone-50 border border-stone-200 rounded focus:outline-none focus:border-stone-400 transition-colors font-['Patrick_Hand']"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        maxLength={10}
+                        required
+                      />
+                      <textarea 
+                        placeholder="寫下你想說的話..."
+                        className="w-full p-2 bg-stone-50 border border-stone-200 rounded h-24 resize-none focus:outline-none focus:border-stone-400 transition-colors font-['Patrick_Hand']"
+                        value={content}
+                        onChange={e => setContent(e.target.value)}
+                        maxLength={100}
+                        required
+                      />
+                      <button 
+                        type="submit" 
+                        disabled={isSubmitting}
+                        className="bg-stone-700 text-white font-bold py-2 rounded-md hover:bg-stone-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Send size={16} />
+                        {isSubmitting ? '傳送中...' : '送出留言'}
+                      </button>
+                  </div>
+              </form>
+           </div>
+        </div>
     );
 };
 
-const FloatingBackground = () => (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {ASSETS.floating.map((src, index) => (
-        <motion.div
-          key={index}
-          initial={{ y: 0, opacity: 0.6 }} 
-          animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0], opacity: [0.6, 1, 0.6] }}
-          transition={{ duration: 15 + index * 2, repeat: Infinity, ease: "easeInOut", delay: index }}
-          className="absolute"
-          style={{ left: `${(index * 15) % 90}%`, top: `${(index * 20) % 80}%` }}
-        >
-          <img src={resolveImage(src)} alt="floating-icon" className={`w-${16 + index % 4 * 4} h-auto object-contain drop-shadow-md`} />
-        </motion.div>
-      ))}
-    </div>
-);
+// ==========================================
+// 🔐 管理員登入 Modal
+// ==========================================
+interface AdminLoginModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    onLogin: (e: string, p: string) => Promise<void>;
+}
 
+const AdminLoginModal = ({ isOpen, onClose, onLogin }: AdminLoginModalProps) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    if(!isOpen) return null;
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        try {
+            await onLogin(email, password);
+            onClose();
+        } catch (err) {
+            setError('登入失敗，請確認 Firebase 設定或帳密錯誤');
+            console.error(err);
+        }
+    };
+
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
+            <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-sm relative">
+                <button onClick={onClose} className="absolute top-2 right-2 text-stone-400 hover:text-stone-600">✕</button>
+                <h3 className="text-xl font-bold mb-4 text-center">管理員登入</h3>
+                {error && <p className="text-red-500 text-sm mb-2 text-center">{error}</p>}
+                <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                    <input 
+                        type="email" 
+                        placeholder="Email" 
+                        className="p-2 border rounded"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        className="p-2 border rounded"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <button type="submit" className="bg-stone-800 text-white p-2 rounded hover:bg-stone-700">Login</button>
+                </form>
+                <p className="text-xs text-stone-400 mt-4 text-center">
+                    (需在 Firebase Console 開啟 Email Auth 並建立使用者)
+                </p>
+            </div>
+        </div>
+    );
+};
+
+// ==========================================
+// 🚀 主程式 (App)
+// ==========================================
 const App = () => {
   const [viewCount, setViewCount] = useState<number | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const hasIncremented = useRef(false);
 
   // 1. 初始化 Firebase Auth
@@ -939,13 +1101,14 @@ const App = () => {
       try {
         await signInAnonymously(auth);
       } catch (error) {
-        console.error("🔥 Authentication Error: 請確認 Firebase 後台 Authentication -> Sign-in method -> Anonymous 是否已啟用。", error);
+        console.error("🔥 Authentication Error: 請確認 Firebase 後台設定。", error);
       }
     };
     initAuth();
     
-    const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser: User | null) => {
       setUser(currentUser);
+      setIsAdmin(!!currentUser && !currentUser.isAnonymous);
     });
     return () => unsubscribe();
   }, []);
@@ -953,24 +1116,26 @@ const App = () => {
   // 2. 處理瀏覽計數
   useEffect(() => {
     if (!user) return;
-    // [FIX HERE] 修正為 6 層路徑 (加入 'total' 文件 ID)
     const statsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_stats', 'total');
     if (!hasIncremented.current) {
         hasIncremented.current = true;
-        setDoc(statsDocRef, { count: increment(1) }, { merge: true })
-          .catch((err: any) => console.error("Error updating view count:", err));
+        setDoc(statsDocRef, { count: increment(1) }, { merge: true }).catch(console.error);
     }
     const unsubscribe = onSnapshot(statsDocRef, (doc: DocumentSnapshot) => {
-        if (doc.exists()) {
-            setViewCount(doc.data().count);
-        } else {
-            setViewCount(0);
-        }
-    }, (error: any) => {
-        console.error("Error fetching view count:", error);
+        if (doc.exists()) setViewCount(doc.data()?.count);
+        else setViewCount(0);
     });
     return () => unsubscribe();
   }, [user]);
+
+  const handleAdminLogin = async (email: string, password: string): Promise<void> => {
+      await signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const handleLogout = async () => {
+      await signOut(auth);
+      await signInAnonymously(auth);
+  };
 
   return (
     <div className="min-h-screen bg-[#fdfbf7] text-stone-700 font-['Patrick_Hand',_cursive] selection:bg-yellow-200 pb-20 overflow-hidden relative"
@@ -988,6 +1153,9 @@ const App = () => {
             50% { transform: translateY(-3px); }
         }
         .animate-bounce-slight { animation: bounce-slight 2s ease-in-out infinite; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #d6c0ae; border-radius: 20px; }
       `}</style>
       
       <svg style={{position: 'absolute', width: 0, height: 0}}>
@@ -996,6 +1164,7 @@ const App = () => {
 
       <FloatingBackground />
       <TravelMascot />
+      <AdminLoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} onLogin={handleAdminLogin} />
 
       <header className="relative pt-10 pb-12 px-4 md:px-6 text-center z-10 max-w-6xl mx-auto">
         <div className="flex flex-col items-center justify-center w-full mt-4 relative z-10">
@@ -1032,15 +1201,15 @@ const App = () => {
       <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
           {allTrips.map((trip, index) => (
-            <TripCard key={index} trip={trip} index={index} />
+            <TripCard key={index} trip={trip} index={index} user={user} />
           ))}
         </div>
       </main>
-      
-      {/* 📝 留言板區域 */}
-      <Guestbook />
 
-      <footer className="pt-16 border-t border-stone-200 text-center relative z-10 bg-white/50 backdrop-blur-sm pb-10">
+      {/* 📝 留言板區塊 */}
+      <Guestbook user={user} isAdmin={isAdmin} />
+
+      <footer className="mt-16 pt-16 border-t border-stone-200 text-center relative z-10 bg-white/50 backdrop-blur-sm pb-10">
          <div className="relative z-10 flex flex-col items-center justify-center gap-4 text-stone-400">
            <div className="flex gap-6">
              <Camera size={28} className="text-stone-300 hover:text-stone-500 transition-colors cursor-pointer" />
@@ -1052,18 +1221,29 @@ const App = () => {
              <span className="text-xs font-normal uppercase tracking-widest text-stone-400 mt-2 block">Designed for Memories</span>
            </p>
 
-           {/* 流量統計 */}
-           <motion.div 
-             initial={{ opacity: 0, y: 10 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 1 }}
-             className="flex items-center gap-2 mt-2 px-3 py-1 bg-stone-100/50 rounded-full border border-stone-200"
-           >
-              <Eye size={14} className="text-stone-400" />
-              <span className="text-xs font-bold text-stone-500 tracking-wider">
-                 {viewCount !== null ? `${viewCount.toLocaleString()} 次造訪` : '...'}
-              </span>
-           </motion.div>
+           <div className="flex items-center gap-4">
+               {/* 流量統計 */}
+               <motion.div 
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 1 }}
+                 className="flex items-center gap-2 px-3 py-1 bg-stone-100/50 rounded-full border border-stone-200"
+               >
+                  <Eye size={14} className="text-stone-400" />
+                  <span className="text-xs font-bold text-stone-500 tracking-wider">
+                     {viewCount !== null ? `${viewCount.toLocaleString()} 次造訪` : '...'}
+                  </span>
+               </motion.div>
+
+               {/* 管理員登入按鈕 */}
+               <button 
+                  onClick={() => isAdmin ? handleLogout() : setIsLoginOpen(true)}
+                  className={`p-1.5 rounded-full border transition-colors ${isAdmin ? 'bg-stone-800 text-white border-stone-800' : 'bg-transparent text-stone-300 border-transparent hover:text-stone-500 hover:border-stone-300'}`}
+                  title={isAdmin ? "登出管理員" : "管理員登入"}
+               >
+                   {isAdmin ? <LogOut size={14} /> : <Lock size={14} />}
+               </button>
+           </div>
          </div>
       </footer>
     </div>
