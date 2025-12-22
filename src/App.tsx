@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Calendar } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ==========================================
@@ -355,32 +355,18 @@ const resolveImage = (url: string) => {
 };
 
 // ==========================================
-// 🐕 吉祥物舉牌日期標籤
+// 🐕 吉祥物元件 (只負責裝飾，不負責日期)
 // ==========================================
-const MascotLabel = ({ trip, index }: { trip: Trip; index: number }) => {
+const MascotDecoration = ({ index }: { index: number }) => {
   const mascotImg = index % 2 === 0 ? ASSETS.mascot1 : ASSETS.mascot2;
   return (
-    <div className="absolute -top-[52px] md:-top-[80px] -left-[10px] md:-left-[20px] z-30 group-hover:animate-bounce-slight origin-bottom-left w-[120px] h-[120px] md:w-[160px] md:h-[160px]">
-        <div className="relative w-full h-full flex flex-col items-center justify-end">
-            <img 
-              src={resolveImage(mascotImg)} 
-              alt="Mascot"
-              className="w-24 h-24 md:w-32 md:h-32 object-contain absolute bottom-[20px] md:bottom-[30px] left-[5px] md:left-[10px] z-10"
-              style={{ transform: "rotate(-5deg)" }}
-            />
-            <div 
-              className="relative z-20 bg-[#fff9c4] border-2 border-[#d6c0ae] px-3 py-1.5 md:px-4 md:py-2 rounded-md shadow-md text-center min-w-[70px] md:min-w-[90px] -rotate-3 transform translate-y-3 md:translate-y-4 translate-x-3 md:translate-x-4"
-              style={{ boxShadow: "3px 3px 0px rgba(0,0,0,0.1)" }}
-            >
-                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#d6c0ae] rounded-full opacity-50"></div>
-                <span className="block text-lg md:text-xl font-black text-stone-600 font-['Patrick_Hand'] leading-none">
-                    {trip.year}
-                </span>
-                <span className="block text-[10px] md:text-xs font-bold text-stone-400 uppercase tracking-widest leading-tight font-['Patrick_Hand'] mt-0.5">
-                    {trip.season}
-                </span>
-            </div>
-        </div>
+    <div className="absolute -top-[52px] md:-top-[75px] -left-[10px] md:-left-[20px] z-10 pointer-events-none w-[100px] h-[100px] md:w-[130px] md:h-[130px]">
+        <img 
+          src={resolveImage(mascotImg)} 
+          alt="Mascot"
+          className="w-full h-full object-contain"
+          style={{ transform: "rotate(-10deg)" }}
+        />
     </div>
   );
 };
@@ -432,34 +418,43 @@ const RandomSticker = ({ index }: { index: number }) => {
   );
 };
 
-// 🏷️ 可愛動物紙膠帶元件
-const CuteWashiTape = ({ index }: { index: number }) => {
+// 🏷️ 日期紙膠帶元件 (新版：功能性顯示日期)
+const DateTapeLabel = ({ trip, index }: { trip: Trip, index: number }) => {
+  // 隨機分配柔和的膠帶顏色，符合手帳感
   const tapeColors = [
-    "bg-red-100/90", "bg-blue-100/90", "bg-green-100/90", "bg-yellow-100/90", "bg-orange-100/90"
+    "bg-[#fdfcdc]", // 淡奶油黃
+    "bg-[#e0f7fa]", // 淡粉藍
+    "bg-[#fce4ec]", // 淡粉紅
+    "bg-[#e8f5e9]", // 淡薄荷
   ];
   const color = tapeColors[index % tapeColors.length];
-  const rotate = (index % 2 === 0) ? -2 : 2; 
-  const icons = useMemo(() => {
-    const pattern = [];
-    for(let i=0; i<5; i++) {
-        const r = (index + i) % 3;
-        if(r === 0) pattern.push(<Star size={12} key={i} className="text-stone-400/70" />);
-        if(r === 1) pattern.push(<Heart size={12} key={i} className="text-stone-500/70" />);
-        if(r === 2) pattern.push(<Sun size={12} key={i} className="text-stone-500/70" />);
-    }
-    return pattern;
-  }, [index]);
+  
+  // 微微的隨機旋轉，模擬手貼的感覺
+  const rotate = (index % 3 === 0) ? -1.5 : (index % 3 === 1) ? 1.5 : 0; 
 
   return (
     <div 
-      className={`absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 shadow-sm z-30 backdrop-blur-[1px] ${color} flex items-center justify-around px-1 overflow-hidden`}
+      className={`absolute -top-5 left-1/2 -translate-x-1/2 w-48 h-10 z-30 flex items-center justify-center shadow-md backdrop-blur-sm ${color}`}
       style={{ 
         transform: `translateX(-50%) rotate(${rotate}deg)`,
-        clipPath: "polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)",
-        maskImage: "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzjwqonyQAWMUEFPTE2MDAYAfXYK0ZO1uMAAAAAASUVORK5CYII=)" 
+        // 使用 maskImage 模擬兩端撕裂的鋸齒效果 (CSS clip-path 替代方案)
+        clipPath: "polygon(0% 0%, 100% 0%, 98% 50%, 100% 100%, 0% 100%, 2% 50%)",
+        opacity: 0.95
       }}
     >
-      {icons}
+      {/* 膠帶紋理層 (可選) */}
+      <div className="absolute inset-0 opacity-10 bg-repeat pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23000000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E")` }}></div>
+      
+      {/* 內容層 */}
+      <div className="relative z-10 flex items-center gap-2 text-stone-700">
+        <span className="text-xl font-black tracking-wider font-['Patrick_Hand'] leading-none">
+            {trip.year}
+        </span>
+        <div className="w-[1.5px] h-4 bg-stone-400/50 rounded-full"></div>
+        <span className="text-lg font-bold tracking-widest font-['Patrick_Hand'] leading-none text-stone-600">
+            {trip.season}
+        </span>
+      </div>
     </div>
   );
 };
@@ -652,8 +647,11 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
       className="group relative w-full h-[28rem] md:h-[32rem] card-perspective cursor-pointer"
       onClick={handleFlip}
     >
-      <CuteWashiTape index={index} />
-      <MascotLabel trip={trip} index={index} />
+      {/* 🏷️ 改用新的日期紙膠帶放在正上方 */}
+      <DateTapeLabel trip={trip} index={index} />
+      
+      {/* 🐕 吉祥物現在只負責裝飾，不拿日期牌了 */}
+      <MascotDecoration index={index} />
 
       <div 
           className="card-inner relative w-full h-full transition-all duration-700 ease-in-out"
@@ -671,10 +669,6 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
           >
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
                    
-                   {/* [FIXED] 移除了 mode="wait"，改用預設的堆疊模式
-                      這會讓舊照片慢慢變透明消失，新照片同時變清晰浮現
-                      解決了中間的「白畫面閃爍」問題
-                   */}
                    <AnimatePresence>
                       {displayImages[0] ? (
                           <>
