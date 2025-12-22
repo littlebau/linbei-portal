@@ -1,9 +1,37 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Calendar } from 'lucide-react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Firebase Imports
+import { initializeApp } from "firebase/app";
+import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
+import { 
+  getFirestore, doc, setDoc, updateDoc, 
+  increment, onSnapshot, collection, addDoc, 
+  query, orderBy, serverTimestamp, getDoc 
+} from "firebase/firestore";
+
 // ==========================================
-// 🎨 素材層 (ASSETS LAYER)
+// 🟢 你的 Firebase Config (已填入)
+// ==========================================
+const firebaseConfig = {
+  apiKey: "AIzaSyBSVyHMDAqc8JkeZuCjmAGyPSu8oDN543Y",
+  authDomain: "mytravelsite-39bd9.firebaseapp.com",
+  projectId: "mytravelsite-39bd9",
+  storageBucket: "mytravelsite-39bd9.firebasestorage.app",
+  messagingSenderId: "114552084268",
+  appId: "1:114552084268:web:6606382ccd60a921a57e89",
+  measurementId: "G-FTFRKF1S5F"
+};
+
+// 初始化 Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+// ==========================================
+// 🎨 素材層
 // ==========================================
 const ASSETS = {
   mainTheme: "https://drive.google.com/file/d/1DkyWE7T3BSV5PGyYiRCaHlCeaR-kskBO/view?usp=drive_link",
@@ -28,7 +56,7 @@ const ASSETS = {
 };
 
 // ==========================================
-// 🗂️ 資料層 (DATA LAYER)
+// 🗂️ 資料層
 // ==========================================
 
 interface Trip {
@@ -201,7 +229,8 @@ const allTrips: Trip[] = [
     images: [
         "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0",
         "https://lh3.googleusercontent.com/pw/AP1GczN_mLa6r-jHwsCxo2uPp7xMyk3verZ8Xsvwryo3TmRT64ee7dBhtAYtlluFHjRCJ7mHtc6MtqUv6-GwWLXAWof_MOIaQNDq6RkUJ7CnZficWO6sp_gmJbk5UqJbINSOuycvWqxnKsEDdi3UJfkOiU7hjQ=w651-h869-s-no-gm?authuser=0",
-        "" 
+        "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczN_mLa6r-jHwsCxo2uPp7xMyk3verZ8Xsvwryo3TmRT64ee7dBhtAYtlluFHjRCJ7mHtc6MtqUv6-GwWLXAWof_MOIaQNDq6RkUJ7CnZficWO6sp_gmJbk5UqJbINSOuycvWqxnKsEDdi3UJfkOiU7hjQ=w651-h869-s-no-gm?authuser=0"
     ],
     album: "https://photos.app.goo.gl/mk2rstVdxmKUcjas8",
     plan: "",
@@ -418,18 +447,12 @@ const RandomSticker = ({ index }: { index: number }) => {
   );
 };
 
-// 🏷️ 日期紙膠帶元件 (新版：功能性顯示日期)
+// 🏷️ 日期紙膠帶元件
 const DateTapeLabel = ({ trip, index }: { trip: Trip, index: number }) => {
-  // 隨機分配柔和的膠帶顏色，符合手帳感
   const tapeColors = [
-    "bg-[#fdfcdc]", // 淡奶油黃
-    "bg-[#e0f7fa]", // 淡粉藍
-    "bg-[#fce4ec]", // 淡粉紅
-    "bg-[#e8f5e9]", // 淡薄荷
+    "bg-[#fdfcdc]", "bg-[#e0f7fa]", "bg-[#fce4ec]", "bg-[#e8f5e9]", 
   ];
   const color = tapeColors[index % tapeColors.length];
-  
-  // 微微的隨機旋轉，模擬手貼的感覺
   const rotate = (index % 3 === 0) ? -1.5 : (index % 3 === 1) ? 1.5 : 0; 
 
   return (
@@ -437,15 +460,11 @@ const DateTapeLabel = ({ trip, index }: { trip: Trip, index: number }) => {
       className={`absolute -top-5 left-1/2 -translate-x-1/2 w-48 h-10 z-30 flex items-center justify-center shadow-md backdrop-blur-sm ${color}`}
       style={{ 
         transform: `translateX(-50%) rotate(${rotate}deg)`,
-        // 使用 maskImage 模擬兩端撕裂的鋸齒效果 (CSS clip-path 替代方案)
         clipPath: "polygon(0% 0%, 100% 0%, 98% 50%, 100% 100%, 0% 100%, 2% 50%)",
         opacity: 0.95
       }}
     >
-      {/* 膠帶紋理層 (可選) */}
       <div className="absolute inset-0 opacity-10 bg-repeat pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23000000' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E")` }}></div>
-      
-      {/* 內容層 */}
       <div className="relative z-10 flex items-center gap-2 text-stone-700">
         <span className="text-xl font-black tracking-wider font-['Patrick_Hand'] leading-none">
             {trip.year}
@@ -499,114 +518,61 @@ const PostalStamp = ({ status, index }: { status: string; index: number }) => {
 };
 
 // ==========================================
-// 🐶 旅行吉祥物元件
+// ❤️ 按讚按鈕元件
 // ==========================================
-const TravelMascot = () => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  };
+const LikeButton = ({ tripId }: { tripId: string }) => {
+    const [likes, setLikes] = useState(0);
+    const [liked, setLiked] = useState(false);
 
-  return (
-    <motion.div
-      initial={{ x: 200, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 80, 
-        damping: 15, 
-        delay: 1.5 
-      }}
-      className="fixed bottom-2 right-4 z-50 cursor-pointer group flex flex-col items-end"
-      onClick={scrollToTop}
-    >
-      <motion.div 
-        initial={{ scale: 0, opacity: 0, y: 10 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        transition={{ delay: 2.5, type: "spring" }}
-        className="relative bg-white border-2 border-stone-800 rounded-2xl py-2 px-4 shadow-lg mb-1 mr-4 origin-bottom-right"
-      >
-          <span className="text-stone-800 font-black text-sm md:text-base whitespace-nowrap tracking-wider font-['Patrick_Hand'] flex items-center gap-1">
-            林北三人成團 GO! 🚀
-          </span>
-          <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-stone-800 transform rotate-45"></div>
-      </motion.div>
+    // 🟢 [FIX 2] 修改路徑結構，確保是 偶數層 (Coll/Doc/Coll/Doc)
+    // 舊: .../data/likes_日本東北 (5層 -> Error)
+    // 新: .../data/trip_likes/日本東北 (6層 -> OK)
+    // 'trip_likes' 是集合名稱，'tripId' 是文件 ID
+    const likeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'trip_likes', tripId);
 
-      <motion.div
-        animate={{ y: [0, -5, 0] }}
-        transition={{ 
-          duration: 2, 
-          repeat: Infinity, 
-          ease: "easeInOut" 
-        }}
-        className="relative"
-      >
-        <motion.img 
-          whileHover={{ 
-            scale: 1.1, 
-            rotate: -10,
-            transition: { type: "spring", stiffness: 300 } 
-          }}
-          src={resolveImage(ASSETS.groupMascot)} 
-          alt="Group Mascot" 
-          className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
-        />
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-            <div className="bg-yellow-400/90 text-white rounded-full p-2 shadow-sm animate-bounce">
-                <ArrowUp size={20} strokeWidth={3} />
-            </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
+    useEffect(() => {
+        const unsubscribe = onSnapshot(likeDocRef, (doc) => {
+            if (doc.exists()) {
+                setLikes(doc.data().count || 0);
+            }
+        });
+        
+        const hasLiked = localStorage.getItem(`liked_${tripId}`);
+        if (hasLiked) setLiked(true);
 
-// ==========================================
-// 🧩 漂浮背景
-// ==========================================
-const FloatingBackground = () => {
-  const floatingItems = [
-    { src: ASSETS.floating[0], left: '10%', top: '20%', delay: 0, duration: 15, size: 'w-20' },
-    { src: ASSETS.floating[1], left: '85%', top: '15%', delay: 2, duration: 20, size: 'w-24' },
-    { src: ASSETS.floating[2], left: '5%', top: '60%', delay: 5, duration: 18, size: 'w-20' },
-    { src: ASSETS.floating[3], left: '90%', top: '50%', delay: 1, duration: 16, size: 'w-28' },
-    { src: ASSETS.floating[4], left: '15%', top: '85%', delay: 3, duration: 22, size: 'w-24' },
-    { src: ASSETS.floating[5], left: '80%', top: '80%', delay: 4, duration: 25, size: 'w-20' },
-    { src: ASSETS.floating[0], left: '50%', top: '5%', delay: 6, duration: 30, size: 'w-16' }, 
-  ];
+        return () => unsubscribe();
+    }, [tripId]);
 
-  return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {floatingItems.map((item, index) => (
-        <motion.div
-          key={index}
-          initial={{ y: 0, opacity: 0.6 }} 
-          animate={{ 
-            y: [0, -20, 0], 
-            rotate: [0, 10, -10, 0],
-            opacity: [0.6, 1, 0.6]
-          }}
-          transition={{ 
-            duration: item.duration, 
-            repeat: Infinity, 
-            ease: "easeInOut",
-            delay: item.delay
-          }}
-          className="absolute"
-          style={{ left: item.left, top: item.top }}
+    const handleLike = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        
+        setLiked(true);
+        localStorage.setItem(`liked_${tripId}`, 'true');
+
+        try {
+            await setDoc(likeDocRef, { count: increment(1) }, { merge: true });
+        } catch (error) {
+            console.error("Error liking:", error);
+        }
+    };
+
+    return (
+        <motion.button
+            whileTap={{ scale: 0.8 }}
+            onClick={handleLike}
+            className="absolute bottom-2 right-4 z-30 flex items-center gap-1 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full shadow-sm border border-rose-100 hover:bg-rose-50 transition-colors"
         >
-          <img 
-            src={resolveImage(item.src)} 
-            alt="floating-icon" 
-            className={`${item.size} h-auto object-contain drop-shadow-md`}
-          />
-        </motion.div>
-      ))}
-    </div>
-  );
+            <Heart 
+                size={16} 
+                className={`transition-colors ${liked ? "fill-rose-500 text-rose-500" : "text-rose-300"}`} 
+            />
+            <span className="text-xs font-bold text-rose-500 font-['Patrick_Hand']">
+                {likes > 0 ? likes : ''}
+            </span>
+        </motion.button>
+    );
 };
+
 
 // ==========================================
 // 🎴 單一卡片元件 (TripCard)
@@ -621,17 +587,13 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
 
   useEffect(() => {
     if (displayImages.length <= 1) return;
-    
-    // 設定 4秒 換圖
     const interval = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
     }, 4000); 
-
     return () => clearInterval(interval);
   }, [displayImages.length]);
 
   const handleFlip = (e: React.MouseEvent) => {
-     // Check if click was on a link or button
      const target = e.target as HTMLElement;
      if (target.closest('a') || target.closest('button')) return;
      setIsFlipped(!isFlipped);
@@ -647,32 +609,26 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
       className="group relative w-full h-[28rem] md:h-[32rem] card-perspective cursor-pointer"
       onClick={handleFlip}
     >
-      {/* 🏷️ 改用新的日期紙膠帶放在正上方 */}
       <DateTapeLabel trip={trip} index={index} />
-      
-      {/* 🐕 吉祥物現在只負責裝飾，不拿日期牌了 */}
       <MascotDecoration index={index} />
 
       <div 
           className="card-inner relative w-full h-full transition-all duration-700 ease-in-out"
           style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
       >
-          
           {/* ========= 正面 (FRONT) ========= */}
           <div 
             className="card-front absolute inset-0 bg-white p-3 shadow-md border border-stone-200 flex flex-col"
             style={{ 
               backfaceVisibility: 'hidden', 
               WebkitBackfaceVisibility: 'hidden',
-              pointerEvents: isFlipped ? 'none' : 'auto' // 當翻到背面時，正面不接收點擊
+              pointerEvents: isFlipped ? 'none' : 'auto'
             }}
           >
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
-                   
                    <AnimatePresence>
                       {displayImages[0] ? (
                           <>
-                             {/* 背景模糊層 */}
                              <motion.div
                                 key={`bg-${currentImageIndex}`}
                                 initial={{ opacity: 0 }}
@@ -687,25 +643,19 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                                     className="w-full h-full object-cover filter blur-xl opacity-60 scale-110" 
                                 />
                              </motion.div>
-
-                             {/* 主圖片層 (Blur Reveal) */}
                              <motion.img 
                                   key={currentImageIndex} 
                                   src={resolveImage(displayImages[currentImageIndex])} 
                                   alt={trip.title} 
                                   className="absolute inset-0 w-full h-full object-contain z-10 shadow-sm"
                                   referrerPolicy="no-referrer"
-                                  
-                                  // 進場：模糊 -> 清晰 + 淡入
                                   initial={{ opacity: 0, scale: 1.1, filter: "blur(8px)" }}
                                   animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                                  // 退場：直接變透明 (不需模糊，這樣視覺最乾淨)
                                   exit={{ opacity: 0, zIndex: 0 }} 
-                                  
                                   transition={{ 
                                       opacity: { duration: 1.2, ease: "easeInOut" },
                                       filter: { duration: 1.2, ease: "easeInOut" },
-                                      scale: { duration: 6, ease: "linear" } // Slow zoom
+                                      scale: { duration: 6, ease: "linear" } 
                                   }}
                               />
                           </>
@@ -719,8 +669,10 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
                           </div>
                        )}
                    </AnimatePresence>
-                   
                    <PostalStamp status={trip.status} index={index} />
+                   
+                   {/* ❤️ 加入按讚按鈕 */}
+                   <LikeButton tripId={trip.title} />
               </div>
               
               <LocationTapeLabel location={trip.location} index={index} />
@@ -741,118 +693,278 @@ const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
               backfaceVisibility: 'hidden', 
               WebkitBackfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
-              pointerEvents: isFlipped ? 'auto' : 'none' // 只有翻到背面時才接收點擊
+              pointerEvents: isFlipped ? 'auto' : 'none'
             }}
           >
-              
               <RandomSticker index={index} />
               <div className="absolute top-0 left-0 bottom-0 w-3 border-r-2 border-dashed border-stone-300"></div>
 
               <div className="flex-1 flex flex-col items-center justify-center w-full pl-4">
-                  <motion.h3 
-                      className="text-2xl md:text-3xl font-black mb-4 md:mb-6 text-stone-800 leading-tight"
-                  >
+                  <motion.h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 text-stone-800 leading-tight">
                       {trip.title}
                   </motion.h3>
 
                   <div className="w-full flex flex-col gap-3 md:gap-4 px-1 md:px-2">
-                      <a 
-                          href={trip.plan || "#"} 
-                          target={trip.plan ? "_blank" : "_self"}
-                          rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${
-                              trip.plan 
-                              ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50 cursor-pointer" 
-                              : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
-                          }`}
-                          onClick={(e) => {
-                            e.stopPropagation(); // 阻止冒泡，避免翻轉
-                            if (!trip.plan) e.preventDefault(); // 只有沒連結時才阻止預設行為
-                          }}
-                      >
+                      <a href={trip.plan || "#"} target={trip.plan ? "_blank" : "_self"} rel="noopener noreferrer" className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${trip.plan ? "border-blue-300 bg-white text-stone-600 hover:bg-blue-50 cursor-pointer" : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"}`} onClick={(e) => { e.stopPropagation(); if (!trip.plan) e.preventDefault(); }}>
                           <div className="flex items-center gap-3 md:gap-4">
-                              <img 
-                                src={resolveImage(ASSETS.iconPlan)} 
-                                alt="Plan" 
-                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`}
-                              />
-                              <span className="text-lg md:text-xl font-black tracking-widest">
-                                  {trip.plan ? "旅行計畫" : "計畫撰寫中..."}
-                              </span>
+                              <img src={resolveImage(ASSETS.iconPlan)} alt="Plan" className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.plan ? "" : "grayscale opacity-50"}`} />
+                              <span className="text-lg md:text-xl font-black tracking-widest">{trip.plan ? "旅行計畫" : "計畫撰寫中..."}</span>
                           </div>
-                          {/* Replaced Dog with MapPin for safety */}
                           <MapPin size={32} className={`md:w-10 md:h-10 transform group-hover/btn:rotate-12 transition-transform ${trip.plan ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                       
-                      <a 
-                          href={trip.album || "#"} 
-                          target={trip.album ? "_blank" : "_self"}
-                          rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${
-                              trip.album 
-                              ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50 cursor-pointer" 
-                              : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
-                          }`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (!trip.album) e.preventDefault();
-                          }}
-                      >
+                      <a href={trip.album || "#"} target={trip.album ? "_blank" : "_self"} rel="noopener noreferrer" className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${trip.album ? "border-amber-300 bg-white text-stone-600 hover:bg-amber-50 cursor-pointer" : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"}`} onClick={(e) => { e.stopPropagation(); if (!trip.album) e.preventDefault(); }}>
                           <div className="flex items-center gap-3 md:gap-4">
-                              <img 
-                                src={resolveImage(ASSETS.iconAlbum)} 
-                                alt="Album" 
-                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.album ? "" : "grayscale opacity-50"}`}
-                              />
-                              <span className="text-lg md:text-xl font-black tracking-widest">
-                                  {trip.album ? "相簿" : "照片整理中..."}
-                              </span>
+                              <img src={resolveImage(ASSETS.iconAlbum)} alt="Album" className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.album ? "" : "grayscale opacity-50"}`} />
+                              <span className="text-lg md:text-xl font-black tracking-widest">{trip.album ? "相簿" : "照片整理中..."}</span>
                           </div>
-                          {/* Replaced Cat with ImageIcon for safety */}
                           <ImageIcon size={32} className={`md:w-10 md:h-10 transform group-hover/btn:-rotate-12 transition-transform ${trip.album ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
 
-                      <a 
-                          href={trip.vlog || "#"} 
-                          target={trip.vlog ? "_blank" : "_self"}
-                          rel="noopener noreferrer"
-                          className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${
-                              trip.vlog 
-                              ? "border-red-300 bg-white text-stone-600 hover:bg-red-50 cursor-pointer" 
-                              : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"
-                          }`}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            if (!trip.vlog) e.preventDefault();
-                          }}
-                      >
+                      <a href={trip.vlog || "#"} target={trip.vlog ? "_blank" : "_self"} rel="noopener noreferrer" className={`relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed rounded-lg transition-all group/btn z-50 ${trip.vlog ? "border-red-300 bg-white text-stone-600 hover:bg-red-50 cursor-pointer" : "border-stone-200 bg-stone-50 text-stone-400 cursor-not-allowed"}`} onClick={(e) => { e.stopPropagation(); if (!trip.vlog) e.preventDefault(); }}>
                           <div className="flex items-center gap-3 md:gap-4">
-                              <img 
-                                src={resolveImage(ASSETS.iconVlog)} 
-                                alt="Vlog" 
-                                className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`}
-                              />
-                              <span className="text-lg md:text-xl font-black tracking-widest">
-                                  {trip.vlog ? "旅遊影片" : "影片剪輯中..."}
-                              </span>
+                              <img src={resolveImage(ASSETS.iconVlog)} alt="Vlog" className={`w-16 h-16 md:w-20 md:h-20 object-contain ${trip.vlog ? "" : "grayscale opacity-50"}`} />
+                              <span className="text-lg md:text-xl font-black tracking-widest">{trip.vlog ? "旅遊影片" : "影片剪輯中..."}</span>
                           </div>
-                          {/* Replaced PawPrint with Plane for safety */}
                           <Plane size={32} className={`md:w-10 md:h-10 transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
                   </div>
               </div>
           </div>
-
       </div>
     </motion.div>
   );
 };
 
 // ==========================================
+// 📝 留言板元件 (Guestbook)
+// ==========================================
+const Guestbook = () => {
+    const [messages, setMessages] = useState([]);
+    const [name, setName] = useState('');
+    const [msg, setMsg] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        // 監聽留言 (按時間倒序)
+        const q = query(
+            collection(db, 'artifacts', appId, 'public', 'data', 'guestbook'), 
+            orderBy('createdAt', 'desc')
+        );
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const msgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setMessages(msgs);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!name.trim() || !msg.trim()) return;
+
+        setIsSubmitting(true);
+        try {
+            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'guestbook'), {
+                name: name.trim(),
+                message: msg.trim(),
+                createdAt: serverTimestamp(),
+            });
+            setMsg(''); // 清空留言，保留名字方便繼續留
+        } catch (error) {
+            console.error("Error adding message:", error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <section className="max-w-4xl mx-auto mt-24 mb-10 px-4">
+            <div className="bg-white p-6 md:p-8 rounded-lg shadow-lg relative overflow-hidden transform rotate-1 border border-stone-200">
+                {/* 頂部裝飾膠帶 */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-48 h-8 bg-rose-100/80 rotate-2 shadow-sm" style={{clipPath: "polygon(2% 0%, 98% 0%, 100% 100%, 0% 100%)"}}></div>
+                
+                <h2 className="text-2xl md:text-3xl font-black text-center text-stone-600 mb-8 flex items-center justify-center gap-2">
+                    <MessageCircle className="text-orange-400" />
+                    訪客留言板
+                </h2>
+
+                {/* 留言表單 */}
+                <form onSubmit={handleSubmit} className="mb-8 flex flex-col gap-4 bg-[#fdfdfd] p-4 rounded-lg border-2 border-dashed border-stone-200">
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <input 
+                            type="text" 
+                            placeholder="你的暱稱" 
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            maxLength={20}
+                            className="flex-1 bg-transparent border-b-2 border-stone-300 focus:border-orange-400 outline-none px-2 py-1 text-lg font-bold text-stone-700 placeholder-stone-300 transition-colors"
+                        />
+                        <button 
+                            type="submit" 
+                            disabled={isSubmitting}
+                            className="bg-orange-400 text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-orange-500 active:scale-95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <Send size={18} />
+                            {isSubmitting ? '傳送中...' : '送出留言'}
+                        </button>
+                    </div>
+                    <textarea 
+                        placeholder="留個言給我們吧！(例如：照片好美！)" 
+                        value={msg}
+                        onChange={(e) => setMsg(e.target.value)}
+                        maxLength={100}
+                        rows={2}
+                        className="w-full bg-transparent border-b-2 border-stone-300 focus:border-orange-400 outline-none px-2 py-1 text-lg text-stone-600 placeholder-stone-300 resize-none transition-colors"
+                    />
+                </form>
+
+                {/* 留言列表 */}
+                <div className="flex flex-col gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    {messages.length === 0 ? (
+                        <div className="text-center text-stone-300 py-10 italic">還沒有留言，快來搶頭香！</div>
+                    ) : (
+                        messages.map((m: any) => (
+                            <motion.div 
+                                key={m.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bg-[#fffdf5] p-3 rounded-md border border-stone-100 shadow-sm relative group"
+                            >
+                                <div className="flex justify-between items-start mb-1">
+                                    <span className="font-black text-stone-700 bg-yellow-100 px-2 rounded-sm transform -rotate-1 text-sm md:text-base">
+                                        {m.name}
+                                    </span>
+                                    <span className="text-[10px] text-stone-300">
+                                        {m.createdAt?.seconds ? new Date(m.createdAt.seconds * 1000).toLocaleDateString() : '剛剛'}
+                                    </span>
+                                </div>
+                                <p className="text-stone-600 text-base md:text-lg pl-1">{m.message}</p>
+                            </motion.div>
+                        ))
+                    )}
+                </div>
+            </div>
+            
+            <style>{`
+                .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+                .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 4px; }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #a8a29e; }
+            `}</style>
+        </section>
+    );
+};
+
+// ==========================================
+// 🟢 [FIX 3] 移除 App 內部的元件定義，移到外部
+// ==========================================
+const TravelMascot = () => {
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    return (
+        <motion.div
+        initial={{ x: 200, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
+        className="fixed bottom-2 right-4 z-50 cursor-pointer group flex flex-col items-end"
+        onClick={scrollToTop}
+        >
+        <motion.div 
+            initial={{ scale: 0, opacity: 0, y: 10 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            transition={{ delay: 2.5, type: "spring" }}
+            className="relative bg-white border-2 border-stone-800 rounded-2xl py-2 px-4 shadow-lg mb-1 mr-4 origin-bottom-right"
+        >
+            <span className="text-stone-800 font-black text-sm md:text-base whitespace-nowrap tracking-wider font-['Patrick_Hand'] flex items-center gap-1">
+                林北三人成團 GO! 🚀
+            </span>
+            <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-stone-800 transform rotate-45"></div>
+        </motion.div>
+        <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="relative"
+        >
+            <motion.img 
+            whileHover={{ scale: 1.1, rotate: -10, transition: { type: "spring", stiffness: 300 } }}
+            src={resolveImage(ASSETS.groupMascot)} 
+            alt="Group Mascot" 
+            className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
+            />
+        </motion.div>
+        </motion.div>
+    );
+};
+
+const FloatingBackground = () => (
+    <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+      {ASSETS.floating.map((src, index) => (
+        <motion.div
+          key={index}
+          initial={{ y: 0, opacity: 0.6 }} 
+          animate={{ y: [0, -20, 0], rotate: [0, 10, -10, 0], opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 15 + index * 2, repeat: Infinity, ease: "easeInOut", delay: index }}
+          className="absolute"
+          style={{ left: `${(index * 15) % 90}%`, top: `${(index * 20) % 80}%` }}
+        >
+          <img src={resolveImage(src)} alt="floating-icon" className={`w-${16 + index % 4 * 4} h-auto object-contain drop-shadow-md`} />
+        </motion.div>
+      ))}
+    </div>
+);
+
+// ==========================================
 // 🚀 主程式
 // ==========================================
 
 const App = () => {
+  const [viewCount, setViewCount] = useState<number | null>(null);
+  const [user, setUser] = useState(null);
+  const hasIncremented = useRef(false);
+
+  // 1. 初始化 Firebase Auth
+  useEffect(() => {
+    const initAuth = async () => {
+      try {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+      } catch (error) {
+        console.error("🔥 Authentication Error: 請確認 Firebase 後台 Authentication -> Sign-in method -> Anonymous 是否已啟用。", error);
+      }
+    };
+    initAuth();
+    
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // 2. 處理瀏覽計數
+  useEffect(() => {
+    if (!user) return;
+    const statsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_stats');
+    if (!hasIncremented.current) {
+        hasIncremented.current = true;
+        setDoc(statsDocRef, { count: increment(1) }, { merge: true })
+          .catch(err => console.error("Error updating view count:", err));
+    }
+    const unsubscribe = onSnapshot(statsDocRef, (doc) => {
+        if (doc.exists()) {
+            setViewCount(doc.data().count);
+        } else {
+            setViewCount(0);
+        }
+    }, (error) => {
+        console.error("Error fetching view count:", error);
+    });
+    return () => unsubscribe();
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-[#fdfbf7] text-stone-700 font-['Patrick_Hand',_cursive] selection:bg-yellow-200 pb-20 overflow-hidden relative"
          style={{backgroundImage: `url(${ASSETS.paper})`}}>
@@ -917,9 +1029,12 @@ const App = () => {
           ))}
         </div>
       </main>
+      
+      {/* 📝 留言板區域 */}
+      <Guestbook />
 
-      <footer className="mt-32 pt-16 border-t border-stone-200 text-center relative z-10 bg-white/50 backdrop-blur-sm pb-10">
-         <div className="relative z-10 flex flex-col items-center justify-center gap-6 text-stone-400">
+      <footer className="pt-16 border-t border-stone-200 text-center relative z-10 bg-white/50 backdrop-blur-sm pb-10">
+         <div className="relative z-10 flex flex-col items-center justify-center gap-4 text-stone-400">
            <div className="flex gap-6">
              <Camera size={28} className="text-stone-300 hover:text-stone-500 transition-colors cursor-pointer" />
              <Backpack size={28} className="text-stone-300 hover:text-stone-500 transition-colors cursor-pointer" />
@@ -929,6 +1044,19 @@ const App = () => {
              © 2025 Family Travel Journal.<br/>
              <span className="text-xs font-normal uppercase tracking-widest text-stone-400 mt-2 block">Designed for Memories</span>
            </p>
+
+           {/* 流量統計 */}
+           <motion.div 
+             initial={{ opacity: 0, y: 10 }}
+             animate={{ opacity: 1, y: 0 }}
+             transition={{ delay: 1 }}
+             className="flex items-center gap-2 mt-2 px-3 py-1 bg-stone-100/50 rounded-full border border-stone-200"
+           >
+              <Eye size={14} className="text-stone-400" />
+              <span className="text-xs font-bold text-stone-500 tracking-wider">
+                 {viewCount !== null ? `${viewCount.toLocaleString()} 次造訪` : '...'}
+              </span>
+           </motion.div>
          </div>
       </footer>
     </div>
