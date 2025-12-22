@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { MapPin, Camera, Backpack, Plane, Sun, PawPrint, Dog, Cat, Star, Heart, Smile, Coffee, Map, Images, Video, ArrowRight, Calendar, RotateCw, ArrowUp } from 'lucide-react';
-import { motion, useScroll, useAnimation, AnimatePresence } from 'framer-motion';
+import { MapPin, Camera, Backpack, Plane, PawPrint, Dog, Cat, Star, Heart, Smile, Coffee, RotateCw, ArrowUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // ==========================================
 // 🎨 素材層 (ASSETS LAYER)
@@ -31,7 +31,22 @@ const ASSETS = {
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
 
-const allTrips = [
+// 定義 Trip 介面以解決隱式 any 問題
+interface Trip {
+  year: number;
+  season: string;
+  title: string;
+  location: string;
+  status: string;
+  type: string;
+  image: string;
+  images?: string[];
+  album: string;
+  plan: string;
+  vlog: string;
+}
+
+const allTrips: Trip[] = [
   { 
     year: 2025, season: "秋假", title: "日本東北", location: "日本 東北", status: "Done", type: "future", 
     image: "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
@@ -316,7 +331,7 @@ const allTrips = [
   },
 ];
 
-const resolveImage = (url) => {
+const resolveImage = (url: string) => {
   if (!url || url.includes("Upload") || url.includes("Paste")) return url;
   if (url.includes("drive.google.com")) {
     const idMatch = url.match(/\/d\/([^/]+)/);
@@ -330,7 +345,7 @@ const resolveImage = (url) => {
 // ==========================================
 // 🐕 吉祥物舉牌日期標籤
 // ==========================================
-const MascotLabel = ({ trip, index }) => {
+const MascotLabel = ({ trip, index }: { trip: Trip; index: number }) => {
   const mascotImg = index % 2 === 0 ? ASSETS.mascot1 : ASSETS.mascot2;
   return (
     <div className="absolute -top-[52px] md:-top-[80px] -left-[10px] md:-left-[20px] z-30 group-hover:animate-bounce-slight origin-bottom-left w-[120px] h-[120px] md:w-[160px] md:h-[160px]">
@@ -359,7 +374,7 @@ const MascotLabel = ({ trip, index }) => {
 };
 
 // 🌟 隨機貼紙元件
-const RandomSticker = ({ index }) => {
+const RandomSticker = ({ index }: { index: number }) => {
   const stickerData = useMemo(() => {
     const stickers = [
       { icon: <Coffee size={24} />, color: "text-amber-700", bg: "bg-amber-100", rotate: 12 },
@@ -397,7 +412,7 @@ const RandomSticker = ({ index }) => {
 };
 
 // 🏷️ 可愛動物紙膠帶元件
-const CuteWashiTape = ({ index }) => {
+const CuteWashiTape = ({ index }: { index: number }) => {
   const tapeColors = [
     "bg-red-100/90", "bg-blue-100/90", "bg-green-100/90", "bg-yellow-100/90", "bg-orange-100/90"
   ];
@@ -429,7 +444,7 @@ const CuteWashiTape = ({ index }) => {
 };
 
 // 📍 地點紙膠帶元件
-const LocationTapeLabel = ({ location, index }) => {
+const LocationTapeLabel = ({ location, index }: { location: string; index: number }) => {
     const rotate = (index % 2 === 0) ? -2 : 2; 
     return (
         <div 
@@ -454,7 +469,7 @@ const LocationTapeLabel = ({ location, index }) => {
 };
 
 // 📮 郵戳元件
-const PostalStamp = ({ status, index }) => {
+const PostalStamp = ({ status, index }: { status: string; index: number }) => {
     const stampImg = index % 2 === 0 ? ASSETS.stamp1 : ASSETS.stamp2;
     return (
         <div className="absolute -top-4 -right-4 z-10 opacity-90 rotate-12 pointer-events-none mix-blend-multiply shrink-0 w-32 h-auto">
@@ -580,11 +595,11 @@ const FloatingBackground = () => {
 // ==========================================
 // 🎴 單一卡片元件 (TripCard)
 // ==========================================
-const TripCard = ({ trip, index }) => {
+const TripCard = ({ trip, index }: { trip: Trip; index: number }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const randomRotate = (index % 5) - 2;
 
-  const validImages = trip.images ? trip.images.filter(img => img && img.trim() !== "") : [];
+  const validImages = trip.images ? trip.images.filter((img: string) => img && img.trim() !== "") : [];
   const displayImages = validImages.length > 0 ? validImages : [trip.image];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -594,14 +609,15 @@ const TripCard = ({ trip, index }) => {
     // 設定 4秒 換圖
     const interval = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
-    }, 6000); 
+    }, 4000); 
 
     return () => clearInterval(interval);
   }, [displayImages.length]);
 
-  const handleFlip = (e) => {
+  const handleFlip = (e: React.MouseEvent) => {
      // Check if click was on a link or button
-     if (e.target.closest('a') || e.target.closest('button')) return;
+     const target = e.target as HTMLElement;
+     if (target.closest('a') || target.closest('button')) return;
      setIsFlipped(!isFlipped);
   };
 
@@ -826,10 +842,15 @@ const App = () => {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
         .hand-drawn-border { stroke-linecap: round; stroke-linejoin: round; filter: url(#wobble); }
+        
+        /* 3D Flip Styles */
         .card-perspective { perspective: 1000px; }
         .card-inner { transform-style: preserve-3d; }
         .card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
         .card-back { transform: rotateY(180deg); }
+        /* Removed hover flip rule to support click flip */
+        
+        /* Slight bounce for peeking pets */
         @keyframes bounce-slight {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-3px); }
@@ -842,10 +863,16 @@ const App = () => {
       </svg>
 
       <FloatingBackground />
+      
+      {/* 🐶 新增：右下角吉祥物 (Travel Mascot) */}
       <TravelMascot />
 
+      {/* Header (Changed to Center Layout with New Logo) */}
       <header className="relative pt-10 pb-12 px-4 md:px-6 text-center z-10 max-w-6xl mx-auto">
+        
         <div className="flex flex-col items-center justify-center w-full mt-4 relative z-10">
+            
+            {/* New Main Theme Logo */}
             <motion.div 
               initial={{ opacity: 0, y: -20, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -861,6 +888,7 @@ const App = () => {
                 />
             </motion.div>
 
+            {/* Subtitle Text */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -873,9 +901,11 @@ const App = () => {
                     收集世界的角落，紀錄我們一起長大的時光。
                 </p>
             </motion.div>
+
         </div>
       </header>
 
+      {/* Main Content: Trip Cards */}
       <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
           {allTrips.map((trip, index) => (
