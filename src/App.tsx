@@ -4,15 +4,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Firebase Imports
 import { initializeApp } from "firebase/app";
-import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "firebase/auth";
 import { 
-  getFirestore, doc, setDoc, updateDoc, 
-  increment, onSnapshot, collection, addDoc, 
-  query, orderBy, serverTimestamp, getDoc 
+  getAuth, 
+  signInAnonymously, 
+  onAuthStateChanged, 
+  signInWithCustomToken,
+  User
+} from "firebase/auth";
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  increment, 
+  onSnapshot, 
+  collection, 
+  addDoc, 
+  query, 
+  orderBy, 
+  serverTimestamp,
+  DocumentSnapshot,
+  QuerySnapshot
 } from "firebase/firestore";
 
 // ==========================================
-// 🟢 你的 Firebase Config (已填入)
+// 🟢 你的 Firebase Config
 // ==========================================
 const firebaseConfig = {
   apiKey: "AIzaSyBSVyHMDAqc8JkeZuCjmAGyPSu8oDN543Y",
@@ -28,10 +43,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+// [設定] 使用固定的 App ID
+const appId = 'family-travel-journal';
 
 // ==========================================
-// 🎨 素材層
+// 🎨 素材層 (ASSETS LAYER)
 // ==========================================
 const ASSETS = {
   mainTheme: "https://drive.google.com/file/d/1DkyWE7T3BSV5PGyYiRCaHlCeaR-kskBO/view?usp=drive_link",
@@ -56,7 +72,7 @@ const ASSETS = {
 };
 
 // ==========================================
-// 🗂️ 資料層
+// 🗂️ 資料層 (DATA LAYER)
 // ==========================================
 
 interface Trip {
@@ -524,14 +540,11 @@ const LikeButton = ({ tripId }: { tripId: string }) => {
     const [likes, setLikes] = useState(0);
     const [liked, setLiked] = useState(false);
 
-    // 🟢 [FIX 2] 修改路徑結構，確保是 偶數層 (Coll/Doc/Coll/Doc)
-    // 舊: .../data/likes_日本東北 (5層 -> Error)
-    // 新: .../data/trip_likes/日本東北 (6層 -> OK)
-    // 'trip_likes' 是集合名稱，'tripId' 是文件 ID
+    // [路徑修正] 路徑為: 'collection/docId/collection/docId' (偶數層)
     const likeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'trip_likes', tripId);
 
     useEffect(() => {
-        const unsubscribe = onSnapshot(likeDocRef, (doc) => {
+        const unsubscribe = onSnapshot(likeDocRef, (doc: DocumentSnapshot) => {
             if (doc.exists()) {
                 setLikes(doc.data().count || 0);
             }
@@ -751,14 +764,14 @@ const Guestbook = () => {
             collection(db, 'artifacts', appId, 'public', 'data', 'guestbook'), 
             orderBy('createdAt', 'desc')
         );
-        const unsubscribe = onSnapshot(q, (snapshot) => {
+        const unsubscribe = onSnapshot(q, (snapshot: QuerySnapshot) => {
             const msgs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             setMessages(msgs);
         });
         return () => unsubscribe();
     }, []);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         if (!name.trim() || !msg.trim()) return;
 
@@ -856,8 +869,9 @@ const Guestbook = () => {
 };
 
 // ==========================================
-// 🟢 [FIX 3] 移除 App 內部的元件定義，移到外部
+// 🚀 主程式
 // ==========================================
+
 const TravelMascot = () => {
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -914,31 +928,23 @@ const FloatingBackground = () => (
     </div>
 );
 
-// ==========================================
-// 🚀 主程式
-// ==========================================
-
 const App = () => {
   const [viewCount, setViewCount] = useState<number | null>(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const hasIncremented = useRef(false);
 
   // 1. 初始化 Firebase Auth
   useEffect(() => {
     const initAuth = async () => {
       try {
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
+        await signInAnonymously(auth);
       } catch (error) {
         console.error("🔥 Authentication Error: 請確認 Firebase 後台 Authentication -> Sign-in method -> Anonymous 是否已啟用。", error);
       }
     };
     initAuth();
     
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser: any) => {
       setUser(currentUser);
     });
     return () => unsubscribe();
@@ -947,19 +953,20 @@ const App = () => {
   // 2. 處理瀏覽計數
   useEffect(() => {
     if (!user) return;
-    const statsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_stats');
+    // [FIX HERE] 修正為 6 層路徑 (加入 'total' 文件 ID)
+    const statsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_stats', 'total');
     if (!hasIncremented.current) {
         hasIncremented.current = true;
         setDoc(statsDocRef, { count: increment(1) }, { merge: true })
-          .catch(err => console.error("Error updating view count:", err));
+          .catch((err: any) => console.error("Error updating view count:", err));
     }
-    const unsubscribe = onSnapshot(statsDocRef, (doc) => {
+    const unsubscribe = onSnapshot(statsDocRef, (doc: DocumentSnapshot) => {
         if (doc.exists()) {
             setViewCount(doc.data().count);
         } else {
             setViewCount(0);
         }
-    }, (error) => {
+    }, (error: any) => {
         console.error("Error fetching view count:", error);
     });
     return () => unsubscribe();
