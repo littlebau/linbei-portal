@@ -45,21 +45,7 @@ const ASSETS = {
 // 🗂️ 資料層 (DATA LAYER)
 // ==========================================
 
-interface Trip {
-  year: number;
-  season: string;
-  title: string;
-  location: string;
-  status: string;
-  type: string;
-  image: string;     // 主要封面圖 (兼容舊資料)
-  images?: string[]; // [NEW] 支援多張輪播圖片
-  album: string;
-  plan: string;
-  vlog: string;
-}
-
-const allTrips: Trip[] = [
+const allTrips = [
   { 
     year: 2025, season: "秋假", title: "日本東北", location: "日本 東北", status: "Done", type: "future", 
     image: "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
@@ -345,7 +331,7 @@ const allTrips: Trip[] = [
 ];
 
 // 🔧 圖片轉換器
-const resolveImage = (url: string) => {
+const resolveImage = (url) => {
   if (!url || url.includes("Upload") || url.includes("Paste")) return url;
   if (url.includes("drive.google.com")) {
     const idMatch = url.match(/\/d\/([^/]+)/);
@@ -360,7 +346,7 @@ const resolveImage = (url: string) => {
 // 🐕 吉祥物舉牌日期標籤 (Mascot Sign Label)
 // ==========================================
 // [Modified] Scaled up mascot image and container by approx 2x
-const MascotLabel = ({ trip, index }: { trip: Trip, index: number }) => {
+const MascotLabel = ({ trip, index }) => {
   
   // 交錯使用 Mascot 1 和 Mascot 2
   const mascotImg = index % 2 === 0 ? ASSETS.mascot1 : ASSETS.mascot2;
@@ -396,7 +382,7 @@ const MascotLabel = ({ trip, index }: { trip: Trip, index: number }) => {
 };
 
 // 🌟 隨機貼紙元件
-const RandomSticker = ({ index }: { index: number }) => {
+const RandomSticker = ({ index }) => {
   const stickerData = useMemo(() => {
     const stickers = [
       { icon: <Coffee size={24} />, color: "text-amber-700", bg: "bg-amber-100", rotate: 12 },
@@ -434,7 +420,7 @@ const RandomSticker = ({ index }: { index: number }) => {
 };
 
 // 🏷️ 可愛動物紙膠帶元件
-const CuteWashiTape = ({ index }: { index: number }) => {
+const CuteWashiTape = ({ index }) => {
   const tapeColors = [
     "bg-red-100/90", "bg-blue-100/90", "bg-green-100/90", "bg-yellow-100/90", "bg-orange-100/90"
   ];
@@ -467,7 +453,7 @@ const CuteWashiTape = ({ index }: { index: number }) => {
 };
 
 // 📍 地點紙膠帶元件
-const LocationTapeLabel = ({ location, index }: { location: string, index: number }) => {
+const LocationTapeLabel = ({ location, index }) => {
     const rotate = (index % 2 === 0) ? -2 : 2; 
     
     return (
@@ -493,7 +479,7 @@ const LocationTapeLabel = ({ location, index }: { location: string, index: numbe
 };
 
 // 📮 郵戳元件 (New: Image Based)
-const PostalStamp = ({ status, index }: { status: string, index: number }) => {
+const PostalStamp = ({ status, index }) => {
     // 交錯使用 Stamp 1 和 Stamp 2
     const stampImg = index % 2 === 0 ? ASSETS.stamp1 : ASSETS.stamp2;
 
@@ -626,7 +612,7 @@ const FloatingBackground = () => {
 // ==========================================
 // 🎴 單一卡片元件 (Handle Flip State Here)
 // ==========================================
-const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
+const TripCard = ({ trip, index }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const randomRotate = (index % 5) - 2;
 
@@ -641,17 +627,20 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
   useEffect(() => {
     if (displayImages.length <= 1) return;
     
+    // ==========================================================
+    // 💡 設定在這裡：8000 毫秒 = 8 秒
+    // ==========================================================
     const interval = setInterval(() => {
         setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
-    }, 8000); // Change every 5 seconds
+    }, 8000); //
 
     return () => clearInterval(interval);
   }, [displayImages.length]);
 
   // 點擊翻轉處理
-  const handleFlip = (e: React.MouseEvent) => {
+  const handleFlip = (e) => {
      // 如果點擊的是連結(按鈕)，不要翻轉
-     if ((e.target as HTMLElement).closest('a')) return;
+     if (e.target.closest('a')) return;
      setIsFlipped(!isFlipped);
   };
 
@@ -684,8 +673,8 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
                    
                    {/* [NEW] Photo Logic: Slideshow or Ken Burns Single Image */}
-                   {/* Removed mode="popLayout" to enable cross-dissolve effect */}
-                   <AnimatePresence>
+                   {/* Changed to mode="wait" for fade-out then fade-in effect */}
+                   <AnimatePresence mode="wait">
                       {displayImages[0] ? (
                           <>
                              {/* 1. [NEW] 模糊背景層 (Blurred Background Layer) 
@@ -696,7 +685,7 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                transition={{ duration: 2, ease: "easeInOut" }} // Increased duration and smoother ease
+                                transition={{ duration: 1.2, ease: "easeInOut" }} // 👈 這裡設定背景淡入淡出時間 (目前0.8秒)
                                 className="absolute inset-0 z-0"
                              >
                                 <img 
@@ -716,13 +705,13 @@ const TripCard = ({ trip, index }: { trip: Trip, index: number }) => {
                                   className="absolute inset-0 w-full h-full object-contain z-10 shadow-sm" // z-10 on top
                                   referrerPolicy="no-referrer"
                                   
-                                  // [NEW] Ken Burns Effect (Slow Zoom) & Crossfade
-                                  initial={{ opacity: 0, scale: 1 }}
-                                  animate={{ opacity: 1, scale: 1.05 }} // Slight zoom
-                                  exit={{ opacity: 0 }}
+                                  // [NEW] Blur Reveal Effect (夢幻模糊顯影)
+                                  initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+                                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                  exit={{ opacity: 0, scale: 0.95, filter: "blur(5px)" }} // Slight zoom out on exit
                                   transition={{ 
-                                      opacity: { duration: 1.5, ease: "easeInOut" }, // Smoother crossfade (1.5s)
-                                      scale: { duration: 8, ease: "linear" } // Faster zoom feel
+                                      duration: 1.2, // 👈 這裡設定轉場持續時間，為了夢幻感設為 1.2秒
+                                      ease: "easeInOut" 
                                   }}
                               />
                           </>
