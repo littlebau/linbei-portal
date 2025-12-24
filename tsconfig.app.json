@@ -18,7 +18,7 @@
     "jsx": "react-jsx",
 
     /* Linting - 幫您放寬標準，寫起來比較輕鬆 */
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true

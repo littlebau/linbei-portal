@@ -31,7 +31,7 @@ import {
 // ==========================================
 // ⚠️ 開發模式開關 (上線前請務必檢查！)
 // ==========================================
-const ENABLE_DEV_TOOLS = flase; 
+const ENABLE_DEV_TOOLS = false; 
 
 // ==========================================
 // 🎨 自定義年份 Icon 設定區
@@ -710,7 +710,8 @@ const LikeButton = ({ tripId, user }: { tripId: string, user: User | null }) => 
 // 🎴 單一卡片元件 (TripCard)
 // ==========================================
 // [修改] 增加 tripId 屬性，並使用 forwardRef 解決 Framer Motion 問題
-const TripCard = React.forwardRef(({ trip, tripId, visualIndex, user, accessLevel }: { trip: Trip; tripId: string; visualIndex: number, user: User | null, accessLevel: AccessLevel }, ref: React.Ref<HTMLDivElement>) => {
+// [新增] 加上 index: number 到 Props 定義中，解決 TypeScript 錯誤
+const TripCard = React.forwardRef(({ trip, tripId, visualIndex, index, user, accessLevel }: { trip: Trip; tripId: string; visualIndex: number; index: number; user: User | null; accessLevel: AccessLevel }, ref: React.Ref<HTMLDivElement>) => {
   const [isFlipped, setIsFlipped] = useState(false);
   
   // 使用穩定的 visualIndex 計算旋轉角度，確保篩選時卡片樣子不變
@@ -781,7 +782,8 @@ const TripCard = React.forwardRef(({ trip, tripId, visualIndex, user, accessLeve
       whileInView={{ opacity: 1, y: 0, rotate: randomRotate }}
       whileHover={{ y: -5, rotate: 0, zIndex: 10 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: (visualIndex % 3) * 0.1 }}
+      // [優化] 使用 index 來計算延遲，讓動畫依序出現 (0.1, 0.2, 0.3...)
+      transition={{ duration: 0.5, delay: (index % 3) * 0.1 }}
       className="group relative w-full h-[28rem] md:h-[32rem] card-perspective cursor-pointer"
       onClick={handleFlip}
     >
