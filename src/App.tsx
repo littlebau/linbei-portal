@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert, ChevronLeft, ChevronRight } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert, ChevronLeft, ChevronRight, Hand } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Firebase Imports
@@ -697,6 +697,7 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
 
   const validImages = trip.images ? trip.images.filter((img) => img && img.trim() !== "") : [];
   const displayImages = validImages.length > 0 ? validImages : [trip.image];
+  const hasMultipleImages = displayImages.length > 1;
   
   // [修改] 使用 page 和 direction 來控制圖片切換與動畫方向
   const [[page, direction], setPage] = useState([0, 0]);
@@ -735,7 +736,7 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
   const handleFlip = (e: React.MouseEvent) => {
       const target = e.target as HTMLElement;
       // 避免點擊到連結或按鈕時翻面
-      if (target.closest('a') || target.closest('button') || target.closest('.like-btn') || target.closest('.group\\/like')) return;
+      if (target.closest('a') || target.closest('button') || target.closest('.like-btn') || target.closest('.group\\/like') || target.closest('.nav-btn')) return;
       setIsFlipped(!isFlipped);
   };
 
@@ -777,7 +778,7 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
                     
                     {displayImages.length > 0 ? (
-                      <div className="relative w-full h-full overflow-hidden">
+                      <div className="relative w-full h-full overflow-hidden group/image">
                           {/* 背景模糊層 - 隨圖片淡入淡出 */}
                           <div className="absolute inset-0 z-0">
                              <img 
@@ -819,16 +820,54 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
                              />
                           </AnimatePresence>
 
-                          {/* [新增] 只有多張圖片時才顯示分頁點 */}
-                          {displayImages.length > 1 && (
-                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 p-1 px-2 rounded-full bg-black/20 backdrop-blur-sm">
-                                {displayImages.map((_, idx) => (
-                                    <div 
-                                        key={idx}
-                                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === imageIndex ? 'bg-white w-2 h-2' : 'bg-white/50'}`}
-                                    />
-                                ))}
-                            </div>
+                          {/* [新增] 只有多張圖片時才顯示導航與提示 */}
+                          {hasMultipleImages && (
+                            <>
+                                {/* 左箭頭 (電腦版/手機版皆可點) */}
+                                <button
+                                    className="nav-btn absolute left-1 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-black/20 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-all opacity-0 group-hover/image:opacity-100"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        paginate(-1);
+                                    }}
+                                >
+                                    <ChevronLeft size={20} />
+                                </button>
+
+                                {/* 右箭頭 */}
+                                <button
+                                    className="nav-btn absolute right-1 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-black/20 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-all opacity-0 group-hover/image:opacity-100"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        paginate(1);
+                                    }}
+                                >
+                                    <ChevronRight size={20} />
+                                </button>
+
+                                {/* 滑動/數量提示標籤 */}
+                                <div className="absolute top-2 right-2 z-20 bg-black/40 backdrop-blur-md px-2 py-1 rounded-md text-white text-[10px] font-bold flex items-center gap-1 pointer-events-none opacity-80">
+                                    <ImageIcon size={10} />
+                                    <span>{imageIndex + 1} / {displayImages.length}</span>
+                                </div>
+
+                                {/* 手勢提示 (僅在 hover 時顯示更詳細的滑動提示) */}
+                                <div className="absolute top-2 left-2 z-20 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                    <div className="bg-black/40 backdrop-blur-md px-2 py-1 rounded-md text-white text-[10px] flex items-center gap-1">
+                                        <Hand size={10} /> 左右滑動
+                                    </div>
+                                </div>
+
+                                {/* 分頁圓點 */}
+                                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 p-1 px-2 rounded-full bg-black/20 backdrop-blur-sm pointer-events-none">
+                                    {displayImages.map((_, idx) => (
+                                        <div 
+                                            key={idx}
+                                            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === imageIndex ? 'bg-white w-2 h-2' : 'bg-white/50'}`}
+                                        />
+                                    ))}
+                                </div>
+                            </>
                           )}
                        </div>
                     ) : (
