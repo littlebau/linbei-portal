@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Firebase Imports
@@ -688,7 +688,6 @@ const LikeButton = ({ tripIndex, user }: { tripIndex: number, user: User | null 
 // ==========================================
 // 🎴 單一卡片元件 (TripCard)
 // ==========================================
-// [修改] 增加 accessLevel prop 傳入
 const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: number, user: User | null, accessLevel: AccessLevel }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const randomRotate = (index % 5) - 2;
@@ -698,20 +697,46 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
 
   const validImages = trip.images ? trip.images.filter((img) => img && img.trim() !== "") : [];
   const displayImages = validImages.length > 0 ? validImages : [trip.image];
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
+  // [修改] 使用 page 和 direction 來控制圖片切換與動畫方向
+  const [[page, direction], setPage] = useState([0, 0]);
+  const imageIndex = Math.abs(page % displayImages.length);
 
-  useEffect(() => {
-    if (displayImages.length <= 1) return;
-    const interval = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % displayImages.length);
-    }, 4000); 
-    return () => clearInterval(interval);
-  }, [displayImages.length]);
+  const paginate = (newDirection: number) => {
+    setPage([page + newDirection, newDirection]);
+  };
+
+  const variants = {
+    enter: (direction: number) => {
+      return {
+        x: direction > 0 ? 300 : -300,
+        opacity: 0
+      };
+    },
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (direction: number) => {
+      return {
+        zIndex: 0,
+        x: direction < 0 ? 300 : -300,
+        opacity: 0
+      };
+    }
+  };
+
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset: number, velocity: number) => {
+    return Math.abs(offset) * velocity;
+  };
 
   const handleFlip = (e: React.MouseEvent) => {
-     const target = e.target as HTMLElement;
-     if (target.closest('a') || target.closest('button') || target.closest('.like-btn') || target.closest('.group\\/like')) return;
-     setIsFlipped(!isFlipped);
+      const target = e.target as HTMLElement;
+      // 避免點擊到連結或按鈕時翻面
+      if (target.closest('a') || target.closest('button') || target.closest('.like-btn') || target.closest('.group\\/like')) return;
+      setIsFlipped(!isFlipped);
   };
 
   // [功能] 處理相簿點擊
@@ -751,52 +776,70 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
           >
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
                     
-                    <AnimatePresence>
-                      {displayImages[0] ? (
-                          <div key="image-container" className="absolute inset-0">
-                             {/* 背景模糊層 */}
-                             <motion.div
-                                key={`bg-${currentImageIndex}`}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 1.5, ease: "easeInOut" }}
-                                className="absolute inset-0 z-0"
-                             >
-                                <img 
-                                    src={resolveImage(displayImages[currentImageIndex])} 
-                                    alt="Background Blur"
-                                    className="w-full h-full object-cover filter blur-xl opacity-60 scale-110" 
-                                />
-                             </motion.div>
+                    {displayImages.length > 0 ? (
+                      <div className="relative w-full h-full overflow-hidden">
+                          {/* 背景模糊層 - 隨圖片淡入淡出 */}
+                          <div className="absolute inset-0 z-0">
+                             <img 
+                                src={resolveImage(displayImages[imageIndex])} 
+                                alt="Background Blur"
+                                className="w-full h-full object-cover filter blur-xl opacity-60 scale-110 transition-all duration-500" 
+                             />
+                          </div>
 
-                             {/* 主圖片層 */}
+                          {/* [修改] 手勢滑動主圖片層 */}
+                          <AnimatePresence initial={false} custom={direction}>
                              <motion.img 
-                                  key={`img-${currentImageIndex}`}
-                                  src={resolveImage(displayImages[currentImageIndex])} 
-                                  alt={trip.title} 
-                                  className="absolute inset-0 w-full h-full object-contain z-10 shadow-sm"
-                                  referrerPolicy="no-referrer"
-                                  initial={{ opacity: 0, scale: 1.1, filter: "blur(8px)" }}
-                                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                                  exit={{ opacity: 0, zIndex: 0 }} 
-                                  transition={{ 
-                                      opacity: { duration: 1.2, ease: "easeInOut" },
-                                      filter: { duration: 1.2, ease: "easeInOut" },
-                                      scale: { duration: 6, ease: "linear" } 
-                                  }}
-                              />
+                                 key={page}
+                                 src={resolveImage(displayImages[imageIndex])} 
+                                 custom={direction}
+                                 variants={variants}
+                                 initial="enter"
+                                 animate="center"
+                                 exit="exit"
+                                 transition={{
+                                   x: { type: "spring", stiffness: 300, damping: 30 },
+                                   opacity: { duration: 0.2 }
+                                 }}
+                                 drag="x"
+                                 dragConstraints={{ left: 0, right: 0 }}
+                                 dragElastic={1}
+                                 onDragEnd={(e, { offset, velocity }) => {
+                                   const swipe = swipePower(offset.x, velocity.x);
+                                   // 阻止事件冒泡以免觸發翻卡，雖然 Framer Motion 的 drag 通常會阻止 click，但保險起見
+                                   if (swipe < -swipeConfidenceThreshold) {
+                                     paginate(1);
+                                   } else if (swipe > swipeConfidenceThreshold) {
+                                     paginate(-1);
+                                   }
+                                 }}
+                                 // 點擊圖片本身也可以翻面，不阻擋 onClick
+                                 className="absolute inset-0 w-full h-full object-contain z-10 shadow-sm cursor-grab active:cursor-grabbing"
+                                 referrerPolicy="no-referrer"
+                             />
+                          </AnimatePresence>
+
+                          {/* [新增] 只有多張圖片時才顯示分頁點 */}
+                          {displayImages.length > 1 && (
+                            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1.5 p-1 px-2 rounded-full bg-black/20 backdrop-blur-sm">
+                                {displayImages.map((_, idx) => (
+                                    <div 
+                                        key={idx}
+                                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === imageIndex ? 'bg-white w-2 h-2' : 'bg-white/50'}`}
+                                    />
+                                ))}
+                            </div>
+                          )}
+                       </div>
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
+                          <div className="absolute inset-0 opacity-30" style={{backgroundImage: `url(${ASSETS.paper})`}}></div>
+                          <div className="relative z-10 w-[80%] h-[70%] border-2 border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center gap-3 bg-white/50 backdrop-blur-sm">
+                              <Camera size={40} className="text-stone-300/80" />
+                              <span className="text-sm font-bold tracking-widest text-stone-400 font-['Patrick_Hand']">正在挑選照片中...</span>
                           </div>
-                        ) : (
-                          <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
-                              <div className="absolute inset-0 opacity-30" style={{backgroundImage: `url(${ASSETS.paper})`}}></div>
-                              <div className="relative z-10 w-[80%] h-[70%] border-2 border-dashed border-stone-300 rounded-lg flex flex-col items-center justify-center gap-3 bg-white/50 backdrop-blur-sm">
-                                  <Camera size={40} className="text-stone-300/80" />
-                                  <span className="text-sm font-bold tracking-widest text-stone-400 font-['Patrick_Hand']">正在挑選照片中...</span>
-                              </div>
-                          </div>
-                        )}
-                    </AnimatePresence>
+                      </div>
+                    )}
                     
                     <PostalStamp status={trip.status} index={index} />
                     
