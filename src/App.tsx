@@ -31,7 +31,7 @@ import {
 // ==========================================
 // ⚠️ 開發模式開關 (上線前請務必檢查！)
 // ==========================================
-const ENABLE_DEV_TOOLS = true; 
+const ENABLE_DEV_TOOLS = false; 
 
 // ==========================================
 // 🎨 自定義年份 Icon 設定區
@@ -518,43 +518,66 @@ const allTrips: Trip[] = [
 // ==========================================
 // 🐕 吉祥物元件 (TravelMascot)
 // ==========================================
+// ==========================================
+// 🐕 吉祥物元件 (TravelMascot) - 已修改為可愛互動版
+// ==========================================
 const TravelMascot = () => {
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-    return (
-        <motion.div
-        initial={{ x: 200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
-        className="fixed bottom-2 right-4 z-50 cursor-pointer group flex flex-col items-end"
-        onClick={scrollToTop}
-        >
-        <motion.div 
-            initial={{ scale: 0, opacity: 0, y: 10 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            transition={{ delay: 2.5, type: "spring" }}
-            className="relative bg-white border-2 border-stone-800 rounded-2xl py-2 px-4 shadow-lg mb-1 mr-4 origin-bottom-right"
-        >
-            <span className="text-stone-800 font-black text-sm md:text-base whitespace-nowrap tracking-wider font-['Patrick_Hand'] flex items-center gap-1">
-                林北三人成團 GO! 🚀
-            </span>
-            <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white border-b-2 border-r-2 border-stone-800 transform rotate-45"></div>
-        </motion.div>
-        <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="relative"
-        >
-            <motion.img 
-            whileHover={{ scale: 1.1, rotate: -10, transition: { type: "spring", stiffness: 300 } }}
-            src={resolveImage(ASSETS.groupMascot)} 
-            alt="Group Mascot" 
-            className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
-            />
-        </motion.div>
-        </motion.div>
-    );
+  // 用來控制點擊後的興奮狀態
+  const [isExcited, setIsExcited] = useState(false);
+
+  const handleInteract = () => {
+      // 觸發可愛反應
+      setIsExcited(true);
+      // 設定 700ms 後恢復原狀 (配合動畫時間)
+      setTimeout(() => setIsExcited(false), 700);
+  };
+
+  return (
+      <motion.div
+          initial={{ x: 200, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
+          className="fixed bottom-2 right-4 z-50 cursor-pointer select-none" // select-none 防止快速點擊選取到圖片
+          onClick={handleInteract}
+      >
+          {/* 氣泡對話框已移除 */}
+
+          <motion.div
+              // 這裡控制動畫邏輯：
+              // 如果 isExcited (被點到) -> 執行跳躍 + 旋轉 + 放大
+              // 否則 -> 執行輕鬆的漂浮 + 微微晃動
+              animate={isExcited ? {
+                  y: [0, -60, 0],           // 跳起來的高度
+                  rotate: [0, -20, 20, -10, 10, 0], // 劇烈搖擺 (撒嬌感)
+                  scale: [1, 1.25, 1]       // 瞬間放大
+              } : {
+                  y: [0, -10, 0],           // 平常的呼吸感漂浮
+                  rotate: [0, 3, -3, 0],    // 平常微微的轉頭，比較不呆板
+                  scale: 1
+              }}
+              
+              // 動畫的時間設定
+              transition={isExcited ? {
+                  duration: 0.6,            // 反應要快才可愛
+                  ease: "easeInOut"
+              } : {
+                  duration: 3,              // 平常慢慢漂
+                  repeat: Infinity,
+                  ease: "easeInOut"
+              }}
+              className="relative"
+          >
+              <motion.img 
+                  // 滑鼠游標移上去時，稍微放大一點點就好，不要搶了點擊的戲
+                  whileHover={{ scale: 1.05 }}
+                  src={resolveImage(ASSETS.groupMascot)} 
+                  alt="Group Mascot" 
+                  className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
+                  style={{ filter: "drop-shadow(0px 10px 15px rgba(0,0,0,0.3))" }} // 加強一點影子讓跳起來更有感
+              />
+          </motion.div>
+      </motion.div>
+  );
 };
 
 // ==========================================
