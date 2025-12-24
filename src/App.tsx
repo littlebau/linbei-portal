@@ -1439,8 +1439,8 @@ const App = () => {
 
       <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
         {/* Sticky Header Container */}
-        <div className="sticky top-4 z-40 mb-8 md:mb-12 transition-all duration-300">
-            <div className="flex items-center justify-center max-w-4xl mx-auto">
+        <div className="sticky top-4 z-40 mb-8 md:mb-12 transition-all duration-300 w-full px-2 md:px-0">
+            <div className="flex items-center max-w-4xl mx-auto w-full">
                 {/* Fixed 'All' Button */}
                 <div className="flex-shrink-0 mr-2 z-10">
                     <button
@@ -1463,7 +1463,7 @@ const App = () => {
                 <div className="w-[2px] h-8 bg-stone-300 mx-2 hidden md:block rounded-full opacity-50"></div>
 
                 {/* Horizontal Scrollable Timeline */}
-                <div className="flex-1 overflow-x-auto no-scrollbar mask-gradient relative">
+                <div className="flex-1 overflow-x-auto no-scrollbar mask-gradient relative min-w-0">
                     <div className="flex items-center gap-3 pb-2 pt-2 px-2">
                         {uniqueYears.map((year, idx) => {
                             // 判斷該年份是否使用通用的 ICON，或是有特別指定
