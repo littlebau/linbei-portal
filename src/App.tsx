@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert, ChevronLeft, ChevronRight, Hand } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert, ChevronLeft, ChevronRight, Hand, Calendar, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Firebase Imports
@@ -1235,6 +1235,19 @@ const App = () => {
   const [accessLevel, setAccessLevel] = useState<AccessLevel>('NONE');
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
 
+  // [新增] 年份篩選邏輯
+  const [selectedYear, setSelectedYear] = useState<number | 'ALL'>('ALL');
+  
+  const uniqueYears = useMemo(() => {
+      const years = Array.from(new Set(allTrips.map(t => t.year)));
+      return years.sort((a, b) => b - a);
+  }, []);
+
+  const filteredTrips = useMemo(() => {
+      if (selectedYear === 'ALL') return allTrips;
+      return allTrips.filter(t => t.year === selectedYear);
+  }, [selectedYear]);
+
   // 1. [新增] 檢查網址 Token (在元件載入時執行一次)
   useEffect(() => {
       const searchParams = new URLSearchParams(window.location.search);
@@ -1365,11 +1378,48 @@ const App = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
-          {allTrips.map((trip, index) => (
-            <TripCard key={index} trip={trip} index={index} user={user} accessLevel={accessLevel} />
-          ))}
+        {/* 年份篩選器 */}
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12 sticky top-2 z-40 py-2 px-2 rounded-xl backdrop-blur-md bg-white/30 transition-all">
+            <button
+                onClick={() => setSelectedYear('ALL')}
+                className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-sm md:text-base font-bold transition-all shadow-sm ${
+                    selectedYear === 'ALL' 
+                    ? 'bg-stone-800 text-white scale-105' 
+                    : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                }`}
+            >
+                <Filter size={14} />
+                全部 ({allTrips.length})
+            </button>
+            {uniqueYears.map(year => (
+                <button
+                    key={year}
+                    onClick={() => setSelectedYear(year)}
+                    className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-sm md:text-base font-bold transition-all shadow-sm ${
+                        selectedYear === year 
+                        ? 'bg-stone-800 text-white scale-105' 
+                        : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                    }`}
+                >
+                    <Calendar size={14} className={selectedYear === year ? 'text-white' : 'text-stone-400'} />
+                    {year}
+                </button>
+            ))}
         </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
+          <AnimatePresence mode="popLayout">
+            {filteredTrips.map((trip, index) => (
+                <TripCard key={`${trip.year}-${trip.season}-${index}`} trip={trip} index={index} user={user} accessLevel={accessLevel} />
+            ))}
+          </AnimatePresence>
+        </div>
+        
+        {filteredTrips.length === 0 && (
+            <div className="text-center py-20 text-stone-400 font-bold text-xl">
+                這裡空空如也，就像還沒出發的旅行一樣 🛫
+            </div>
+        )}
       </main>
 
       {/* 📝 留言板區塊 */}
