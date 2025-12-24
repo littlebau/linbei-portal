@@ -1438,11 +1438,11 @@ const App = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
-        {/* Sticky Header Container */}
+        {/* Sticky Header Container - Modified for Multi-line */}
         <div className="sticky top-4 z-40 mb-8 md:mb-12 transition-all duration-300 w-full px-2 md:px-0">
-            <div className="flex items-center max-w-4xl mx-auto w-full">
-                {/* Fixed 'All' Button */}
-                <div className="flex-shrink-0 mr-2 z-10">
+            <div className="max-w-4xl mx-auto w-full bg-white/80 backdrop-blur-md shadow-lg rounded-2xl p-3 border border-stone-100/50">
+                <div className="flex flex-wrap items-center justify-center gap-2 md:gap-3">
+                    {/* Fixed 'All' Button */}
                     <button
                         onClick={() => setSelectedYear('ALL')}
                         className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm md:text-base font-bold transition-all shadow-sm border-2 transform ${
@@ -1457,50 +1457,44 @@ const App = () => {
                         <Filter size={16} />
                         <span className="whitespace-nowrap">全部 ({allTrips.length})</span>
                     </button>
-                </div>
-                
-                {/* Visual Divider */}
-                <div className="w-[2px] h-8 bg-stone-300 mx-2 hidden md:block rounded-full opacity-50"></div>
+                    
+                    {/* Visual Divider */}
+                    <div className="w-[1px] h-6 bg-stone-300/50 mx-1 hidden md:block"></div>
 
-                {/* Horizontal Scrollable Timeline */}
-                <div className="flex-1 overflow-x-auto no-scrollbar mask-gradient relative min-w-0">
-                    <div className="flex items-center gap-3 pb-2 pt-2 px-2">
-                        {uniqueYears.map((year, idx) => {
-                            // 判斷該年份是否使用通用的 ICON，或是有特別指定
-                            // 若 YEAR_ICONS 有指定就用指定的，否則用 UNIVERSAL_YEAR_ICON
-                            const iconUrl = YEAR_ICONS[String(year)] || UNIVERSAL_YEAR_ICON;
-                            
-                            return (
-                                <button
-                                    key={year}
-                                    onClick={() => setSelectedYear(year)}
-                                    className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm md:text-base font-bold transition-all shadow-sm border-2 relative overflow-hidden group ${
-                                        selectedYear === year 
-                                        ? 'bg-[#fff59d] text-stone-800 border-[#fff59d] -rotate-1 scale-105 shadow-md z-10' 
-                                        : 'bg-white/80 backdrop-blur-sm text-stone-500 hover:bg-white border-dashed border-stone-300 hover:border-stone-400 hover:rotate-1'
-                                    }`}
-                                    style={{
-                                        boxShadow: selectedYear === year ? '2px 2px 0px rgba(0,0,0,0.1)' : 'none',
-                                        transform: selectedYear === year ? `rotate(${idx % 2 === 0 ? 2 : -2}deg) scale(1.05)` : undefined
-                                    }}
-                                >
-                                    {/* "Washi Tape" effect on top for active items */}
-                                    {selectedYear === year && (
-                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-white/40 rotate-2 pointer-events-none mix-blend-overlay"></div>
-                                    )}
-                                    
-                                    <img 
-                                        src={resolveImage(iconUrl)} 
-                                        alt={String(year)} 
-                                        className="w-10 h-10 object-contain drop-shadow-sm" 
-                                    />
-                                    {year}
-                                </button>
-                            );
-                        })}
-                        {/* Right padding to ensure last item isn't cut off */}
-                        <div className="w-4 flex-shrink-0"></div>
-                    </div>
+                    {/* Year Buttons - Wrapping */}
+                    {uniqueYears.map((year, idx) => {
+                        // 判斷該年份是否使用通用的 ICON，或是有特別指定
+                        // 若 YEAR_ICONS 有指定就用指定的，否則用 UNIVERSAL_YEAR_ICON
+                        const iconUrl = YEAR_ICONS[String(year)] || UNIVERSAL_YEAR_ICON;
+                        
+                        return (
+                            <button
+                                key={year}
+                                onClick={() => setSelectedYear(year)}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm md:text-base font-bold transition-all shadow-sm border-2 relative overflow-hidden group ${
+                                    selectedYear === year 
+                                    ? 'bg-[#fff59d] text-stone-800 border-[#fff59d] -rotate-1 scale-105 shadow-md z-10' 
+                                    : 'bg-white/80 backdrop-blur-sm text-stone-500 hover:bg-white border-dashed border-stone-300 hover:border-stone-400 hover:rotate-1'
+                                }`}
+                                style={{
+                                    boxShadow: selectedYear === year ? '2px 2px 0px rgba(0,0,0,0.1)' : 'none',
+                                    transform: selectedYear === year ? `rotate(${idx % 2 === 0 ? 2 : -2}deg) scale(1.05)` : undefined
+                                }}
+                            >
+                                {/* "Washi Tape" effect on top for active items */}
+                                {selectedYear === year && (
+                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-white/40 rotate-2 pointer-events-none mix-blend-overlay"></div>
+                                )}
+                                
+                                <img 
+                                    src={resolveImage(iconUrl)} 
+                                    alt={String(year)} 
+                                    className="w-10 h-10 object-contain drop-shadow-sm" 
+                                />
+                                {year}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
         </div>
