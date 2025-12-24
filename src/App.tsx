@@ -31,7 +31,7 @@ import {
 // ==========================================
 // ⚠️ 開發模式開關 (上線前請務必檢查！)
 // ==========================================
-const ENABLE_DEV_TOOLS = false; 
+const ENABLE_DEV_TOOLS = true; 
 
 // ==========================================
 // 🎨 自定義年份 Icon 設定區
@@ -168,7 +168,7 @@ const allTrips: Trip[] = [
   // New 2026 Trips
   { 
     year: 2026, season: "寒假", title: "沖繩家族旅行", location: "日本 沖繩", status: "Planning", type: "future", 
-    image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=1200", // 暫時使用 Unsplash 圖片，請替換
+    image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", // 暫時使用 Unsplash 圖片，請替換
     images: [],
     album: "", 
     plan: "https://docs.google.com/document/d/1-4yHFrFozhLuGazQj6jzCq7lzwB6TtsV/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
@@ -176,7 +176,7 @@ const allTrips: Trip[] = [
   },
   { 
     year: 2026, season: "春假", title: "峇厘島 包車旅遊", location: "印尼 峇厘島", status: "Planning", type: "future", 
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200", // 暫時使用 Unsplash 圖片，請替換
+    image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", // 暫時使用 Unsplash 圖片，請替換
     images: [],
     album: "", 
     plan: "https://docs.google.com/document/d/1KztrprkyI7DxRptC1q7lpHRYwVsS7iBW/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
