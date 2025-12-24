@@ -1506,7 +1506,7 @@ const App = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
-          <AnimatePresence mode="popLayout">
+          <AnimatePresence>
             {filteredTrips.map((trip, index) => {
                 const tripId = getTripId(trip);
                 const visualIndex = getStableSeed(trip);
