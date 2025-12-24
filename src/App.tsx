@@ -50,7 +50,7 @@ const YEAR_ICONS: Record<string, string> = {
 // ==========================================
 const ACCESS_TOKENS = {
     FAMILY: "ilovefamily", 
-    GUEST: "hellofriend"   
+    GUEST: "hellofriend"    
 };
 
 type AccessLevel = 'NONE' | 'GUEST' | 'FAMILY';
@@ -165,6 +165,24 @@ const ASSETS = {
 // 🗂️ 資料層 (Trips)
 // ==========================================
 const allTrips: Trip[] = [
+  // New 2026 Trips
+  { 
+    year: 2026, season: "寒假", title: "沖繩家族旅行", location: "日本 沖繩", status: "Planning", type: "future", 
+    image: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=1200", // 暫時使用 Unsplash 圖片，請替換
+    images: [],
+    album: "", 
+    plan: "https://docs.google.com/document/d/1-4yHFrFozhLuGazQj6jzCq7lzwB6TtsV/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
+    vlog: "" 
+  },
+  { 
+    year: 2026, season: "春假", title: "峇厘島 包車旅遊", location: "印尼 峇厘島", status: "Planning", type: "future", 
+    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=1200", // 暫時使用 Unsplash 圖片，請替換
+    images: [],
+    album: "", 
+    plan: "https://docs.google.com/document/d/1KztrprkyI7DxRptC1q7lpHRYwVsS7iBW/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
+    vlog: "" 
+  },
+  // Existing 2025
   { 
     year: 2025, season: "秋假", title: "日本東北賞楓", location: "日本 東北", status: "Done", type: "future", 
     image: "https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0",
@@ -191,6 +209,7 @@ const allTrips: Trip[] = [
     plan: "https://docs.google.com/document/d/13Tg1tbjXMauMIuIlisPgrwgdt9h-0BF9/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
     vlog: "https://youtu.be/CeH0dgQCtPY" 
   },
+  // Existing 2024
   { 
     year: 2024, season: "秋假", title: "日本名古屋", location: "日本 名古屋", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOIFpXM83TMg3kiA0lHJfb7s9QrYCqMQgGF9TU5CTXqohr_yM9YwOwW7--G9xvVAMYKRyd1ZOkTpZCAhhyoBrPGHHX4SU9Z07Je3jJTLppWkExKICFejgU5UKItNM-JcS2AiWhDgL2vZmHLZYK8-kXJbw=w683-h911-s-no-gm?authuser=0",
@@ -228,6 +247,7 @@ const allTrips: Trip[] = [
     plan: "https://docs.google.com/document/d/1kTI_pd3t2UpaU1F-seRqsN4tftGl2ZIy/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/1pxgzINsQkg"
   },
+  // Existing 2023
   { 
     year: 2023, season: "秋假", title: "東京富士山+輕井澤", location: "日本 東京/輕井澤", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOSXA2NRjXKyroJ_Np5KA2cJ0RjMYqyFEugErbZ-vXu1r43BYkAcWKzS0b3GAmnDuiv0yAIQJcsZ7bfbBSf6U0KeGftcss_E4WR3OCri_8aSQyX0WrCjmm15lJE8bw2Kn674bTmez_Y38f0lpFDvVISwg=w683-h911-s-no-gm?authuser=0",
@@ -254,6 +274,7 @@ const allTrips: Trip[] = [
     plan: "https://docs.google.com/document/d/1PYevx-l8pimaWODh2JkjZLyz-8xXUVX9/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
     vlog: "https://youtu.be/H3iL7GCYOCo"
   },
+  // New 2022
   { 
     year: 2022, season: "秋假", title: "金門", location: "台灣 金門", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNCZqyKu69Abqg8PsMWI0liXB0CN_eCpW5tMQwR8YCzTXSN77IDC8os1s6CEpDrufxVRBaYo_HkK8uiG1c428dY7UB7fEEBnFX9Efmqe31NtNyjdJqOeRuiZDowU8728TOv3JQkdeKMIFUP-JBpGEUhCg=w1080-h810-s-no-gm?authuser=0",
@@ -268,18 +289,44 @@ const allTrips: Trip[] = [
     vlog: "https://youtu.be/qgYisyxXANc"
   },
   { 
+    year: 2022, season: "春假", title: "鄧家家族台南旅遊", location: "台灣 台南", status: "Done", type: "past", 
+    image: "https://lh3.googleusercontent.com/pw/AP1GczPJwUyQeS0lRQ4dJT5h8NmUoRhpyd0hD16pqzlDgUnGyPUlnnYPoCnzzbTJNC3VN2VUMECeIemdti4MNJtp479iaN0TPeVEfNIZWDiIAYRW_az6dqK387vj0sorLWlsL92KKtRQV5dA_Juv5lYoeXOirQ=w1159-h869-s-no-gm?authuser=0", // 暫時使用 Unsplash 圖片，請替換
+    images: ["https://lh3.googleusercontent.com/pw/AP1GczPJwUyQeS0lRQ4dJT5h8NmUoRhpyd0hD16pqzlDgUnGyPUlnnYPoCnzzbTJNC3VN2VUMECeIemdti4MNJtp479iaN0TPeVEfNIZWDiIAYRW_az6dqK387vj0sorLWlsL92KKtRQV5dA_Juv5lYoeXOirQ=w1159-h869-s-no-gm?authuser=0",
+  "https://lh3.googleusercontent.com/pw/AP1GczOqTcTUKZRFfUDVhio-ROY3OR-Ta23vC9JJAI_-1dHTR-MwFw4wgK52T_Z-bCQRpzKqiVJHNVbgatboCGzOT6lx3-D06I48d4FR7QRk5FGpdAhkEs6UCVA9Eqd9zVhIpny1qkzeLDhY4_SUjjK5CYBTaQ=w651-h869-s-no-gm?authuser=0",
+"https://lh3.googleusercontent.com/pw/AP1GczOBvTqvV8PTa8U6Ec1awCBBFQaaeoMoFu2WGcns0Hv-kosPYar0TsEN79eeUF4tO_5QFcd5N34t8sjwO5UP-7f-ExtQ6TH11PJQXa1CK08PlXlM2ZcUxX7rM0jcMRuf9P6dXU2nOigwiQCeFBbBMN62fw=w1080-h810-s-no-gm?authuser=0",
+"https://lh3.googleusercontent.com/pw/AP1GczOoP5VHg86CWrpxDAig9Kx6fHxvgZtKDK2lRhwrPOuBGETKAZjg5MI7juunnFaeN-NquOA4IgXiJ80SSMYDcPNYrh6eGRyM8-uik9qm2oLHatkgybNNsrJFgRsjTwmXTlIwinDQygUFwiuJcUVCoUj6Gg=w1159-h869-s-no-gm?authuser=0",
+"https://lh3.googleusercontent.com/pw/AP1GczNoJcOzWiC1800WK2KRcgNHQHjUmPNC6h0-5GlQJ_2XoYoRyLeZAO7WsuqN1yMD0zKa3QGm1tRrhTWUmxQOdcrtpeV5KRMPfrsQKRWKBejZ5NygaxNVG7dyv-jBa1zvHLu0gTRAmsgg_UWDiKVyxyeSXg=w1159-h869-s-no-gm?authuser=0"],
+    album: "https://photos.app.goo.gl/nhqBPBhprt8cVWYb7", 
+    plan: "", 
+    vlog: "" 
+  },
+  // New 2021
+  { 
+    year: 2021, season: "秋假", title: "南投合歡山福壽山出遊", location: "台灣 南投+合歡山+福壽山", status: "Done", type: "past", 
+    image: "https://lh3.googleusercontent.com/pw/AP1GczNlOHGQFVYQZecoZuEYBNFc3qaehwvIthFqBkG7ALXcyChbNvoOkK6bZ-1ERIiOUZEOnjfofCBw9WMK_TEPfxpoFPBQvRhRSLo7czSrL8F3kweaZCEUjAhhNlqAc61r60emm80R4JfNxa8HVrJ_MXZttg=w651-h869-s-no-gm?authuser=0", // 暫時使用 Unsplash 圖片，請替換
+    images: ["https://lh3.googleusercontent.com/pw/AP1GczNlOHGQFVYQZecoZuEYBNFc3qaehwvIthFqBkG7ALXcyChbNvoOkK6bZ-1ERIiOUZEOnjfofCBw9WMK_TEPfxpoFPBQvRhRSLo7czSrL8F3kweaZCEUjAhhNlqAc61r60emm80R4JfNxa8HVrJ_MXZttg=w651-h869-s-no-gm?authuser=0",
+  "https://lh3.googleusercontent.com/pw/AP1GczNunlxc1x-_NCn1ohEE63PoYP0Vgst5wNO28mbXMt5l_HeaRL0fJHX3AUZctX6_rP-HwIgsPKbSR4o0spljC0hOprUBvgcVyqCM858rsLoGhrKxgheXeSjHKc8Dp7la6aShybei_04qnu_vq65jcsO1BA=w651-h869-s-no-gm?authuser=0",
+"https://lh3.googleusercontent.com/pw/AP1GczPp0PRsLjqAWRd-QpVDxC6aQ5ILnnFDM08G1p9PFrYzN17uIq_pwattsMErVqE9svwiL2Rp_2THygyzXLXQQVNGenYnFTXzBgiX4HxrmVIRAbrC6-gRksIgqTMgivTarfzB6D6idVUBQZe11iilz0CVPQ=w960-h720-s-no-gm?authuser=0",
+"https://lh3.googleusercontent.com/pw/AP1GczMLc_M9YJXg_hATSn3oaYbrYKbYD_O1cJidigP7sb7a5szKFCRCl6-PC2vBMKEagYRyiutDTEvghb0T8-Pmy8eBJR1m8NGwwJvdDh75PN93MD4L-8cKvJF99VLQv1ad5AnaFFM0_Qz64ra8tW2AJJbfZA=w651-h869-s-no-gm?authuser=0"],
+    album: "https://photos.app.goo.gl/ZjqDsUssKqur5ks7A", 
+    plan: "https://docs.google.com/document/d/1SiQ0EF7aLXrQvFnk_FCZT_yU-g_-Z39g/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
+    vlog: "" 
+  },
+  { 
     year: 2021, season: "春假", title: "澎湖", location: "台灣 澎湖", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOWyPeiR_92g04FqjWeg2EUS3XsyNGZSoxZBVDtGaNzUVadlOplFiFKFOcmj_lQpY0Z9VtVO5-iIKboJQeRL_OjvhPHwk2rHV6PW5bUqYsYald_ytBhjwCkS3fL2usU4fy-qTM1IVn3Z8tH9JFNJL0t_g=w1215-h911-s-no-gm?authuser=0",
     images: [
         "https://lh3.googleusercontent.com/pw/AP1GczOWyPeiR_92g04FqjWeg2EUS3XsyNGZSoxZBVDtGaNzUVadlOplFiFKFOcmj_lQpY0Z9VtVO5-iIKboJQeRL_OjvhPHwk2rHV6PW5bUqYsYald_ytBhjwCkS3fL2usU4fy-qTM1IVn3Z8tH9JFNJL0t_g=w1215-h911-s-no-gm?authuser=0",
         "https://lh3.googleusercontent.com/pw/AP1GczMb2ZrT6qBTMYYvQSf9ObOL6mReUdyCr_e1dAk24qlUQcWDrg_IzTlXOKuj4L4R_oy5J0bFwXcXJYw2lC4boHba4G2CwvsNQADXxZuXZI3LEEl5OiUIDfMimUwzovN6hWpaFQ2Tvjg0HBpA7gmmJOsfZA=w869-h869-s-no-gm?authuser=0",
         "https://lh3.googleusercontent.com/pw/AP1GczM0JxrLTYhJboQv_RRsFaWU54jY5dmVx-qZf65c8ynvXDt8CsaSHPEOLWK4NhfyF3UhKnhwIpdjcuL81Et8V4MP9UtQkUUS08Q5H7ciYLDnPfcDf_gV0gTqQuhl-I-oRjzC7limAYZocBTOM67G3k5TtA=w869-h869-s-no-gm?authuser=0",
-        "https://lh3.googleusercontent.com/pw/AP1GczMnq1tePgBzGB-wq-d3RCqF-LeW6fPlHDbjtrCycsFQuyhZa9x3ygqao7_OC1LBPrCCg44YK0fNjzGhC2xj9cId56Hs6EJiifbLK6u8DyP5keywYEsAKsfRd8WayrHlNKjH_ff-dSEqkSiSPWJeIIGtYw=w1158-h869-s-no-gm?authuser=0" 
+        "https://lh3.googleusercontent.com/pw/AP1GczMnq1tePgBzGB-wq-d3RCqF-LeW6fPlHDbjtrCycsFQuyhZa9x3ygqao7_OC1LBPrCCg44YK0fNjzGhC2xj9cId56Hs6EJiifbLK6u8DyP5keywYEsAKsfRd8WayrHlNKjH_ff-dSEqkSiSPWJeIIGtYw=w1158-h869-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczO1OgYby1SuymrY1abmMwFQse5dRdydgd6GEwHeau8QSxEXX1OJm_ZDP9aiYYe5pnGrI6qSVbbPoLmeAyV7aJFUM8ONn2N3BOyMuk1XGIB5z8ku_4ZXFS9652YLNvOuw_u9pSPQui-3y78oTiW0ltOIdQ=w651-h869-s-no-gm?authuser=0" 
     ],
     album: "https://photos.app.goo.gl/VDvduGyLpJrJRWvK9",
     plan: "https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ/edit?usp=drive_link",
     vlog: ""
   },
+  // Existing 2020
   { 
     year: 2020, season: "秋假", title: "台東花蓮", location: "台灣 花東", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczO8aEmmVsL3vbj2KkKhniAZGxub7WwkJ1jkBkuUawv3jmNr0N87uztf5kdR91-KV3XT8IsTMTFzMwrTkTCxy7pfcJoI2Mcr5CQn4MWd8_CVIpetFMaHvxcy_D-692cAeIaVWa_mCr2svMzK8VwE5FgNNA=w1159-h869-s-no-gm?authuser=0",
@@ -314,6 +361,7 @@ const allTrips: Trip[] = [
     plan: "",
     vlog: ""
   },
+  // Existing 2019
   { 
     year: 2019, season: "秋假", title: "花蓮", location: "台灣 花蓮", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOObxTVG1EGf41t9VT4uSzHjFz-2ROovPIACf9NmeUgiCqVnJUoiK51ZHOcv7bdxwpL-cPltqQ51qtXin8Pko4jRx2oLegYXFCD6GLC3TVCFCDoQKzxJoV1I-RG_Qpt4rjK7Pyc-Kilm7DrwdGwWnKamg=w651-h869-s-no-gm?authuser=0",
@@ -350,6 +398,7 @@ const allTrips: Trip[] = [
     plan: "https://docs.google.com/document/d/1vl7W0JEGucFdqfiODl2M3XSnAlZSWjPRE0NN25bN9WY/edit?usp=sharing",
     vlog: ""
   },
+  // Existing 2018
   { 
     year: 2018, season: "秋假", title: "菲律賓薄荷島", location: "菲律賓 薄荷島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNEnT1ehdcVZHZnDFnepYVonSsp7PiUHYMJbguR-RU9lsvV3jGyuoNl0W7iikhg10yTRXlARhqXVIVjt-Cz-D5wxwAsWD0mF3t8152_0fDu3hzl9Uzns7bTcHJQNEJBAa3atLBLiqVMzmCKH7ObQ3Wjhw=w651-h869-s-no-gm?authuser=0",
@@ -377,6 +426,7 @@ const allTrips: Trip[] = [
     plan: "",
     vlog: ""
   },
+  // Existing 2017
   { 
     year: 2017, season: "10月", title: "日本九州", location: "日本 九州", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczNw2V4r-AZlrxXikyE8f-ydCdR-fQpfTazFARMpZAQb9NyqOJEumziV29fkdw0DZufBYHPMcmDHwcOpWxjlmnMlzV2BzWAtqbBPZot8HSCrAT5nBtygTYjhP41aNzeT-zy_Ixv0emZquRPBf1S2R1IzGA=w960-h720-s-no-gm?authuser=0", 
@@ -400,6 +450,7 @@ const allTrips: Trip[] = [
     plan: "https://docs.google.com/document/d/1_I-eQ5iuBo18AJUMjqYzNDW8mLmIT1C5ozHpR-Az7qg/edit?usp=sharing",
     vlog: ""
   },
+  // Existing 2016
   { 
     year: 2016, season: "12月", title: "泰國普吉島", location: "泰國 普吉島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczMhhy_tboy1m7o-aLb7_bxVGK14AxIPmVCmz8o-9BFAt3r_Oi1VgFJ8Z0yMC3e-KS9jr1V7lDhjx771AK59RSHNIp0W4DPFZjZ0FwDOq6qSBx0TPm5_X9qUYJD_BqD-AvMoBydvWA29kY-bMvrZnCHwJw=w1298-h869-s-no-gm?authuser=0", 
@@ -411,6 +462,7 @@ const allTrips: Trip[] = [
     plan: "",
     vlog: ""
   },
+  // Existing 2015
   { 
     year: 2015, season: "10月", title: "菲律賓長灘島", location: "菲律賓 長灘島", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczP2-YWeZHX1KEDGC5XCjt9oqQm2iZo9Es3AmbJAB-xc9czoagV6o3iHURgCB4dBfwAqKuCiq2FSeoiRdldx-Vx9LYjGZmMyWHwomAfCSPqVpKBPPhcnvOJbBi8bhFTlEFFiMJJ3YnBE9kzwJsFFeZ1A1g=w1159-h869-s-no-gm?authuser=0", 
@@ -449,6 +501,7 @@ const allTrips: Trip[] = [
     plan: "",
     vlog: ""
   },
+  // Existing 2014
   { 
     year: 2014, season: "暑假", title: "韓國首爾", location: "韓國 首爾", status: "Done", type: "past",
     image: "https://lh3.googleusercontent.com/pw/AP1GczOFvT0MwE9z5-L3dCYqQTf8g-wEmyZ5ntyUPpw52loItuxZ3uXfYIvY7ybT3DPB4GJ7q-a1f0XzaAohanG_ghlMikM9H7vAXP6cIh7Cy2dRrTLfswklTKAkk_ttccbTfPCorUagdyY5p17fjH29Ky8JhA=w581-h869-s-no-gm?authuser=0", 
@@ -1426,7 +1479,7 @@ const App = () => {
             >
                 <div className="h-1 w-16 bg-orange-400 mb-4 rounded-full mx-auto"></div>
                 <p className="text-lg md:text-2xl text-stone-500 leading-relaxed font-bold tracking-wide">
-                    從 2012 到 2025<br/>
+                    從 2012 到 2026<br/>
                     收集世界的角落，紀錄我們一起長大的時光。
                 </p>
                 {/* 顯示目前權限狀態 (除錯用或提示用) */}
