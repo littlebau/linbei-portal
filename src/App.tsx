@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert, ChevronLeft, ChevronRight, Hand, Calendar, Filter } from 'lucide-react';
+import { MapPin, Camera, Backpack, Plane, Star, Heart, Smile, ArrowUp, Sun, Image as ImageIcon, RotateCw, Eye, MessageCircle, Send, Lock, LogOut, Trash2, KeyRound, ShieldAlert, ChevronLeft, ChevronRight, Hand, Calendar, Filter, Wrench } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Firebase Imports
@@ -29,17 +29,30 @@ import {
 } from "firebase/firestore";
 
 // ==========================================
-// 🔐 安全性設定 (Security Tokens)
+// ⚠️ 開發模式開關 (上線前請務必檢查！)
 // ==========================================
-// 在這裡設定你的密碼
+const ENABLE_DEV_TOOLS = flase; 
+
+// ==========================================
+// 🎨 自定義年份 Icon 設定區
+// ==========================================
+// 這是通用的年份 Icon (會顯示在所有年份旁邊，除非下方有特定年份覆蓋)
+const UNIVERSAL_YEAR_ICON = "https://drive.google.com/file/d/1fQHKR7xUsZ0diaDrceeskFQ4I_iUUN9E/view?usp=drive_link";
+
+// 如果您想要針對「特定年份」使用不同的圖，請在下方設定 (目前先註解掉，讓全部都用通用的)
+const YEAR_ICONS: Record<string, string> = {
+    // 範例:
+    // "2025": "https://drive.google.com/file/d/1Sv1K9za4tHvQ4o-ujX8j59WdBR5YtHAG/view?usp=drive_link"
+};
+
+// ==========================================
+// 🔐 安全性設定
+// ==========================================
 const ACCESS_TOKENS = {
-    // 網址範例: domain.com/?token=ilovefamily (家庭成員)
     FAMILY: "ilovefamily", 
-    // 網址範例: domain.com/?token=hellofriend (訪客)
     GUEST: "hellofriend"   
 };
 
-// 權限等級定義
 type AccessLevel = 'NONE' | 'GUEST' | 'FAMILY';
 
 // ==========================================
@@ -55,7 +68,6 @@ const firebaseConfig = {
   measurementId: "G-FTFRKF1S5F"
 };
 
-// 初始化 Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -85,6 +97,14 @@ interface GuestMessage {
     content: string;
     timestamp: any;
 }
+
+const getTripId = (trip: Trip) => {
+    return `${trip.year}_${trip.title.replace(/\s+/g, '_')}`;
+};
+
+const getStableSeed = (trip: Trip) => {
+    return trip.year + trip.title.length + (trip.location?.length || 0);
+};
 
 const resolveImage = (url: string) => {
   if (!url || typeof url !== 'string') return '';
@@ -641,11 +661,12 @@ const PostalStamp = ({ status, index }: { status: string; index: number }) => {
 // ==========================================
 // ❤️ 按讚按鈕元件
 // ==========================================
-const LikeButton = ({ tripIndex, user }: { tripIndex: number, user: User | null }) => {
+// [修改] 接收 tripId 而不是 index
+const LikeButton = ({ tripId, user }: { tripId: string, user: User | null }) => {
   const [likes, setLikes] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
 
-  const likeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'trip_likes', String(tripIndex));
+  const likeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'trip_likes', tripId);
 
   useEffect(() => {
     if (!user) return;
@@ -657,7 +678,7 @@ const LikeButton = ({ tripIndex, user }: { tripIndex: number, user: User | null 
     });
     
     return () => unsubscribe();
-  }, [user, tripIndex]);
+  }, [user, tripId]);
 
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation(); 
@@ -688,9 +709,12 @@ const LikeButton = ({ tripIndex, user }: { tripIndex: number, user: User | null 
 // ==========================================
 // 🎴 單一卡片元件 (TripCard)
 // ==========================================
-const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: number, user: User | null, accessLevel: AccessLevel }) => {
+// [修改] 增加 tripId 屬性，並使用 forwardRef 解決 Framer Motion 問題
+const TripCard = React.forwardRef(({ trip, tripId, visualIndex, user, accessLevel }: { trip: Trip; tripId: string; visualIndex: number, user: User | null, accessLevel: AccessLevel }, ref: React.Ref<HTMLDivElement>) => {
   const [isFlipped, setIsFlipped] = useState(false);
-  const randomRotate = (index % 5) - 2;
+  
+  // 使用穩定的 visualIndex 計算旋轉角度，確保篩選時卡片樣子不變
+  const randomRotate = (visualIndex % 5) - 2;
   
   // [權限檢查] 是否為家庭成員
   const isFamily = accessLevel === 'FAMILY';
@@ -751,16 +775,18 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
 
   return (
     <motion.div 
+      ref={ref}
+      layout // [關鍵修正] 加入 layout 讓篩選時動畫平滑
       initial={{ opacity: 0, y: 50, rotate: randomRotate }}
       whileInView={{ opacity: 1, y: 0, rotate: randomRotate }}
       whileHover={{ y: -5, rotate: 0, zIndex: 10 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
+      transition={{ duration: 0.5, delay: (visualIndex % 3) * 0.1 }}
       className="group relative w-full h-[28rem] md:h-[32rem] card-perspective cursor-pointer"
       onClick={handleFlip}
     >
-      <DateTapeLabel trip={trip} index={index} />
-      <MascotDecoration index={index} />
+      <DateTapeLabel trip={trip} index={visualIndex} />
+      <MascotDecoration index={visualIndex} />
 
       <div 
           className="card-inner relative w-full h-full transition-all duration-700 ease-in-out"
@@ -880,15 +906,15 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
                       </div>
                     )}
                     
-                    <PostalStamp status={trip.status} index={index} />
+                    <PostalStamp status={trip.status} index={visualIndex} />
                     
-                    {/* ❤️ 新增：按讚按鈕 */}
+                    {/* ❤️ 新增：按讚按鈕 (使用 tripId) */}
                     <div className="like-btn">
-                      <LikeButton tripIndex={index} user={user} />
+                      <LikeButton tripId={tripId} user={user} />
                     </div>
               </div>
               
-              <LocationTapeLabel location={trip.location} index={index} />
+              <LocationTapeLabel location={trip.location} index={visualIndex} />
               
               <div className="absolute bottom-2 left-3 z-20">
                   <div className="flex items-center gap-1.5 text-rose-500 font-black tracking-widest font-['Patrick_Hand'] bg-rose-50 px-3 py-1.5 rounded-lg border-2 border-rose-200 shadow-md">
@@ -909,7 +935,7 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
               pointerEvents: isFlipped ? 'auto' : 'none'
             }}
           >
-              <RandomSticker index={index} />
+              <RandomSticker index={visualIndex} />
               <div className="absolute top-0 left-0 bottom-0 w-3 border-r-2 border-dashed border-stone-300"></div>
 
               <div className="flex-1 flex flex-col items-center justify-center w-full pl-4">
@@ -1016,7 +1042,8 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
       </div>
     </motion.div>
   );
-};
+});
+TripCard.displayName = "TripCard";
 
 // ==========================================
 // 📝 留言板元件 (Guestbook)
@@ -1200,7 +1227,7 @@ const AdminLoginModal = ({ isOpen, onClose, onLogin }: AdminLoginModalProps) => 
 // ==========================================
 // 🚫 403 未授權畫面
 // ==========================================
-const UnauthorizedView = () => (
+const UnauthorizedView = ({ onDevBypass }: { onDevBypass: (level: AccessLevel) => void }) => (
     <div className="min-h-screen flex flex-col items-center justify-center bg-stone-100 p-4 font-['Patrick_Hand']"
          style={{backgroundImage: `url(${ASSETS.paper})`}}>
         <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl text-center max-w-md w-full border-4 border-dashed border-stone-300 relative">
@@ -1213,10 +1240,36 @@ const UnauthorizedView = () => (
                 <br />
                 如果您是親友，請聯繫 <strong className="text-stone-800">林北</strong> 索取通行連結！
             </p>
-            <div className="flex items-center justify-center gap-2 text-stone-400 text-sm">
+            <div className="flex items-center justify-center gap-2 text-stone-400 text-sm mb-8">
                 <KeyRound size={16} />
                 <span>請檢查您的網址是否包含 Token</span>
             </div>
+
+            {/* 🛠️ 開發者測試工具 (僅在開發預覽時使用) */}
+            {ENABLE_DEV_TOOLS && (
+                <div className="border-t-2 border-stone-100 pt-6 mt-2">
+                    <div className="flex items-center justify-center gap-2 text-stone-400 mb-3 text-xs font-bold uppercase tracking-widest">
+                        <Wrench size={12} /> Developer Tools
+                    </div>
+                    <div className="flex gap-3 justify-center">
+                        <button 
+                            onClick={() => onDevBypass('FAMILY')}
+                            className="px-4 py-2 bg-amber-100 text-amber-800 rounded-lg text-sm font-bold hover:bg-amber-200 transition-colors"
+                        >
+                            進入家庭版
+                        </button>
+                        <button 
+                            onClick={() => onDevBypass('GUEST')}
+                            className="px-4 py-2 bg-stone-100 text-stone-600 rounded-lg text-sm font-bold hover:bg-stone-200 transition-colors"
+                        >
+                            進入訪客版
+                        </button>
+                    </div>
+                    <p className="text-[10px] text-stone-300 mt-2">
+                        (此區塊方便您在 Canvas 預覽，正式網址仍需 Token)
+                    </p>
+                </div>
+            )}
         </div>
     </div>
 );
@@ -1310,7 +1363,9 @@ const App = () => {
 
   // [新增] 權限阻擋畫面
   if (isCheckingAccess) return <div className="min-h-screen bg-stone-50" />; // 載入中空白
-  if (accessLevel === 'NONE') return <UnauthorizedView />;
+  
+  // [修改] 傳遞設定權限的函式給 UnauthorizedView
+  if (accessLevel === 'NONE') return <UnauthorizedView onDevBypass={setAccessLevel} />;
 
   return (
     <div className="min-h-screen bg-[#fdfbf7] text-stone-700 font-['Patrick_Hand',_cursive] selection:bg-yellow-200 pb-20 overflow-hidden relative"
@@ -1331,6 +1386,9 @@ const App = () => {
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #d6c0ae; border-radius: 20px; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .mask-gradient { mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
       `}</style>
       
       <svg style={{position: 'absolute', width: 0, height: 0}}>
@@ -1378,45 +1436,99 @@ const App = () => {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 md:px-6 z-10 relative">
-        {/* 年份篩選器 */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12 sticky top-2 z-40 py-2 px-2 rounded-xl backdrop-blur-md bg-white/30 transition-all">
-            <button
-                onClick={() => setSelectedYear('ALL')}
-                className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-sm md:text-base font-bold transition-all shadow-sm ${
-                    selectedYear === 'ALL' 
-                    ? 'bg-stone-800 text-white scale-105' 
-                    : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-                }`}
-            >
-                <Filter size={14} />
-                全部 ({allTrips.length})
-            </button>
-            {uniqueYears.map(year => (
-                <button
-                    key={year}
-                    onClick={() => setSelectedYear(year)}
-                    className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-sm md:text-base font-bold transition-all shadow-sm ${
-                        selectedYear === year 
-                        ? 'bg-stone-800 text-white scale-105' 
-                        : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-                    }`}
-                >
-                    <Calendar size={14} className={selectedYear === year ? 'text-white' : 'text-stone-400'} />
-                    {year}
-                </button>
-            ))}
+        {/* Sticky Header Container */}
+        <div className="sticky top-4 z-40 mb-8 md:mb-12 transition-all duration-300">
+            <div className="flex items-center justify-center max-w-4xl mx-auto">
+                {/* Fixed 'All' Button */}
+                <div className="flex-shrink-0 mr-2 z-10">
+                    <button
+                        onClick={() => setSelectedYear('ALL')}
+                        className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm md:text-base font-bold transition-all shadow-sm border-2 transform ${
+                            selectedYear === 'ALL' 
+                            ? 'bg-stone-800 text-white border-stone-800 scale-105 shadow-md' 
+                            : 'bg-white/90 backdrop-blur-sm text-stone-600 hover:bg-white border-dashed border-stone-300 hover:border-stone-400'
+                        }`}
+                        style={{
+                            boxShadow: selectedYear === 'ALL' ? '2px 2px 0px rgba(0,0,0,0.1)' : 'none'
+                        }}
+                    >
+                        <Filter size={16} />
+                        <span className="whitespace-nowrap">全部 ({allTrips.length})</span>
+                    </button>
+                </div>
+                
+                {/* Visual Divider */}
+                <div className="w-[2px] h-8 bg-stone-300 mx-2 hidden md:block rounded-full opacity-50"></div>
+
+                {/* Horizontal Scrollable Timeline */}
+                <div className="flex-1 overflow-x-auto no-scrollbar mask-gradient relative">
+                    <div className="flex items-center gap-3 pb-2 pt-2 px-2">
+                        {uniqueYears.map((year, idx) => {
+                            // 判斷該年份是否使用通用的 ICON，或是有特別指定
+                            // 若 YEAR_ICONS 有指定就用指定的，否則用 UNIVERSAL_YEAR_ICON
+                            const iconUrl = YEAR_ICONS[String(year)] || UNIVERSAL_YEAR_ICON;
+                            
+                            return (
+                                <button
+                                    key={year}
+                                    onClick={() => setSelectedYear(year)}
+                                    className={`flex-shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm md:text-base font-bold transition-all shadow-sm border-2 relative overflow-hidden group ${
+                                        selectedYear === year 
+                                        ? 'bg-[#fff59d] text-stone-800 border-[#fff59d] -rotate-1 scale-105 shadow-md z-10' 
+                                        : 'bg-white/80 backdrop-blur-sm text-stone-500 hover:bg-white border-dashed border-stone-300 hover:border-stone-400 hover:rotate-1'
+                                    }`}
+                                    style={{
+                                        boxShadow: selectedYear === year ? '2px 2px 0px rgba(0,0,0,0.1)' : 'none',
+                                        transform: selectedYear === year ? `rotate(${idx % 2 === 0 ? 2 : -2}deg) scale(1.05)` : undefined
+                                    }}
+                                >
+                                    {/* "Washi Tape" effect on top for active items */}
+                                    {selectedYear === year && (
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-4 bg-white/40 rotate-2 pointer-events-none mix-blend-overlay"></div>
+                                    )}
+                                    
+                                    <img 
+                                        src={resolveImage(iconUrl)} 
+                                        alt={String(year)} 
+                                        className="w-10 h-10 object-contain drop-shadow-sm" 
+                                    />
+                                    {year}
+                                </button>
+                            );
+                        })}
+                        {/* Right padding to ensure last item isn't cut off */}
+                        <div className="w-4 flex-shrink-0"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-16">
           <AnimatePresence mode="popLayout">
-            {filteredTrips.map((trip, index) => (
-                <TripCard key={`${trip.year}-${trip.season}-${index}`} trip={trip} index={index} user={user} accessLevel={accessLevel} />
-            ))}
+            {filteredTrips.map((trip, index) => {
+                const tripId = getTripId(trip);
+                const visualIndex = getStableSeed(trip);
+                
+                return (
+                    <TripCard 
+                        key={tripId} 
+                        tripId={tripId}
+                        trip={trip} 
+                        visualIndex={visualIndex} 
+                        index={index} 
+                        user={user} 
+                        accessLevel={accessLevel} 
+                    />
+                );
+            })}
           </AnimatePresence>
         </div>
         
         {filteredTrips.length === 0 && (
-            <div className="text-center py-20 text-stone-400 font-bold text-xl">
+            <div className="text-center py-20 text-stone-400 font-bold text-xl flex flex-col items-center gap-4">
+                <div className="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center">
+                    <Plane size={32} className="text-stone-300" />
+                </div>
                 這裡空空如也，就像還沒出發的旅行一樣 🛫
             </div>
         )}
