@@ -297,7 +297,7 @@ const allTrips: Trip[] = [
 "https://lh3.googleusercontent.com/pw/AP1GczOoP5VHg86CWrpxDAig9Kx6fHxvgZtKDK2lRhwrPOuBGETKAZjg5MI7juunnFaeN-NquOA4IgXiJ80SSMYDcPNYrh6eGRyM8-uik9qm2oLHatkgybNNsrJFgRsjTwmXTlIwinDQygUFwiuJcUVCoUj6Gg=w1159-h869-s-no-gm?authuser=0",
 "https://lh3.googleusercontent.com/pw/AP1GczNoJcOzWiC1800WK2KRcgNHQHjUmPNC6h0-5GlQJ_2XoYoRyLeZAO7WsuqN1yMD0zKa3QGm1tRrhTWUmxQOdcrtpeV5KRMPfrsQKRWKBejZ5NygaxNVG7dyv-jBa1zvHLu0gTRAmsgg_UWDiKVyxyeSXg=w1159-h869-s-no-gm?authuser=0"],
     album: "https://photos.app.goo.gl/nhqBPBhprt8cVWYb7", 
-    plan: "", 
+    plan: "https://docs.google.com/document/d/1hwImkN5kfL6ZXZPxy4eEWQ3hpdI9AOiDzXypCnVyyAM/edit?usp=sharing", 
     vlog: "" 
   },
   // New 2021
