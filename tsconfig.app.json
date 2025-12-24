@@ -21,7 +21,6 @@
     "strict": false,                  // 關閉所有嚴格類型檢查的總開關
     "noImplicitAny": false,           // 允許變數不寫型別（自動視為 any），這能解決很多 "Parameter 'x' implicitly has an 'any' type" 的錯誤
     "strictNullChecks": false,        // 不檢查 null 或 undefined，這能解決很多 "Object is possibly 'null'" 的錯誤
-    "suppressImplicitAnyIndexErrors": true, // 允許用字串隨意存取物件屬性，解決 "Element implicitly has an 'any' type..." 錯誤
     "noUnusedLocals": false,          // 允許宣告了變數卻沒使用（不報錯）
     "noUnusedParameters": false,      // 允許函式參數沒使用（不報錯）
     "noFallthroughCasesInSwitch": true
