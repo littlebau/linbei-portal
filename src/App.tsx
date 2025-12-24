@@ -167,14 +167,6 @@ const ASSETS = {
 const allTrips: Trip[] = [
   // New 2026 Trips
   { 
-    year: 2026, season: "寒假", title: "沖繩家族旅行", location: "日本 沖繩", status: "Planning", type: "future", 
-    image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", // 暫時使用 Unsplash 圖片，請替換
-    images: [],
-    album: "", 
-    plan: "https://docs.google.com/document/d/1-4yHFrFozhLuGazQj6jzCq7lzwB6TtsV/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "" 
-  },
-  { 
     year: 2026, season: "春假", title: "峇厘島 包車旅遊", location: "印尼 峇厘島", status: "Planning", type: "future", 
     image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", // 暫時使用 Unsplash 圖片，請替換
     images: [],
@@ -182,6 +174,15 @@ const allTrips: Trip[] = [
     plan: "https://docs.google.com/document/d/1KztrprkyI7DxRptC1q7lpHRYwVsS7iBW/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
     vlog: "" 
   },
+  { 
+    year: 2026, season: "寒假", title: "沖繩家族旅行", location: "日本 沖繩", status: "Planning", type: "future", 
+    image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", // 暫時使用 Unsplash 圖片，請替換
+    images: [],
+    album: "", 
+    plan: "https://docs.google.com/document/d/1-4yHFrFozhLuGazQj6jzCq7lzwB6TtsV/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
+    vlog: "" 
+  },
+
   // Existing 2025
   { 
     year: 2025, season: "秋假", title: "日本東北賞楓", location: "日本 東北", status: "Done", type: "future", 
