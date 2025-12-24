@@ -823,9 +823,9 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
                           {/* [新增] 只有多張圖片時才顯示導航與提示 */}
                           {hasMultipleImages && (
                             <>
-                                {/* 左箭頭 (電腦版/手機版皆可點) */}
+                                {/* 左箭頭 (電腦版/手機版皆可點，手機版預設顯示，電腦版 Hover 顯示) */}
                                 <button
-                                    className="nav-btn absolute left-1 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-black/20 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-all opacity-0 group-hover/image:opacity-100"
+                                    className="nav-btn absolute left-1 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-black/20 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-all opacity-100 md:opacity-0 md:group-hover/image:opacity-100"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         paginate(-1);
@@ -836,7 +836,7 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
 
                                 {/* 右箭頭 */}
                                 <button
-                                    className="nav-btn absolute right-1 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-black/20 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-all opacity-0 group-hover/image:opacity-100"
+                                    className="nav-btn absolute right-1 top-1/2 -translate-y-1/2 z-20 p-1.5 bg-black/20 hover:bg-black/50 text-white rounded-full backdrop-blur-sm transition-all opacity-100 md:opacity-0 md:group-hover/image:opacity-100"
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         paginate(1);
@@ -851,8 +851,8 @@ const TripCard = ({ trip, index, user, accessLevel }: { trip: Trip; index: numbe
                                     <span>{imageIndex + 1} / {displayImages.length}</span>
                                 </div>
 
-                                {/* 手勢提示 (僅在 hover 時顯示更詳細的滑動提示) */}
-                                <div className="absolute top-2 left-2 z-20 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 pointer-events-none">
+                                {/* 手勢提示 (手機版預設顯示，電腦版 Hover 顯示) */}
+                                <div className="absolute top-2 left-2 z-20 opacity-100 md:opacity-0 md:group-hover/image:opacity-100 transition-opacity duration-300 pointer-events-none">
                                     <div className="bg-black/40 backdrop-blur-md px-2 py-1 rounded-md text-white text-[10px] flex items-center gap-1">
                                         <Hand size={10} /> 左右滑動
                                     </div>
