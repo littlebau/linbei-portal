@@ -240,10 +240,35 @@ const TravelBusMascot = () => {
 // ==========================================
 const TravelMascot = () => {
   const [isExcited, setIsExcited] = useState(false);
+  const [message, setMessage] = useState('');
+
+  // 1. 定時顯示 "不要碰我"
+  useEffect(() => {
+    const timer = setInterval(() => {
+        // 如果正在激動(被點擊)，就不要覆蓋訊息
+        if (!isExcited) {
+            setMessage('不要碰我');
+            setTimeout(() => {
+                // 只有當訊息還是"不要碰我"的時候才清除，避免清除掉點擊後的訊息
+                setMessage(prev => prev === '不要碰我' ? '' : prev);
+            }, 2000);
+        }
+    }, 5000); // 每 5 秒檢查一次
+
+    return () => clearInterval(timer);
+  }, [isExcited]);
 
   const handleInteract = () => {
+      // 觸發激動狀態
       setIsExcited(true);
+      // 設定生氣訊息
+      setMessage('我跟你說不要碰我了！💢');
+      
+      // 700ms 後恢復平靜 (配合動畫)
       setTimeout(() => setIsExcited(false), 700);
+      
+      // 2秒後清除訊息
+      setTimeout(() => setMessage(''), 2000);
   };
 
   return (
@@ -254,6 +279,22 @@ const TravelMascot = () => {
           className="fixed bottom-2 right-4 z-50 cursor-pointer select-none"
           onClick={handleInteract}
       >
+          {/* 對話氣泡 */}
+          <AnimatePresence>
+            {message && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.5, y: 10 }}
+                    className="absolute -top-16 right-4 w-max bg-white px-4 py-2 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600 z-50 pointer-events-none"
+                >
+                    {message}
+                    {/* 氣泡尾巴 */}
+                    <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
+                </motion.div>
+            )}
+          </AnimatePresence>
+
           <motion.div
               animate={isExcited ? {
                   y: [0, -60, 0],
