@@ -32,6 +32,7 @@ import {
 // ⚠️ 開發模式開關 (上線前請務必檢查！)
 // ==========================================
 const ENABLE_DEV_TOOLS = false; 
+const ENABLE_OPENING_ANIMATION = true; // ⬅️ 如果要關閉動畫，請將這裡改成 false
 
 // ==========================================
 // 🎨 自定義年份 Icon 設定區
@@ -1618,7 +1619,7 @@ const App = () => {
   // [新增] 權限狀態與開場動畫控制
   const [accessLevel, setAccessLevel] = useState<AccessLevel>('NONE');
   const [isCheckingAccess, setIsCheckingAccess] = useState(true);
-  const [showIntro, setShowIntro] = useState(true); // 控制開場動畫
+  const [showIntro, setShowIntro] = useState(ENABLE_OPENING_ANIMATION); // ⬅️ 這裡改成讀取上方的設定
 
   // [新增] 年份篩選邏輯
   const [selectedYear, setSelectedYear] = useState<number | 'ALL'>('ALL');
