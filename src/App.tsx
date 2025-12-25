@@ -157,6 +157,85 @@ const ASSETS = {
 };
 
 // ==========================================
+// 🚌 旅遊車吉祥物 (TravelBusMascot)
+// ==========================================
+const TravelBusMascot = () => {
+    // 狀態：'right-idle' (在右邊飄), 'jumping' (跳躍中), 'driving' (開往左邊), 'left-idle' (在左邊飄)
+    const [status, setStatus] = useState<'right-idle' | 'jumping' | 'driving' | 'left-idle'>('right-idle');
+    const [showWarning, setShowWarning] = useState(false);
+
+    const handleInteract = () => {
+        if (status === 'right-idle') {
+            // 觸發跳躍
+            setStatus('jumping');
+            
+            // 跳躍 0.5 秒後開始開車
+            setTimeout(() => {
+                setStatus('driving');
+            }, 600); 
+
+            // 開車 3 秒後到達左邊
+            setTimeout(() => {
+                setStatus('left-idle');
+            }, 3600); // 600ms + 3000ms
+        } else if (status === 'left-idle') {
+            // 已經在左邊，顯示警告
+            setShowWarning(true);
+            setTimeout(() => setShowWarning(false), 2000);
+        }
+    };
+
+    // 判斷是否目標在左邊 (driving 或 left-idle 時都是靠左定位)
+    const isLeftTarget = status === 'driving' || status === 'left-idle';
+
+    return (
+        <motion.div
+            layout // 自動處理位置變換的動畫
+            transition={{ 
+                layout: { duration: 3, ease: "easeInOut" } // 設定開車過程為 3 秒
+            }}
+            className={`fixed top-24 z-50 cursor-pointer select-none ${isLeftTarget ? 'left-4' : 'right-4'}`}
+            onClick={handleInteract}
+        >
+             {/* 警告對話框 */}
+             <AnimatePresence>
+                {showWarning && (
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        className="absolute top-2 left-32 md:left-44 w-max bg-white/95 px-4 py-2 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
+                    >
+                        再碰就撞牆了！🚌💥
+                        {/* 對話框箭頭 */}
+                        <div className="absolute top-1/2 -left-2 w-4 h-4 bg-white transform -translate-y-1/2 rotate-45 border-l border-b border-stone-200"></div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <motion.div
+                animate={
+                    status === 'jumping' ? { y: [0, -50, 0], scale: [1, 1.1, 1] } : // 跳躍動畫
+                    status === 'driving' ? { y: [0, -2, 2, -2, 0], x: [0, -3, 0] } : // 行駛震動
+                    { y: [0, -8, 0] } // 閒置飄浮
+                }
+                transition={
+                    status === 'jumping' ? { duration: 0.5 } :
+                    status === 'driving' ? { repeat: Infinity, duration: 0.2 } :
+                    { repeat: Infinity, duration: 3, ease: "easeInOut" }
+                }
+            >
+                <img 
+                    src={resolveImage("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link")}
+                    alt="Travel Bus Mascot"
+                    className="w-22 md:w-32 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
+                />
+            </motion.div>
+        </motion.div>
+    );
+};
+
+// ==========================================
 // 🐕 吉祥物元件 (TravelMascot)
 // ==========================================
 const TravelMascot = () => {
@@ -1743,6 +1822,7 @@ const App = () => {
 
           <FloatingBackground />
           <TravelMascot />
+          <TravelBusMascot /> {/* 新增的旅遊車吉祥物 */}
           <AdminLoginModal isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} onLogin={handleAdminLogin} />
 
           <header className="relative pt-10 pb-12 px-4 md:px-6 text-center z-10 max-w-6xl mx-auto">
