@@ -262,7 +262,7 @@ const TravelMascot = () => {
       // 觸發激動狀態
       setIsExcited(true);
       // 設定生氣訊息
-      setMessage('不要戳我喔！💢');
+      setMessage('不要戳我啦！💢');
       
       // 700ms 後恢復平靜 (配合動畫)
       setTimeout(() => setIsExcited(false), 700);
@@ -290,7 +290,7 @@ const TravelMascot = () => {
                 >
                     {message}
                     {/* 氣泡尾巴 */}
-                    <div className="absolute -bottom-4 right-4 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
+                    <div className="absolute -bottom-4 right-8 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
                 </motion.div>
             )}
           </AnimatePresence>
