@@ -286,7 +286,7 @@ const handleInteract = () => {
     // 觸發激動狀態
     setIsExcited(true);
     // 設定生氣訊息
-    setMessage('可以不要戳我嗎！💢');
+    setMessage('Do not touch me ！💢');
     
     // 700ms 後恢復平靜 (配合動畫)
     setTimeout(() => setIsExcited(false), 700);
