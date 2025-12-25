@@ -32,7 +32,7 @@ import {
 // ⚠️ 開發模式開關 (上線前請務必檢查！)
 // ==========================================
 const ENABLE_DEV_TOOLS = false; 
-const ENABLE_OPENING_ANIMATION = false; // ⬅️ 如果要關閉動畫，請將這裡改成 false
+const ENABLE_OPENING_ANIMATION = true; // ⬅️ 如果要關閉動畫，請將這裡改成 false
 
 // ==========================================
 // 🎨 自定義年份 Icon 設定區
