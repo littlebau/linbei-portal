@@ -32,7 +32,7 @@ import {
 // ⚠️ 開發模式開關 (上線前請務必檢查！)
 // ==========================================
 const ENABLE_DEV_TOOLS = false; 
-const ENABLE_OPENING_ANIMATION = true; // ⬅️ 如果要關閉動畫，請將這裡改成 false
+const ENABLE_OPENING_ANIMATION = false; // ⬅️ 如果要關閉動畫，請將這裡改成 false
 
 // ==========================================
 // 🎨 自定義年份 Icon 設定區
@@ -204,7 +204,7 @@ const TravelBusMascot = () => {
                         initial={{ opacity: 0, scale: 0.5, x: -20 }}
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         exit={{ opacity: 0, scale: 0.5 }}
-                        className="absolute top-2 left-32 md:left-44 w-max bg-white/95 px-4 py-2 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
+                        className="absolute top-2 left-2 md:left-44 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
                     >
                         再碰就撞牆了！🚌💥
                         {/* 對話框箭頭 */}
@@ -286,7 +286,7 @@ const TravelMascot = () => {
                     initial={{ opacity: 0, scale: 0.5, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.5, y: 10 }}
-                    className="absolute -top-16 right-4 w-max bg-white px-4 py-2 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600 z-50 pointer-events-none"
+                    className="absolute -top-8 right-2 w-max bg-white px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600 z-50 pointer-events-none"
                 >
                     {message}
                     {/* 氣泡尾巴 */}
