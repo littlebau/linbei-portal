@@ -204,7 +204,7 @@ const TravelBusMascot = () => {
                         initial={{ opacity: 0, scale: 0.5, x: -20 }}
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         exit={{ opacity: 0, scale: 0.5 }}
-                        className="absolute top-1 left-8 md:left-44 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
+                        className="absolute top-1 left-10 md:left-44 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
                     >
                         再碰就撞牆了！🚌💥
                         {/* 對話框箭頭 */}
@@ -262,7 +262,7 @@ const TravelMascot = () => {
       // 觸發激動狀態
       setIsExcited(true);
       // 設定生氣訊息
-      setMessage('我跟你說不要碰我了！💢');
+      setMessage('不要戳我喔！💢');
       
       // 700ms 後恢復平靜 (配合動畫)
       setTimeout(() => setIsExcited(false), 700);
@@ -290,7 +290,7 @@ const TravelMascot = () => {
                 >
                     {message}
                     {/* 氣泡尾巴 */}
-                    <div className="absolute -bottom-2 right-8 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
+                    <div className="absolute -bottom-4 right-4 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
                 </motion.div>
             )}
           </AnimatePresence>
