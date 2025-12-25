@@ -160,171 +160,198 @@ const ASSETS = {
 // 🚌 旅遊車吉祥物 (TravelBusMascot)
 // ==========================================
 const TravelBusMascot = () => {
-    // 狀態：'right-idle' (在右邊飄), 'jumping' (跳躍中), 'driving' (開往左邊), 'left-idle' (在左邊飄)
-    const [status, setStatus] = useState<'right-idle' | 'jumping' | 'driving' | 'left-idle'>('right-idle');
-    const [showWarning, setShowWarning] = useState(false);
+  // 狀態：'right-idle' (在右邊飄), 'jumping' (跳躍中), 'driving' (開往左邊), 'left-idle' (在左邊飄)
+  const [status, setStatus] = useState<'right-idle' | 'jumping' | 'driving' | 'left-idle'>('right-idle');
+  const [showWarning, setShowWarning] = useState(false);
+  const [showShout, setShowShout] = useState(false); // 新增：出發喊話狀態
 
-    const handleInteract = () => {
-        if (status === 'right-idle') {
-            // 觸發跳躍
-            setStatus('jumping');
-            
-            // 跳躍 0.5 秒後開始開車
-            setTimeout(() => {
-                setStatus('driving');
-            }, 600); 
+  const handleInteract = () => {
+      if (status === 'right-idle') {
+          // 1. 先喊出發
+          setShowShout(true);
+          setTimeout(() => setShowShout(false), 2000);
 
-            // 開車 3 秒後到達左邊
-            setTimeout(() => {
-                setStatus('left-idle');
-            }, 3600); // 600ms + 3000ms
-        } else if (status === 'left-idle') {
-            // 已經在左邊，顯示警告
-            setShowWarning(true);
-            setTimeout(() => setShowWarning(false), 2000);
-        }
-    };
+          // 2. 觸發跳躍
+          setStatus('jumping');
+          
+          // 3. 跳躍 0.5 秒後開始開車
+          setTimeout(() => {
+              setStatus('driving');
+          }, 600); 
 
-    // 判斷是否目標在左邊 (driving 或 left-idle 時都是靠左定位)
-    const isLeftTarget = status === 'driving' || status === 'left-idle';
+          // 4. 開車 3 秒後到達左邊
+          setTimeout(() => {
+              setStatus('left-idle');
+          }, 3600); 
+      } else if (status === 'left-idle') {
+          // 已經在左邊，顯示警告
+          setShowWarning(true);
+          setTimeout(() => setShowWarning(false), 2000);
+      }
+  };
 
-    return (
-        <motion.div
-            layout // 自動處理位置變換的動畫
-            transition={{ 
-                layout: { duration: 3, ease: "easeInOut" } // 設定開車過程為 3 秒
-            }}
-            className={`fixed top-24 z-50 cursor-pointer select-none ${isLeftTarget ? 'left-4' : 'right-4'}`}
-            onClick={handleInteract}
-        >
-             {/* 警告對話框 */}
-             <AnimatePresence>
-                {showWarning && (
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.5, x: -20 }}
-                        animate={{ opacity: 1, scale: 1, x: 0 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        className="absolute top-1 left-10 md:left-44 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
-                    >
-                        再碰就撞牆了！🚌💥
-                        {/* 對話框箭頭 */}
-                        <div className="absolute top-1/2 -left-2 w-4 h-4 bg-white transform -translate-y-1/2 rotate-45 border-l border-b border-stone-200"></div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+  // 判斷是否目標在左邊 (driving 或 left-idle 時都是靠左定位)
+  const isLeftTarget = status === 'driving' || status === 'left-idle';
 
-            <motion.div
-                animate={
-                    status === 'jumping' ? { y: [0, -50, 0], scale: [1, 1.1, 1] } : // 跳躍動畫
-                    status === 'driving' ? { y: [0, -2, 2, -2, 0], x: [0, -3, 0] } : // 行駛震動
-                    { y: [0, -8, 0] } // 閒置飄浮
-                }
-                transition={
-                    status === 'jumping' ? { duration: 0.5 } :
-                    status === 'driving' ? { repeat: Infinity, duration: 0.2 } :
-                    { repeat: Infinity, duration: 3, ease: "easeInOut" }
-                }
-            >
-                <img 
-                    src={resolveImage("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link")}
-                    alt="Travel Bus Mascot"
-                    className="w-12 md:w-20 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
-                />
-            </motion.div>
-        </motion.div>
-    );
+  return (
+      <motion.div
+          layout // 自動處理位置變換的動畫
+          transition={{ 
+              layout: { duration: 3, ease: "easeInOut" } // 設定開車過程為 3 秒
+          }}
+          // 修改重點：位置設為 right-1 (很靠邊)，left-1 (很靠邊)
+          className={`fixed top-24 z-50 cursor-pointer select-none ${isLeftTarget ? 'left-1' : 'right-1'}`}
+          onClick={handleInteract}
+      >
+            {/* 出發對話框 (新增) */}
+           <AnimatePresence>
+              {showShout && (
+                  <motion.div 
+                      initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      // 位置調整：靠右邊時，氣泡要往左長，才不會被切掉
+                      className="absolute -top-10 right-0 w-max bg-white/95 px-3 py-1.5 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-black text-stone-600 tracking-widest"
+                  >
+                      出發！🚍💨
+                      {/* 對話框箭頭 */}
+                      <div className="absolute -bottom-2 right-6 w-3 h-3 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
+                  </motion.div>
+              )}
+          </AnimatePresence>
+
+           {/* 警告對話框 */}
+           <AnimatePresence>
+              {showWarning && (
+                  <motion.div 
+                      initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                      animate={{ opacity: 1, scale: 1, x: 0 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      className="absolute top-1 left-16 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
+                  >
+                      再碰就撞牆了！🚌💥
+                      {/* 對話框箭頭 */}
+                      <div className="absolute top-1/2 -left-2 w-4 h-4 bg-white transform -translate-y-1/2 rotate-45 border-l border-b border-stone-200"></div>
+                  </motion.div>
+              )}
+          </AnimatePresence>
+
+          <motion.div
+              animate={
+                  status === 'jumping' ? { y: [0, -50, 0], scale: [1, 1.1, 1] } : // 跳躍動畫
+                  status === 'driving' ? { y: [0, -2, 2, -2, 0], x: [0, -3, 0] } : // 行駛震動
+                  { y: [0, -8, 0] } // 閒置飄浮
+              }
+              transition={
+                  status === 'jumping' ? { duration: 0.5 } :
+                  status === 'driving' ? { repeat: Infinity, duration: 0.2 } :
+                  { repeat: Infinity, duration: 3, ease: "easeInOut" }
+              }
+          >
+              {/* 修改重點：大小固定為 w-14 */}
+              <img 
+                  src={resolveImage("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link")}
+                  alt="Travel Bus Mascot"
+                  className="w-14 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
+              />
+          </motion.div>
+      </motion.div>
+  );
 };
 
 // ==========================================
 // 🐕 吉祥物元件 (TravelMascot)
 // ==========================================
 const TravelMascot = () => {
-  const [isExcited, setIsExcited] = useState(false);
-  const [message, setMessage] = useState('');
+const [isExcited, setIsExcited] = useState(false);
+const [message, setMessage] = useState('');
 
-  // 1. 定時顯示 "不要碰我"
-  useEffect(() => {
-    const timer = setInterval(() => {
-        // 如果正在激動(被點擊)，就不要覆蓋訊息
-        if (!isExcited) {
-            setMessage('不要碰我');
-            setTimeout(() => {
-                // 只有當訊息還是"不要碰我"的時候才清除，避免清除掉點擊後的訊息
-                setMessage(prev => prev === '不要碰我' ? '' : prev);
-            }, 2000);
-        }
-    }, 5000); // 每 5 秒檢查一次
+// 1. 定時顯示 "不要碰我"
+useEffect(() => {
+  const timer = setInterval(() => {
+      // 如果正在激動(被點擊)，就不要覆蓋訊息
+      if (!isExcited) {
+          setMessage('不要碰我');
+          setTimeout(() => {
+              // 只有當訊息還是"不要碰我"的時候才清除，避免清除掉點擊後的訊息
+              setMessage(prev => prev === '不要碰我' ? '' : prev);
+          }, 2000);
+      }
+  }, 5000); // 每 5 秒檢查一次
 
-    return () => clearInterval(timer);
-  }, [isExcited]);
+  return () => clearInterval(timer);
+}, [isExcited]);
 
-  const handleInteract = () => {
-      // 觸發激動狀態
-      setIsExcited(true);
-      // 設定生氣訊息
-      setMessage('不要戳我啦！💢');
-      
-      // 700ms 後恢復平靜 (配合動畫)
-      setTimeout(() => setIsExcited(false), 700);
-      
-      // 2秒後清除訊息
-      setTimeout(() => setMessage(''), 2000);
-  };
+const handleInteract = () => {
+    // 觸發激動狀態
+    setIsExcited(true);
+    // 設定生氣訊息
+    setMessage('不要戳我啦！💢');
+    
+    // 700ms 後恢復平靜 (配合動畫)
+    setTimeout(() => setIsExcited(false), 700);
+    
+    // 2秒後清除訊息
+    setTimeout(() => setMessage(''), 2000);
+};
 
-  return (
-      <motion.div
-          initial={{ x: 200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
-          className="fixed bottom-2 right-4 z-50 cursor-pointer select-none"
-          onClick={handleInteract}
-      >
-          {/* 對話氣泡 */}
-          <AnimatePresence>
-            {message && (
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.5, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.5, y: 10 }}
-                    className="absolute -top-8 right-2 w-max bg-white px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600 z-50 pointer-events-none"
-                >
-                    {message}
-                    {/* 氣泡尾巴 */}
-                    <div className="absolute -bottom-4 right-8 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
-                </motion.div>
-            )}
-          </AnimatePresence>
+return (
+    <motion.div
+        initial={{ x: 200, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
+        // 修改重點：位置設為 right-1 (很靠邊)，bottom-4 (避免太低被手機導航條擋住)
+        className="fixed bottom-4 right-1 z-50 cursor-pointer select-none"
+        onClick={handleInteract}
+    >
+        {/* 對話氣泡 */}
+        <AnimatePresence>
+          {message && (
+              <motion.div
+                  initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.5, y: 10 }}
+                  // 位置調整：right-0 確保對齊右邊緣，氣泡往左長
+                  className="absolute -top-10 right-0 w-max bg-white px-3 py-1.5 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600 z-50 pointer-events-none"
+              >
+                  {message}
+                  {/* 氣泡尾巴調整 */}
+                  <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
+              </motion.div>
+          )}
+        </AnimatePresence>
 
-          <motion.div
-              animate={isExcited ? {
-                  y: [0, -60, 0],
-                  rotate: [0, -20, 20, -10, 10, 0],
-                  scale: [1, 1.25, 1]
-              } : {
-                  y: [0, -10, 0],
-                  rotate: [0, 3, -3, 0],
-                  scale: 1
-              }}
-              transition={isExcited ? {
-                  duration: 0.6,
-                  ease: "easeInOut"
-              } : {
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-              }}
-              className="relative"
-          >
-              <motion.img 
-                  whileHover={{ scale: 1.05 }}
-                  src={resolveImage(ASSETS.groupMascot)} 
-                  alt="Group Mascot" 
-                  className="w-12 h-auto md:w-20 drop-shadow-2xl hover:brightness-110 transition-all"
-                  style={{ filter: "drop-shadow(0px 10px 15px rgba(0,0,0,0.3))" }}
-              />
-          </motion.div>
-      </motion.div>
-  );
+        <motion.div
+            animate={isExcited ? {
+                y: [0, -60, 0],
+                rotate: [0, -20, 20, -10, 10, 0],
+                scale: [1, 1.25, 1]
+            } : {
+                y: [0, -10, 0],
+                rotate: [0, 3, -3, 0],
+                scale: 1
+            }}
+            transition={isExcited ? {
+                duration: 0.6,
+                ease: "easeInOut"
+            } : {
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+            }}
+            className="relative"
+        >
+            {/* 修改重點：大小固定為 w-14 */}
+            <motion.img 
+                whileHover={{ scale: 1.05 }}
+                src={resolveImage(ASSETS.groupMascot)} 
+                alt="Group Mascot" 
+                className="w-14 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
+                style={{ filter: "drop-shadow(0px 10px 15px rgba(0,0,0,0.3))" }}
+            />
+        </motion.div>
+    </motion.div>
+);
 };
 
 // ==========================================
