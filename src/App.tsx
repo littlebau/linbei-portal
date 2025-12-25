@@ -228,7 +228,7 @@ const TravelBusMascot = () => {
                 <img 
                     src={resolveImage("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link")}
                     alt="Travel Bus Mascot"
-                    className="w-22 md:w-32 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
+                    className="w-32 md:w-40 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
                 />
             </motion.div>
         </motion.div>
