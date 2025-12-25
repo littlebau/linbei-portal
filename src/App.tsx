@@ -228,7 +228,7 @@ const TravelBusMascot = () => {
                 <img 
                     src={resolveImage("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link")}
                     alt="Travel Bus Mascot"
-                    className="w-32 md:w-40 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
+                    className="w-18 md:w-20 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
                 />
             </motion.div>
         </motion.div>
@@ -319,7 +319,7 @@ const TravelMascot = () => {
                   whileHover={{ scale: 1.05 }}
                   src={resolveImage(ASSETS.groupMascot)} 
                   alt="Group Mascot" 
-                  className="w-32 h-auto md:w-40 drop-shadow-2xl hover:brightness-110 transition-all"
+                  className="w-18 h-auto md:w-20 drop-shadow-2xl hover:brightness-110 transition-all"
                   style={{ filter: "drop-shadow(0px 10px 15px rgba(0,0,0,0.3))" }}
               />
           </motion.div>
