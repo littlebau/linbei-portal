@@ -204,7 +204,7 @@ const TravelBusMascot = () => {
                         initial={{ opacity: 0, scale: 0.5, x: -20 }}
                         animate={{ opacity: 1, scale: 1, x: 0 }}
                         exit={{ opacity: 0, scale: 0.5 }}
-                        className="absolute top-2 left-2 md:left-44 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
+                        className="absolute top-1 left-8 md:left-44 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
                     >
                         再碰就撞牆了！🚌💥
                         {/* 對話框箭頭 */}
