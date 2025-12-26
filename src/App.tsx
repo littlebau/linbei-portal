@@ -157,101 +157,138 @@ const ASSETS = {
 };
 
 // ==========================================
-// 🚌 旅遊車吉祥物 (TravelBusMascot)
+// 🚌 旅遊車吉祥物 (TravelBusMascot) - Modified
 // ==========================================
 const TravelBusMascot = () => {
-  // 狀態：'right-idle' (在右邊飄), 'jumping' (跳躍中), 'driving' (開往左邊), 'left-idle' (在左邊飄)
-  const [status, setStatus] = useState<'right-idle' | 'jumping' | 'driving' | 'left-idle'>('right-idle');
-  const [showWarning, setShowWarning] = useState(false);
-  const [showShout, setShowShout] = useState(false); // 新增：出發喊話狀態
+  // 狀態：'start' (右上), 'top-left' (左上), 'bottom-left' (左下)
+  const [phase, setPhase] = useState<'start' | 'top-left' | 'bottom-left'>('start');
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [msg, setMsg] = useState('');
+  const [iconUrl, setIconUrl] = useState("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link");
+  const [imgControls, setImgControls] = useState<any>({ y: [0, -8, 0] }); // 預設漂浮
 
   const handleInteract = () => {
-      if (status === 'right-idle') {
-          // 1. 先喊出發
-          setShowShout(true);
-          setTimeout(() => setShowShout(false), 2000);
+      if (isAnimating) return;
 
-          // 2. 觸發跳躍
-          setStatus('jumping');
+      if (phase === 'start') {
+          // =======================
+          // 階段 1: 右上 -> 左上
+          // =======================
+          setIsAnimating(true);
           
-          // 3. 跳躍 0.5 秒後開始開車
-          setTimeout(() => {
-              setStatus('driving');
-          }, 600); 
+          // 1. 放大 & 喊出團
+          setMsg("出團！");
+          setImgControls({ 
+              scale: [1, 4, 1], // 放大到 4 倍再縮回
+              rotate: [0, 10, -10, 0],
+              transition: { duration: 1.5, ease: "easeInOut" }
+          });
 
-          // 4. 開車 3 秒後到達左邊
+          // 2. 移動到左上角 (在放大縮小動畫結束後開始移動)
           setTimeout(() => {
-              setStatus('left-idle');
-          }, 3600); 
-      } else if (status === 'left-idle') {
-          // 已經在左邊，顯示警告
-          setShowWarning(true);
-          setTimeout(() => setShowWarning(false), 2000);
+              setMsg("");
+              setPhase('top-left'); // 觸發 layout 移動
+              
+              // 開車震動動畫
+              setImgControls({ 
+                  y: [0, -2, 2, -2, 0], 
+                  x: [0, -3, 0],
+                  transition: { repeat: Infinity, duration: 0.2 } 
+              });
+
+              // 到達後停止震動
+              setTimeout(() => {
+                  setIsAnimating(false);
+                  setImgControls({ y: [0, -8, 0], transition: { repeat: Infinity, duration: 3 } }); // 恢復漂浮
+              }, 3000); // 假設移動耗時 3 秒
+          }, 1500);
+
+      } else if (phase === 'top-left') {
+          // =======================
+          // 階段 2: 左上 -> 左下 (變身)
+          // =======================
+          setIsAnimating(true);
+          setMsg("到站了");
+
+          // 1. 變身 Icon
+          setTimeout(() => {
+              setIconUrl("https://drive.google.com/file/d/1mtMJPhNOmGz7l0OU9WZsHDvBs7RI_6yN/view?usp=drive_link");
+              
+              // 2. 慢慢放大再縮小
+              setImgControls({
+                  scale: [1, 3, 1],
+                  transition: { duration: 3, ease: "easeInOut" }
+              });
+
+              // 3. 移動到左下角
+              setTimeout(() => {
+                  setMsg("到達目的地了");
+                  setPhase('bottom-left');
+                  
+                  // 走路動畫
+                  setImgControls({
+                      y: [0, -5, 0],
+                      rotate: [0, 5, -5, 0],
+                      transition: { repeat: Infinity, duration: 0.5 }
+                  });
+
+                  // 到達後停止
+                  setTimeout(() => {
+                      setIsAnimating(false);
+                      setMsg(""); // 清除訊息
+                      setImgControls({ y: 0, rotate: 0 }); // 靜止
+                  }, 4000); // 假設移動耗時 4 秒
+              }, 3000); // 等待放大縮小大部分完成
+          }, 1000);
+
+      } else if (phase === 'bottom-left') {
+          // =======================
+          // 階段 3: 左下 (撒嬌)
+          // =======================
+          setMsg("我還不想回家");
+          // 搖頭動畫
+          setImgControls({
+              x: [0, -5, 5, -5, 5, 0],
+              transition: { duration: 0.5 }
+          });
+          
+          setTimeout(() => setMsg(""), 2000);
       }
   };
 
-  // 判斷是否目標在左邊 (driving 或 left-idle 時都是靠左定位)
-  const isLeftTarget = status === 'driving' || status === 'left-idle';
+  // 根據 phase 決定 CSS 位置類別
+  let positionClass = "top-24 right-1"; // start
+  if (phase === 'top-left') positionClass = "top-24 left-1";
+  if (phase === 'bottom-left') positionClass = "bottom-24 left-1"; // 為了避開原本右下角的吉祥物，放左下
 
   return (
       <motion.div
-          layout // 自動處理位置變換的動畫
-          transition={{ 
-              layout: { duration: 3, ease: "easeInOut" } // 設定開車過程為 3 秒
-          }}
-          // 修改重點：位置設為 right-1 (很靠邊)，left-1 (很靠邊)
-          className={`fixed top-24 z-50 cursor-pointer select-none ${isLeftTarget ? 'left-1' : 'right-1'}`}
+          layout // 讓 Framer Motion 自動處理位置變換的動畫
+          transition={{ layout: { duration: phase === 'start' ? 3 : 4, ease: "easeInOut" } }} // 控制移動速度
+          className={`fixed z-50 cursor-pointer select-none ${positionClass}`}
           onClick={handleInteract}
       >
-            {/* 出發對話框 (新增) */}
+           {/* 對話框 */}
            <AnimatePresence>
-              {showShout && (
+              {msg && (
                   <motion.div 
                       initial={{ opacity: 0, scale: 0.5, y: 10 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.5 }}
-                      // 位置調整：靠右邊時，氣泡要往左長，才不會被切掉
-                      className="absolute -top-10 right-0 w-max bg-white/95 px-3 py-1.5 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-black text-stone-600 tracking-widest"
+                      className={`absolute w-max bg-white/95 px-3 py-1.5 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-black text-stone-600 tracking-widest z-50 ${phase === 'start' ? '-top-10 right-0' : '-top-10 left-0'}`}
                   >
-                      出發！🚍💨
-                      {/* 對話框箭頭 */}
-                      <div className="absolute -bottom-2 right-6 w-3 h-3 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
+                      {msg}
+                      {/* 對話框箭頭，根據位置調整 */}
+                      <div className={`absolute -bottom-2 w-3 h-3 bg-white transform rotate-45 border-r border-b border-stone-200 ${phase === 'start' ? 'right-6' : 'left-6'}`}></div>
                   </motion.div>
               )}
           </AnimatePresence>
 
-           {/* 警告對話框 */}
-           <AnimatePresence>
-              {showWarning && (
-                  <motion.div 
-                      initial={{ opacity: 0, scale: 0.5, x: -20 }}
-                      animate={{ opacity: 1, scale: 1, x: 0 }}
-                      exit={{ opacity: 0, scale: 0.5 }}
-                      className="absolute top-1 left-16 w-max bg-white/95 px-2 py-1 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600"
-                  >
-                      再碰就撞牆了！🚌💥
-                      {/* 對話框箭頭 */}
-                      <div className="absolute top-1/2 -left-2 w-4 h-4 bg-white transform -translate-y-1/2 rotate-45 border-l border-b border-stone-200"></div>
-                  </motion.div>
-              )}
-          </AnimatePresence>
-
-          <motion.div
-              animate={
-                  status === 'jumping' ? { y: [0, -50, 0], scale: [1, 1.1, 1] } : // 跳躍動畫
-                  status === 'driving' ? { y: [0, -2, 2, -2, 0], x: [0, -3, 0] } : // 行駛震動
-                  { y: [0, -8, 0] } // 閒置飄浮
-              }
-              transition={
-                  status === 'jumping' ? { duration: 0.5 } :
-                  status === 'driving' ? { repeat: Infinity, duration: 0.2 } :
-                  { repeat: Infinity, duration: 3, ease: "easeInOut" }
-              }
-          >
-              {/* 修改重點：大小固定為 w-14 */}
+          <motion.div animate={imgControls}>
+              {/* 大小固定為 w-14 */}
               <img 
-                  src={resolveImage("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link")}
-                  alt="Travel Bus Mascot"
+                  src={resolveImage(iconUrl)}
+                  alt="Travel Mascot"
                   className="w-14 h-auto drop-shadow-2xl hover:brightness-110 transition-all"
               />
           </motion.div>
