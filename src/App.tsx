@@ -727,7 +727,7 @@ const TripCard = React.forwardRef(({ trip, tripId, visualIndex, index, user, acc
                                 </div>
                             </>
                           )}
-                       </div>
+                        </div>
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center bg-stone-50 text-stone-300 relative overflow-hidden">
                           <div className="absolute inset-0 opacity-30" style={{backgroundImage: `url(${ASSETS.paper})`}}></div>
@@ -1130,17 +1130,14 @@ const OpeningAnimation = ({ onComplete }: { onComplete: () => void }) => {
   // 控制主要場景時間軸
   useEffect(() => {
     if (stage === 1) {
-      // 第一幕：思考 (6秒)
-      const timer = setTimeout(() => setStage(2), 6000);
+      // 第一幕：思考 (縮短至 3 秒)
+      // 跳過第二幕，直接 setStage(3)
+      const timer = setTimeout(() => setStage(3), 3000);
       return () => clearTimeout(timer);
     }
-    if (stage === 2) {
-      // 第二幕：介紹 (8秒)
-      const timer = setTimeout(() => setStage(3), 8000);
-      return () => clearTimeout(timer);
-    }
+    // 注意：這裡已經移除了 stage === 2 的邏輯
     if (stage === 3) {
-      // 第三幕：出發 (5秒)
+      // 第三幕：出發 (維持 5 秒)
       const timer = setTimeout(() => {
         // 動畫結束，呼叫外部函式進入網站
         onComplete();
@@ -1149,12 +1146,12 @@ const OpeningAnimation = ({ onComplete }: { onComplete: () => void }) => {
     }
   }, [stage, onComplete]);
 
-  // 控制第一幕內部的想法切換
+  // 控制第一幕內部的想法切換 (配合縮短的時間加速)
   useEffect(() => {
     if (stage === 1) {
       setThoughtStep(0);
-      const t1 = setTimeout(() => setThoughtStep(1), 2000);
-      const t2 = setTimeout(() => setThoughtStep(2), 4000);
+      const t1 = setTimeout(() => setThoughtStep(1), 1000); // 加速：1秒切換
+      const t2 = setTimeout(() => setThoughtStep(2), 2000); // 加速：2秒切換
       return () => { clearTimeout(t1); clearTimeout(t2); };
     }
   }, [stage]);
@@ -1186,43 +1183,43 @@ const OpeningAnimation = ({ onComplete }: { onComplete: () => void }) => {
             <div className="relative w-full h-full max-w-lg mx-auto">
                <div className="absolute top-[5%] right-0 w-[45%] h-[40%] flex items-center justify-center z-20">
                  <AnimatePresence mode='wait'>
-                    {thoughtStep === 0 && (
-                      <motion.div
-                        key="thought1"
-                        initial={{ scale: 0, opacity: 0, x: -20, y: 20 }}
-                        animate={{ scale: 1, opacity: 1, x: 0, y: 0 }}
-                        exit={{ scale: 0.8, opacity: 0, transition: { duration: 0.2 } }}
-                        transition={{ type: "spring", stiffness: 150, damping: 15 }}
-                      >
-                        <img src={resolveImage(SCENE_ASSETS.scene1.thought1)} alt="Idea 1" className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-xl" />
-                      </motion.div>
-                    )}
+                   {thoughtStep === 0 && (
+                     <motion.div
+                       key="thought1"
+                       initial={{ scale: 0, opacity: 0, x: -20, y: 20 }}
+                       animate={{ scale: 1, opacity: 1, x: 0, y: 0 }}
+                       exit={{ scale: 0.8, opacity: 0, transition: { duration: 0.2 } }}
+                       transition={{ type: "spring", stiffness: 150, damping: 15 }}
+                     >
+                       <img src={resolveImage(SCENE_ASSETS.scene1.thought1)} alt="Idea 1" className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-xl" />
+                     </motion.div>
+                   )}
 
-                    {thoughtStep === 1 && (
-                      <motion.div
-                        key="thought2"
-                        initial={{ scale: 0, opacity: 0, x: -20, y: 20 }}
-                        animate={{ scale: 1, opacity: 1, x: 0, y: 0 }}
-                        exit={{ scale: 0.8, opacity: 0, transition: { duration: 0.2 } }}
-                        transition={{ type: "spring", stiffness: 150, damping: 15 }}
-                      >
+                   {thoughtStep === 1 && (
+                     <motion.div
+                       key="thought2"
+                       initial={{ scale: 0, opacity: 0, x: -20, y: 20 }}
+                       animate={{ scale: 1, opacity: 1, x: 0, y: 0 }}
+                       exit={{ scale: 0.8, opacity: 0, transition: { duration: 0.2 } }}
+                       transition={{ type: "spring", stiffness: 150, damping: 15 }}
+                     >
                          <img src={resolveImage(SCENE_ASSETS.scene1.thought2)} alt="Idea 2" className="w-56 h-56 md:w-72 md:h-72 object-contain drop-shadow-xl" />
-                      </motion.div>
-                    )}
+                     </motion.div>
+                   )}
 
-                    {thoughtStep === 2 && (
-                      <motion.div
-                        key="bulb"
-                        initial={{ scale: 0, opacity: 0, x: -20, y: 20 }}
-                        animate={{ scale: 1, opacity: 1, x: 0, y: 0 }}
-                        transition={{ type: "spring", bounce: 0.6 }}
-                      >
-                        <div className="bg-yellow-50 p-4 rounded-full shadow-[0_0_50px_rgba(253,224,71,0.6)] border-4 border-yellow-300">
-                          <Lightbulb size={80} className="text-yellow-500 fill-yellow-300 animate-pulse" />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                   {thoughtStep === 2 && (
+                     <motion.div
+                       key="bulb"
+                       initial={{ scale: 0, opacity: 0, x: -20, y: 20 }}
+                       animate={{ scale: 1, opacity: 1, x: 0, y: 0 }}
+                       transition={{ type: "spring", bounce: 0.6 }}
+                     >
+                       <div className="bg-yellow-50 p-4 rounded-full shadow-[0_0_50px_rgba(253,224,71,0.6)] border-4 border-yellow-300">
+                         <Lightbulb size={80} className="text-yellow-500 fill-yellow-300 animate-pulse" />
+                       </div>
+                     </motion.div>
+                   )}
+                 </AnimatePresence>
                </div>
 
                <motion.img 
@@ -1238,86 +1235,9 @@ const OpeningAnimation = ({ onComplete }: { onComplete: () => void }) => {
         )}
 
         {/* =======================
-            第二幕：大螢幕介紹計畫
-           ======================= */}
-        {stage === 2 && (
-          <motion.div 
-            key="scene2"
-            className="absolute inset-0 flex flex-col items-center justify-center bg-stone-800"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="relative w-full h-full flex flex-col items-center justify-center">
-              
-              <motion.div
-                initial={{ y: -50, opacity: 0, scale: 0.8 }}
-                animate={{ y: 0, opacity: 1, scale: 1 }}
-                transition={{ duration: 1 }}
-                className="relative z-0 mb-4"
-              >
-                <div className="relative">
-                  <img 
-                    src={resolveImage(SCENE_ASSETS.scene2.screen)} 
-                    alt="Small Screen" 
-                    className="w-[160px] md:w-[280px] object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] opacity-90"
-                  />
-                </div>
-              </motion.div>
-
-              <div className="w-full max-w-5xl flex items-end justify-center gap-4 md:gap-12 px-4 relative z-10 mt-2">
-                
-                <motion.img 
-                  src={resolveImage(SCENE_ASSETS.scene2.wife)} 
-                  alt="Wife Thumbs Up"
-                  className="w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-xl"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ 
-                    scale: 1, 
-                    opacity: 1,
-                    y: [0, -5, 0]
-                  }}
-                  transition={{ 
-                    delay: 2.2, 
-                    duration: 0.5,
-                    type: "spring",
-                    y: { repeat: Infinity, duration: 2, ease: "easeInOut", delay: 2.7 }
-                  }}
-                />
-
-                <motion.img 
-                  src={resolveImage(SCENE_ASSETS.scene2.dadPresenting)} 
-                  alt="Dad Presenting"
-                  className="w-36 h-36 md:w-56 md:h-56 object-contain drop-shadow-xl mb-4"
-                  initial={{ y: 50, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, type: "spring" }}
-                />
-
-                <motion.img 
-                  src={resolveImage(SCENE_ASSETS.scene2.daughter)} 
-                  alt="Daughter Clapping"
-                  className="w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-xl"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ 
-                    scale: 1, 
-                    opacity: 1,
-                    y: [0, -10, 0], 
-                    rotate: [0, -5, 5, 0]
-                  }}
-                  transition={{ 
-                    delay: 2.4, 
-                    duration: 0.5,
-                    type: "spring",
-                    y: { repeat: Infinity, duration: 0.6, delay: 2.9 },
-                    rotate: { repeat: Infinity, duration: 1.2, delay: 2.9 }
-                  }}
-                />
-              </div>
-            </div>
-          </motion.div>
-        )}
+            第二幕已移除
+            ======================= 
+        */}
 
         {/* =======================
             第三幕：汽車出發 (純圖說故事)
