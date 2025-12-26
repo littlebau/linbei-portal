@@ -166,9 +166,10 @@ const TravelBusMascot = () => {
   // 'top-left': 左上角待機 (點第一次喊到站了)
   // 'top-left-ready': 左上角待機 (點第二次變身)
   // 'zoom-luggage': 變成行李箱放大到中間
+  // 'walking-start': 瞬移回到左上角 (為了做走路動畫的起點)
   // 'walking': 從左上慢慢走到左下
   // 'bottom-left': 左下角終點
-  const [phase, setPhase] = useState<'start' | 'zoom-start' | 'top-left' | 'top-left-ready' | 'zoom-luggage' | 'walking' | 'bottom-left'>('start');
+  const [phase, setPhase] = useState<'start' | 'zoom-start' | 'top-left' | 'top-left-ready' | 'zoom-luggage' | 'walking-start' | 'walking' | 'bottom-left'>('start');
   const [msg, setMsg] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
   const [iconUrl, setIconUrl] = useState("https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link");
@@ -183,7 +184,7 @@ const TravelBusMascot = () => {
           setPhase('zoom-start'); // 觸發 Layout 改變位置到中間
           setMsg("出團！");
 
-          // 停留 2 秒後，縮小並飛往左上角
+          // 需求修正：停留 3 秒
           setTimeout(() => {
               setMsg("");
               setPhase('top-left'); // 觸發 Layout 改變位置到左上
@@ -191,8 +192,8 @@ const TravelBusMascot = () => {
               // 給一點時間讓它飛過去
               setTimeout(() => {
                   setIsAnimating(false);
-              }, 2000); 
-          }, 2000);
+              }, 1500); 
+          }, 3000);
       }
 
       // 2. 左上角互動
@@ -213,25 +214,25 @@ const TravelBusMascot = () => {
               
               // 停留 2 秒後
               setTimeout(() => {
-                  // 先縮回左上角 (為了從左上角出發走軌跡)
-                  setPhase('walking'); // 直接進入 walking 狀態，但 layout 可能需要先回到 top-left 的位置
-                  // 這裡透過 Framer Motion 的 layout 動畫，如果 walking 的位置設定是左下，它會直接走過去
-                  // 但需求是「縮小回去之後，從左上角，有個慢慢走的軌跡到左下角」
+                  // 需求修正：先瞬移回左上角 (walking-start)，再慢慢走到左下角 (walking)
                   
-                  // 所以這裡做一個小技巧：
-                  // 1. 在 zoom-luggage 結束時，視覺上先回到 top-left 的位置 (透過中間狀態，但不需要額外定義 state，直接用 walking 的初始值控制)
-                  // 為了簡單，我們直接讓它飛到 'bottom-left'，並設定很慢的 transition
+                  // 1. 瞬移到左上 (利用 duration: 0)
+                  setPhase('walking-start');
                   
-                  // 在這裡我們直接設定 phase 為 bottom-left，但是在 motion div 上設定 duration 很長
-                  setMsg("GOGOGO!");
-                  setTimeout(() => setMsg(""), 1500);
-                  
-                  setPhase('bottom-left');
-
-                  // 設定動畫結束
+                  // 2. 為了讓 React 渲染和 Framer Motion 抓到位置，給一個極短的延遲後開始走路
                   setTimeout(() => {
-                      setIsAnimating(false);
-                  }, 5000); // 配合走路的時間
+                    setMsg("GOGOGO!");
+                    setPhase('walking'); // 這時候會從 walking-start (左上) 走到 walking (左下)
+                    
+                    setTimeout(() => setMsg(""), 1500);
+
+                    // 設定動畫結束
+                    setTimeout(() => {
+                        setPhase('bottom-left');
+                        setIsAnimating(false);
+                    }, 5000); // 配合走路的時間
+                  }, 50);
+
               }, 2000);
           }
       }
@@ -247,7 +248,7 @@ const TravelBusMascot = () => {
   // 使用 fixed 和 inset/transform 來控制位置
   let positionClass = "";
   let imgSizeClass = "w-14"; // 預設大小
-  let transitionSettings = { duration: 1, ease: "easeInOut" }; // 預設動畫設定
+  let transitionSettings: any = { duration: 1, ease: "easeInOut" }; // 預設動畫設定
 
   switch (phase) {
       case 'start':
@@ -267,60 +268,32 @@ const TravelBusMascot = () => {
           positionClass = "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100]";
           imgSizeClass = "w-48 md:w-64"; // 變很大
           break;
+      case 'walking-start':
+          // 這是關鍵：瞬間回到左上角，作為走路的起點
+          positionClass = "fixed top-24 left-1 z-50";
+          transitionSettings = { duration: 0 }; // 無動畫瞬移
+          break;
       case 'walking':
-          // 這是過渡狀態，實際上會直接跳到 bottom-left 並透過 duration 控制
+          // 從左上慢慢走到左下
           positionClass = "fixed bottom-24 left-1 z-50";
-          transitionSettings = { duration: 5, ease: "linear" }; // 慢慢走
+          transitionSettings = { duration: 5, ease: "linear" }; // 慢慢走 5秒
           break;
       case 'bottom-left':
           positionClass = "fixed bottom-24 left-1 z-50";
-          // 如果是剛從 zoom-luggage 變過來，需要長一點的時間
-          // 這裡我們利用一個 trick: 如果是剛切換過來，在 layout prop 上會吃這裏的設定
-          // 為了確保「從左上到左下慢慢走」，我們需要在 zoom-luggage 到 bottom-left 之間有一個過渡
-          // 由於 React state 更新會重新渲染，我們在 handleInteract 裡直接設成了 bottom-left
-          // 所以這裡的 duration 控制了「從中間縮回左上」還是「從左上走到左下」？
-          
-          // 修正策略：
-          // 1. Zoom Luggage (Center)
-          // 2. 透過 key 改變讓它先瞬移回 Top-Left (或快速縮回)
-          // 3. 再慢慢走到 Bottom-Left
-          
-          // 為了簡化，讓 Framer Motion 處理從 Center -> Bottom-Left 的過程
-          // 但如果要「從左上角慢慢走」，表示要先回到左上。
-          // 我們簡單化：從 Center 縮小回到 Top-Left，然後再走到 Bottom-Left
-          // 這需要多一個 useEffect 或狀態，這邊為了流暢度，我們讓它直接從 Center 飛到 Bottom-Left，但速度放慢
-          // 或者保持使用者的「軌跡」需求：
-          // 我們在 handleInteract 裡做了簡化。這裡設定 duration 為 5秒
-          transitionSettings = { duration: 5, ease: "easeInOut" };
+          // 保持在左下角
           break;
   }
-
-  // 修正邏輯：為了讓它真的從左上走到左下，我們在 Zoom Luggage 之後，應該先設回 Top-Left，然後下一個 render cycle 再設為 Bottom-Left
-  // 這裡使用 useEffect 來處理 walking 的序列
-  useEffect(() => {
-      if (phase === 'walking') {
-          // 1. 先瞬間回到左上 (需要很快，或者在 zoom-luggage 結束時已經是 top-left 的 layout)
-          // 為了視覺效果，我們在 zoom-luggage 結束時設定為 top-left，並在極短時間後設為 bottom-left
-          // 但由於 layout animation 的特性，這比較難完全精準控制
-          
-          // 替代方案：直接從中間飛到左下，但路徑設為曲線？ 
-          // 或者：簡單點，接受從中間縮回左下。
-          
-          // 為了滿足「從左上角軌跡」，我們在 handleInteract 裡做個調整：
-          // (已在 handleInteract 調整：zoom -> top-left -> bottom-left)
-      }
-  }, [phase]);
 
   // 動畫控制物件
   const controls = {
       y: phase === 'bottom-left' || phase === 'top-left' ? 0 : [0, -8, 0], // 漂浮
       rotate: phase === 'zoom-start' || phase === 'zoom-luggage' ? [0, 5, -5, 0] : 0,
   };
-  
+   
   // 針對 Bottom-Left 的走路晃動
-  if (phase === 'bottom-left' && isAnimating) {
+  if (phase === 'walking') {
      controls.y = [0, -5, 0];
-     // controls.rotate = [0, 5, -5, 0]; // 走路搖擺
+     controls.rotate = [0, 10, -10, 0]; // 走路搖擺幅度大一點
   }
 
   return (
@@ -347,7 +320,7 @@ const TravelBusMascot = () => {
 
           <motion.div 
             animate={controls} 
-            transition={{ repeat: Infinity, duration: phase.includes('zoom') ? 0.5 : 3 }}
+            transition={{ repeat: Infinity, duration: phase.includes('zoom') ? 0.5 : (phase === 'walking' ? 0.5 : 3) }}
           >
               <motion.img 
                   layout // 讓圖片大小也能平滑過渡
