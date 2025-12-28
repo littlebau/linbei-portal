@@ -160,15 +160,6 @@ const ASSETS = {
 // 🚌 旅遊車吉祥物 (TravelBusMascot)
 // ==========================================
 const TravelBusMascot = () => {
-  // 狀態定義
-  // 'start': 右上角初始狀態
-  // 'zoom-start': 放大到中間喊口號
-  // 'top-left': 左上角待機 (點第一次喊到站了)
-  // 'top-left-ready': 左上角待機 (點第二次變身)
-  // 'zoom-luggage': 變成行李箱放大到中間
-  // 'walking-start': 瞬移回到左上角 (為了做走路動畫的起點)
-  // 'walking': 從左上慢慢走到左下
-  // 'bottom-left': 左下角終點
   const [phase, setPhase] = useState<'start' | 'zoom-start' | 'top-left' | 'top-left-ready' | 'zoom-luggage' | 'walking-start' | 'walking' | 'bottom-left'>('start');
   const [msg, setMsg] = useState('');
   const [isAnimating, setIsAnimating] = useState(false);
@@ -178,122 +169,98 @@ const TravelBusMascot = () => {
   const handleInteract = () => {
       if (isAnimating) return;
 
-      // 1. 初始狀態 -> 放大到中間喊口號
       if (phase === 'start') {
           setIsAnimating(true);
-          setPhase('zoom-start'); // 觸發 Layout 改變位置到中間
+          setPhase('zoom-start'); 
           setMsg("出團！");
 
-          // 需求修正：停留 3 秒
           setTimeout(() => {
               setMsg("");
-              setPhase('top-left'); // 觸發 Layout 改變位置到左上
+              setPhase('top-left'); 
               
-              // 給一點時間讓它飛過去
               setTimeout(() => {
                   setIsAnimating(false);
               }, 1500); 
           }, 3000);
       }
 
-      // 2. 左上角互動
       else if (phase === 'top-left') {
-          // 第一次點擊：喊到站了
           if (clickCountTopLeft === 0) {
               setMsg("到站了");
               setClickCountTopLeft(1);
-              // 顯示訊息後自動消失
               setTimeout(() => setMsg(""), 2000);
           } 
-          // 第二次點擊：變身行李箱 -> 放大到中間
           else {
               setIsAnimating(true);
               setPhase('zoom-luggage');
-              // 變身
               setIconUrl("https://drive.google.com/file/d/1mtMJPhNOmGz7l0OU9WZsHDvBs7RI_6yN/view?usp=drive_link");
               
-              // 停留 2 秒後
               setTimeout(() => {
-                  // 需求修正：先瞬移回左上角 (walking-start)，再慢慢走到左下角 (walking)
-                  
-                  // 1. 瞬移到左上 (利用 duration: 0)
                   setPhase('walking-start');
                   
-                  // 2. 為了讓 React 渲染和 Framer Motion 抓到位置，給一個極短的延遲後開始走路
                   setTimeout(() => {
                     setMsg("GOGOGO!");
-                    setPhase('walking'); // 這時候會從 walking-start (左上) 走到 walking (左下)
+                    setPhase('walking'); 
                     
                     setTimeout(() => setMsg(""), 1500);
 
-                    // 設定動畫結束
                     setTimeout(() => {
                         setPhase('bottom-left');
                         setIsAnimating(false);
-                    }, 5000); // 配合走路的時間
+                    }, 5000); 
                   }, 50);
 
               }, 2000);
           }
       }
 
-      // 3. 左下角互動 (原本的設計)
       else if (phase === 'bottom-left') {
           setMsg("我還不想回家耶");
           setTimeout(() => setMsg(""), 2000);
       }
   };
 
-  // 根據 phase 決定 CSS 位置類別
-  // 使用 fixed 和 inset/transform 來控制位置
   let positionClass = "";
-  let imgSizeClass = "w-14"; // 預設大小
-  let transitionSettings: any = { duration: 1, ease: "easeInOut" }; // 預設動畫設定
+  let imgSizeClass = "w-14"; 
+  let transitionSettings: any = { duration: 1, ease: "easeInOut" }; 
 
   switch (phase) {
       case 'start':
           positionClass = "fixed top-24 right-1 z-50";
           break;
       case 'zoom-start':
-          // 放大到畫面正中間
           positionClass = "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100]";
-          imgSizeClass = "w-48 md:w-64"; // 變很大
+          imgSizeClass = "w-48 md:w-64"; 
           break;
       case 'top-left':
       case 'top-left-ready':
           positionClass = "fixed top-24 left-1 z-50";
           break;
       case 'zoom-luggage':
-          // 再次放大到中間
           positionClass = "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100]";
-          imgSizeClass = "w-48 md:w-64"; // 變很大
+          imgSizeClass = "w-48 md:w-64"; 
           break;
       case 'walking-start':
-          // 這是關鍵：瞬間回到左上角，作為走路的起點
           positionClass = "fixed top-24 left-1 z-50";
-          transitionSettings = { duration: 0 }; // 無動畫瞬移
+          transitionSettings = { duration: 0 }; 
           break;
       case 'walking':
-          // 從左上慢慢走到左下
           positionClass = "fixed bottom-24 left-1 z-50";
-          transitionSettings = { duration: 5, ease: "linear" }; // 慢慢走 5秒
+          transitionSettings = { duration: 5, ease: "linear" }; 
           break;
       case 'bottom-left':
           positionClass = "fixed bottom-24 left-1 z-50";
-          // 保持在左下角
           break;
   }
 
-  // 動畫控制物件
   const controls = {
-      y: phase === 'bottom-left' || phase === 'top-left' ? 0 : [0, -8, 0], // 漂浮
+      y: phase === 'bottom-left' || phase === 'top-left' ? 0 : [0, -8, 0], 
       rotate: phase === 'zoom-start' || phase === 'zoom-luggage' ? [0, 5, -5, 0] : 0,
   };
    
-  // 針對 Bottom-Left 的走路晃動
   if (phase === 'walking') {
      controls.y = [0, -5, 0];
-     controls.rotate = [0, 10, -10, 0]; // 走路搖擺幅度大一點
+     controls.rotate = [0, 10, -10, 0]; 
   }
 
   return (
@@ -303,7 +270,6 @@ const TravelBusMascot = () => {
           className={`${positionClass} cursor-pointer select-none flex flex-col items-center justify-center`}
           onClick={handleInteract}
       >
-           {/* 對話框 */}
            <AnimatePresence>
               {msg && (
                   <motion.div 
@@ -323,7 +289,7 @@ const TravelBusMascot = () => {
             transition={{ repeat: Infinity, duration: phase.includes('zoom') ? 0.5 : (phase === 'walking' ? 0.5 : 3) }}
           >
               <motion.img 
-                  layout // 讓圖片大小也能平滑過渡
+                  layout 
                   src={resolveImage(iconUrl)}
                   alt="Travel Mascot"
                   className={`${imgSizeClass} h-auto drop-shadow-2xl transition-all duration-500`}
@@ -341,32 +307,23 @@ const TravelMascot = () => {
 const [isExcited, setIsExcited] = useState(false);
 const [message, setMessage] = useState('');
 
-// 1. 定時顯示 "不要碰我"
 useEffect(() => {
   const timer = setInterval(() => {
-      // 如果正在激動(被點擊)，就不要覆蓋訊息
       if (!isExcited) {
           setMessage('不要碰我');
           setTimeout(() => {
-              // 只有當訊息還是"不要碰我"的時候才清除，避免清除掉點擊後的訊息
               setMessage(prev => prev === '不要碰我' ? '' : prev);
           }, 2000);
       }
-  }, 5000); // 每 5 秒檢查一次
+  }, 5000); 
 
   return () => clearInterval(timer);
 }, [isExcited]);
 
 const handleInteract = () => {
-    // 觸發激動狀態
     setIsExcited(true);
-    // 設定生氣訊息
     setMessage('你很皮喔！💢');
-    
-    // 700ms 後恢復平靜 (配合動畫)
     setTimeout(() => setIsExcited(false), 700);
-    
-    // 2秒後清除訊息
     setTimeout(() => setMessage(''), 2000);
 };
 
@@ -375,22 +332,18 @@ return (
         initial={{ x: 200, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 80, damping: 15, delay: 1.5 }}
-        // 修改重點：位置設為 right-1 (很靠邊)，bottom-4 (避免太低被手機導航條擋住)
         className="fixed bottom-4 right-1 z-50 cursor-pointer select-none"
         onClick={handleInteract}
     >
-        {/* 對話氣泡 */}
         <AnimatePresence>
           {message && (
               <motion.div
                   initial={{ opacity: 0, scale: 0.5, y: 10 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.5, y: 10 }}
-                  // 位置調整：right-0 確保對齊右邊緣，氣泡往左長
                   className="absolute -top-10 right-0 w-max bg-white px-3 py-1.5 rounded-2xl shadow-xl border-2 border-stone-200 text-sm font-bold text-stone-600 z-50 pointer-events-none"
               >
                   {message}
-                  {/* 氣泡尾巴調整 */}
                   <div className="absolute -bottom-2 right-4 w-4 h-4 bg-white transform rotate-45 border-r border-b border-stone-200"></div>
               </motion.div>
           )}
@@ -416,7 +369,6 @@ return (
             }}
             className="relative"
         >
-            {/* 修改重點：大小固定為 w-14 */}
             <motion.img 
                 whileHover={{ scale: 1.05 }}
                 src={resolveImage(ASSETS.groupMascot)} 
@@ -707,7 +659,10 @@ const TripCard = React.forwardRef(({ trip, tripId, visualIndex, index, user, acc
 
       <div 
           className="card-inner relative w-full h-full transition-all duration-700 ease-in-out"
-          style={{ transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+          style={{ 
+            transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+            transformStyle: 'preserve-3d'  // 🔑 關鍵修正：確保子元素維持 3D 空間
+          }}
       >
           {/* ========= 正面 (FRONT) ========= */}
           <div 
@@ -715,7 +670,8 @@ const TripCard = React.forwardRef(({ trip, tripId, visualIndex, index, user, acc
             style={{ 
               backfaceVisibility: 'hidden', 
               WebkitBackfaceVisibility: 'hidden',
-              pointerEvents: isFlipped ? 'none' : 'auto'
+              transform: 'rotateY(0deg)', // 明確指定角度
+              zIndex: 2 // 確保正面層級
             }}
           >
               <div className="w-full h-[85%] bg-stone-100 overflow-hidden relative border border-stone-100 group-hover:border-stone-300 transition-colors">
@@ -837,8 +793,8 @@ const TripCard = React.forwardRef(({ trip, tripId, visualIndex, index, user, acc
               backgroundImage: `url(${ASSETS.paper})`,
               backfaceVisibility: 'hidden', 
               WebkitBackfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)',
-              pointerEvents: isFlipped ? 'auto' : 'none'
+              transform: 'rotateY(180deg)', // 🔑 關鍵修正：背面預設旋轉 180 度
+              zIndex: 1
             }}
           >
               <RandomSticker index={visualIndex} />
@@ -1750,6 +1706,8 @@ const allTrips: Trip[] = [
     vlog: ""
   },
 ];
+
+
 
 const App = () => {
   const [viewCount, setViewCount] = useState<number | null>(null);
