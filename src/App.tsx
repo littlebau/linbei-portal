@@ -1385,7 +1385,7 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/hP631FQAmCgxUpoL8",
     plan: "https://docs.google.com/document/d/1BAFg8ngF0yvULcSp7SLqvflTe6oxSSRZ/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: ""
+    vlog: "https://youtu.be/DSEI095uOJM"
   },
   { 
     year: 2025, season: "春假", title: "紐西蘭", location: "紐西蘭", status: "Done", type: "past",
@@ -1411,7 +1411,7 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8",
     plan: "https://docs.google.com/document/d/19k4b5TZ9R-bfBAuEMlQUkMOWeYpSjVz4/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
-    vlog: ""
+    vlog: "https://youtu.be/dOBlBRTxPTU"
   },
   { 
     year: 2024, season: "暑假", title: "泰國喀比島+芭達雅", location: "泰國 喀比/芭達雅", status: "Done", type: "past",
