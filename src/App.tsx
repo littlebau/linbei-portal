@@ -1368,10 +1368,10 @@ const allTrips: Trip[] = [
   { 
     year: 2026, season: "寒假", title: "沖繩家族旅行", location: "日本 沖繩", status: "Planning", type: "future", 
     image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", 
-    images: [],
-    album: "", 
+    images: ["https://lh3.googleusercontent.com/pw/AP1GczOwptGviBLuOYKweQ1j9pDsmG1ZvNya_v5aPP0pR8bMkZpXBSti6O_hAT6f-osKAXOAt0nkCsH2lNjcE3Rjscmga_5INWJFNepNlMmqJvh1AGOyuVET32gOYReryKwDR9xLbwgbR_oxUFxYAP8_t6tTvQ=w1304-h869-s-no-gm?authuser=0"],
+    album: "https://photos.google.com/share/AF1QipM_SjQctVFPK9CaA2YOb2_DOEpeKxFoXY1CP6VfLe0asFqEBmWizzyrVnJHXy8S2A?key=MjJsbmFhbm5CLTBBNFRYbk9GR25MNDdmQ3IyWjB3", 
     plan: "https://docs.google.com/document/d/1-4yHFrFozhLuGazQj6jzCq7lzwB6TtsV/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "" 
+    vlog: "https://www.youtube.com/watch?v=OkN0_K_OtyE" 
   },
 
   // Existing 2025
