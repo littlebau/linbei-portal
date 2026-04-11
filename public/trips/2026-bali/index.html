@@ -54,14 +54,19 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #e0f2f1 0%, #fffde7 100%);
+            height: 450px;
+            background: linear-gradient(135deg, rgba(46, 196, 182, 0.1) 0%, rgba(255, 159, 28, 0.1) 100%);
             clip-path: ellipse(100% 60% at 50% 30%);
             z-index: -1;
         }
 
-        .highlight-text {
-            background: linear-gradient(to top, rgba(255, 159, 28, 0.2) 40%, transparent 40%);
+        .header-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 2rem;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            filter: brightness(0.95);
         }
     </style>
 </head>
@@ -78,7 +83,8 @@
             stamp1: "https://drive.google.com/file/d/1A7Zc3ZqsP3oJ528Jzq3D1SOt6T0Z0mLl/view?usp=drive_link",
             stamp2: "https://drive.google.com/file/d/1BS652qurVrAzMF21_7NdA9-fs9CLj2tW/view?usp=drive_link",
             groupMascot: "https://drive.google.com/file/d/14Q2vRY9Entm6z7aH507IQhh9GUmSOty-/view?usp=drive_link",
-            car: "https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link"
+            car: "https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link",
+            baliHeader: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=80"
         };
 
         const resolveImage = (url) => {
@@ -90,7 +96,7 @@
             return url;
         };
 
-        // --- 行程數據 (精確同步 Word 內容) ---
+        // --- 行程數據 (包含超連結) ---
         const scheduleData = [
             { 
                 day: 1, date: "4/25 (六)", 
@@ -99,21 +105,21 @@
                 items: [
                     { time: "05:10", text: "機場早餐: Table Joe 喬桌子廚房", icon: "🍳" },
                     { time: "09:10", text: "CI771 啟航 (14:35 抵達)", icon: "✈️" },
-                    { time: "16:00", text: "入住 Courtyard Seminyak 飯店休息", icon: "🏨" },
-                    { time: "17:30", text: "晚餐: MoonLite Kitchen (走路5分鐘)", icon: "🌇" }
+                    { time: "16:00", text: "入住 Courtyard Seminyak 飯店", icon: "🏨", link: "https://www.marriott.com/hotels/travel/dpscy-courtyard-bali-seminyak-resort/" },
+                    { time: "17:30", text: "晚餐: MoonLite Kitchen & Bar", icon: "🌇", link: "https://www.moonlitebali.com/" }
                 ],
                 color: "bg-orange-400",
-                note: "第一天我們主打「夕陽晚餐」，開場就要有最高級的享受！"
+                note: "第一天我們主打「夕陽晚餐」，頂樓海景開場最有度假感！"
             },
             { 
                 day: 2, date: "4/26 (日)", 
                 title: "文青早午餐＋海邊俱樂部", 
                 highlights: ["Bo and Bun", "Potato Head"],
                 items: [
-                    { time: "09:30", text: "Titik Temu Coffee 冠軍手沖咖啡", icon: "☕" },
-                    { time: "13:00", text: "午餐: Bo and Bun 越式料理 (已預約)", icon: "🥗" },
-                    { time: "15:00", text: "Seminyak Village 逛街 / Lluvia Spa", icon: "💆" },
-                    { time: "Sunset", text: "Potato Head Beach Club 享受日落", icon: "🍹" }
+                    { time: "09:30", text: "Titik Temu Coffee 冠軍手沖", icon: "☕", link: "https://maps.app.goo.gl/TitikTemu" },
+                    { time: "13:00", text: "午餐: Bo and Bun 越式料理", icon: "🥗", link: "https://www.boandbun.com/" },
+                    { time: "15:00", text: "Lluvia Spa 療癒按摩", icon: "💆", link: "https://lluviaspabali.com/" },
+                    { time: "Sunset", text: "Potato Head Beach Club", icon: "🍹", link: "https://seminyak.potatohead.co/" }
                 ],
                 color: "bg-teal-500",
                 note: "Potato Head 記得要佔草皮區的位置，邊喝飲料邊看日落超 Chill。"
@@ -123,10 +129,10 @@
                 title: "斷崖絕景：透明泳池與火舞", 
                 highlights: ["One Eighty", "Kecak Dance"],
                 items: [
-                    { time: "09:30", text: "包車出發: 神鷹廣場 (GWK)", icon: "🗿" },
-                    { time: "14:45", text: "One Eighty 懸崖透明泳池 (已預約)", icon: "🏊" },
-                    { time: "18:00", text: "烏魯瓦圖廟觀看 Kecak 火舞表演", icon: "🔥" },
-                    { time: "20:00", text: "晚餐: Moggumung 韓式烤肉滿足靈魂", icon: "🥩" }
+                    { time: "09:30", text: "包車出發: 神鷹廣場 (GWK)", icon: "🗿", link: "https://gwkbali.com/" },
+                    { time: "14:45", text: "One Eighty 懸崖透明泳池", icon: "🏊", link: "https://www.oneeightybali.com/" },
+                    { time: "18:00", text: "烏魯瓦圖廟 Kecak 火舞表演", icon: "🔥", link: "https://maps.app.goo.gl/UluwatuTemple" },
+                    { time: "20:00", text: "晚餐: Moggumung 韓式烤肉", icon: "🥩" }
                 ],
                 color: "bg-rose-500",
                 note: "這天視覺衝擊最強，透明懸崖泳池是拍照熱點！"
@@ -136,70 +142,69 @@
                 title: "前進烏布：走入綠意梯田", 
                 highlights: ["Cretya Ubud", "烏布手作"],
                 items: [
-                    { time: "09:00", text: "移動至烏布: 德哥拉朗梯田 (Alas Harum)", icon: "🌿" },
-                    { time: "Lunch", text: "Cretya Ubud 梯田美景午餐", icon: "🍛" },
-                    { time: "Afternoon", text: "烏布皇宮 / 傳統市場 / Seniman Coffee", icon: "🎭" },
-                    { time: "17:30", text: "晚餐: Kebun Bistro (南法風情小酒館)", icon: "🍷" }
+                    { time: "09:00", text: "移動至烏布: 德哥拉朗梯田 Alas Harum", icon: "🌿", link: "https://alasharum.com/" },
+                    { time: "Lunch", text: "Cretya Ubud 梯田美景午餐", icon: "🍛", link: "https://cretyaubud.com/" },
+                    { time: "Afternoon", text: "烏布皇宮 / 傳統市場 / Seniman Coffee", icon: "🎭", link: "https://www.senimancoffee.com/" },
+                    { time: "17:30", text: "晚餐: Kebun Bistro 南法風情", icon: "🍷", link: "https://www.kebunbistro.com/" }
                 ],
                 color: "bg-emerald-600",
-                stay: "Adiwana Suweta",
-                note: "住在蘇維塔阿迪瓦納，每天早餐都是在叢林環抱中享用。"
+                note: "住在 Adiwana Suweta，每天早餐都在叢林環抱中享用。"
             },
             { 
                 day: 5, date: "4/29 (三)", 
                 title: "超療癒：狗狗瑜珈與聖猴森林", 
                 highlights: ["Puppy Yoga", "Monkey Forest"],
                 items: [
-                    { time: "11:30", text: "午餐: Pison Cafe (已 Whatsapp 訂位)", icon: "🥞" },
-                    { time: "13:30", text: "亮點行程: Puppy Yoga 狗狗瑜珈", icon: "🐶" },
-                    { time: "15:30", text: "聖猴森林 (Monkey Forest) 深度探險", icon: "🐒" },
-                    { time: "18:00", text: "晚餐: L'Osteria 手工義式披薩", icon: "🍕" }
+                    { time: "11:30", text: "午餐: Pison Cafe", icon: "🥞", link: "https://pisoncoffee.com/" },
+                    { time: "13:30", text: "Puppy Yoga 狗狗瑜珈 (亮點！)", icon: "🐶", link: "https://www.instagram.com/puppyyogabali/" },
+                    { time: "15:30", text: "聖猴森林 Monkey Forest 探險", icon: "🐒", link: "https://monkeyforestubud.com/" },
+                    { time: "18:00", text: "晚餐: L'Osteria 手工義式披薩", icon: "🍕", link: "https://losteria.id/" }
                 ],
                 color: "bg-amber-500",
-                note: "狗狗瑜珈跟小狗互動超級可愛，這絕對是全行程最療癒的一小時。"
+                note: "狗狗瑜珈這絕對是全行程最療癒的一小時，別忘了帶相機！"
             },
             { 
                 day: 6, date: "4/30 (四)", 
                 title: "瀑布巡禮：水聲與五星萬麗", 
                 highlights: ["秘境瀑布", "Nusa Dua"],
                 items: [
-                    { time: "10:00", text: "三大瀑布: Goa Rang Reng / Kanto Lampo / Tegenungan", icon: "💦" },
-                    { time: "Lunch", text: "OMMA Dayclub 瀑布景觀餐廳午餐", icon: "🍴" },
-                    { time: "Night", text: "入住萬麗飯店 (Renaissance) / Bali Collection", icon: "🏨" }
+                    { time: "10:00", text: "三大瀑布: Goa Rang Reng / Kanto Lampo / Tegenungan", icon: "💦", link: "https://maps.app.goo.gl/P942qHVSVDNzbSDq6" },
+                    { time: "Lunch", text: "OMMA Dayclub 瀑布景觀餐廳", icon: "🍴", link: "https://ommabali.com/" },
+                    { time: "Night", text: "入住萬麗飯店 Renaissance", icon: "🏨", link: "https://www.marriott.com/en-us/hotels/dpsrn-renaissance-bali-nusa-dua-resort/overview/" }
                 ],
                 color: "bg-blue-500",
-                note: "瀑布水氣很大，建議穿著方便玩水的衣物和防滑鞋。"
+                note: "瀑布水氣大，建議穿著玩水衣物與防滑鞋。"
             },
             { 
                 day: 7, date: "5/01 (五)", 
-                title: "萬麗耍廢：度假村的極致放鬆", 
+                title: "萬麗耍廢：度假村極致放鬆", 
                 highlights: ["飯店泳池", "Nusa By Suka"],
                 items: [
-                    { time: "All Day", text: "享受萬麗絕美泳池與飯店飯店設施", icon: "🏊" },
-                    { time: "16:00", text: "Bali Collection 逛街採購伴手禮", icon: "🛍️" },
-                    { time: "Dinner", text: "晚餐: Nusa By Suka (林北私藏名單)", icon: "🍝" }
+                    { time: "All Day", text: "享受萬麗絕美泳池與設施", icon: "🏊" },
+                    { time: "16:00", text: "Bali Collection 逛街採購", icon: "🛍️" },
+                    { time: "Dinner", text: "晚餐: Nusa By Suka (林北極推)", icon: "🍝", link: "https://www.instagram.com/nusabysuka/" }
                 ],
                 color: "bg-cyan-500",
-                note: "萬麗飯店的早餐很有名，記得慢慢享用，下午再出門晃晃。"
+                note: "萬麗飯店的早餐非常有名，下午去 Bali Collection 買伴手禮。"
             },
             { 
                 day: 8, date: "5/02 (六)", 
                 title: "刺激狂歡：Waterbom 水上樂園", 
                 highlights: ["亞洲最強水樂園", "庫塔晚餐"],
                 items: [
-                    { time: "All Day", text: "Waterbom 濕身狂歡，體驗多種刺激滑道", icon: "🛝" },
-                    { time: "17:00", text: "晚餐: 庫塔海景餐廳 (已透過 Gmail 預約)", icon: "🌅" }
+                    { time: "All Day", text: "Waterbom 濕身狂歡刺激滑道", icon: "🛝", link: "https://www.waterbom-bali.com/" },
+                    { time: "17:00", text: "晚餐: 庫塔海景餐廳 (已預約)", icon: "🌅", link: "https://maps.app.goo.gl/vTai2BS1dmfJRTZw8" }
                 ],
                 color: "bg-indigo-500",
                 note: "最後一個整天，用笑聲和水花畫下完美句點。"
             },
             { 
                 day: 9, date: "5/03 (日)", 
-                title: "優雅收心，帶上滿滿回憶回家", 
+                title: "優雅收心，帶上回憶回家", 
                 highlights: ["最後早餐", "CI772"],
                 items: [
-                    { time: "Morning", text: "飯店最後一次豐盛早餐，整理行李", icon: "☕" },
-                    { time: "12:00", text: "退房並前往機場 (CI772 15:55 起飛)", icon: "✈️" }
+                    { time: "Morning", text: "飯店悠閒早餐與收行李", icon: "☕" },
+                    { time: "12:00", text: "前往機場 (15:55 起飛)", icon: "✈️" }
                 ],
                 color: "bg-stone-500",
                 note: "九天旅程辛苦了！帶著充滿能量的身心回家吧。"
@@ -219,45 +224,54 @@
                            className="bg-white/90 backdrop-blur px-4 py-2 rounded-full border border-stone-200 shadow-sm text-stone-500 font-bold hover:bg-white transition-all flex items-center gap-2">
                             <span>🏠</span> 回主頁
                         </a>
-                        <div className="font-handwritten text-xl text-stone-400">#LinbeiTravel2026</div>
+                        <div className="font-handwritten text-xl text-stone-400">#Bali2026_Healing</div>
                     </nav>
 
                     {/* Header */}
-                    <header className="pt-10 pb-12 px-6 text-center relative z-10 max-w-4xl mx-auto">
-                        {motion && (
-                            <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative inline-block mb-4">
-                                <img src={resolveImage(PORTAL_ASSETS.groupMascot)} className="w-32 h-32 mx-auto drop-shadow-2xl animate-wobble" />
-                                <img src={resolveImage(PORTAL_ASSETS.stamp1)} className="absolute -top-12 -right-16 w-28 h-28 rotate-12 mix-blend-multiply opacity-80" />
-                            </motion.div>
-                        )}
-                        <h1 className="text-4xl md:text-6xl font-black text-stone-800 tracking-tighter mb-4">
-                            峇里島 <span className="text-emerald-600">療癒九日</span> 手札
-                        </h1>
-                        <div className="flex flex-wrap justify-center gap-2 font-bold text-stone-400 text-sm md:text-base">
-                            <span className="bg-white/80 px-3 py-1 rounded-full border border-stone-100 shadow-sm">視覺與味蕾的高潮</span>
-                            <span className="bg-white/80 px-3 py-1 rounded-full border border-stone-100 shadow-sm underline decoration-emerald-300 decoration-2 underline-offset-4">三人小團</span>
-                            <span className="bg-white/80 px-3 py-1 rounded-full border border-stone-100 shadow-sm">4/25 - 5/03</span>
+                    <header className="pt-6 pb-12 px-6 relative z-10 max-w-5xl mx-auto">
+                        <div className="relative mb-8">
+                            <img src={PORTAL_ASSETS.baliHeader} className="header-image" alt="Bali Landscape" />
+                            <div className="absolute -bottom-6 -left-6 md:-left-10">
+                                <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative inline-block">
+                                    <img src={resolveImage(PORTAL_ASSETS.groupMascot)} className="w-24 h-24 md:w-32 md:h-32 drop-shadow-2xl animate-wobble" />
+                                    <img src={resolveImage(PORTAL_ASSETS.stamp1)} className="absolute -top-10 -right-12 w-20 h-20 md:w-28 md:h-28 rotate-12 mix-blend-multiply opacity-70" />
+                                </motion.div>
+                            </div>
+                        </div>
+
+                        <div className="text-center md:text-left md:pl-28">
+                            <h1 className="text-4xl md:text-6xl font-black text-stone-800 tracking-tighter mb-4">
+                                峇里島 <span className="text-emerald-600">療癒九日</span> 手札
+                            </h1>
+                            <div className="flex flex-wrap justify-center md:justify-start gap-2 font-bold text-stone-400 text-sm md:text-base">
+                                <span className="bg-white/80 px-3 py-1 rounded-full border border-stone-100 shadow-sm highlight-text">視覺與味蕾的雙重高潮</span>
+                                <span className="bg-white/80 px-3 py-1 rounded-full border border-stone-100 shadow-sm">4/25 - 5/03</span>
+                            </div>
                         </div>
                     </header>
 
                     {/* 關鍵數據 */}
                     <section className="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-6 mb-16 relative z-10">
                         <div className="travel-card bg-white p-6 rounded-3xl border border-stone-100 shadow-sm">
-                            <div className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2">機票航班</div>
+                            <div className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                <span className="w-2 h-2 bg-emerald-400 rounded-full"></span> 航班資訊
+                            </div>
                             <div className="space-y-3">
                                 <div className="flex justify-between items-center">
-                                    <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold">去程 CI771</span>
+                                    <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded text-[10px] font-bold tracking-tighter">去程 CI771</span>
                                     <span className="font-black text-stone-700">09:10 - 14:35</span>
                                 </div>
                                 <div className="flex justify-between items-center">
-                                    <span className="bg-orange-50 text-orange-700 px-2 py-0.5 rounded text-[10px] font-bold">回程 CI772</span>
+                                    <span className="bg-orange-50 text-orange-700 px-2 py-0.5 rounded text-[10px] font-bold tracking-tighter">回程 CI772</span>
                                     <span className="font-black text-stone-700">15:55 - 21:20</span>
                                 </div>
                             </div>
                         </div>
 
                         <div className="travel-card bg-white p-6 rounded-3xl border border-stone-100 shadow-sm">
-                            <div className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2">預估費用 / 人</div>
+                            <div className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                <span className="w-2 h-2 bg-orange-400 rounded-full"></span> 預估預算 / 人
+                            </div>
                             <div className="flex items-center gap-3">
                                 <span className="text-3xl font-black text-emerald-600">NT$ 40,359</span>
                                 <span className="text-[10px] text-stone-400 font-bold leading-tight">含機+酒+交+保+網<br/>(不含餐)</span>
@@ -265,7 +279,9 @@
                         </div>
 
                         <div className="travel-card bg-white p-6 rounded-3xl border border-stone-100 shadow-sm">
-                            <div className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2">移動路線</div>
+                            <div className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                <span className="w-2 h-2 bg-blue-400 rounded-full"></span> 移動路線
+                            </div>
                             <div className="flex items-center gap-2 text-sm font-bold text-stone-600">
                                 Seminyak <span className="text-stone-300">→</span> Ubud <span className="text-stone-300">→</span> Nusa Dua
                             </div>
@@ -275,15 +291,14 @@
                     {/* 每日行程 */}
                     <section className="max-w-4xl mx-auto px-6 relative z-10">
                         <div className="flex items-center gap-4 mb-10">
-                            <h2 className="text-2xl font-black text-stone-700">行程細節</h2>
-                            <div className="flex-1 h-[2px] bg-stone-100"></div>
-                            <div className="text-stone-300 font-handwritten text-xl tracking-widest uppercase">Itinerary Detail</div>
+                            <h2 className="text-2xl font-black text-stone-700">旅程手記</h2>
+                            <div className="flex-1 h-[2px] bg-stone-200"></div>
+                            <div className="text-stone-300 font-handwritten text-xl tracking-widest uppercase">Itinerary Details</div>
                         </div>
 
                         <div className="space-y-6">
                             {scheduleData.map((day, idx) => (
                                 <div key={idx} className="relative">
-                                    {/* 裝飾膠帶 */}
                                     <div className="absolute -top-3 left-10 w-24 h-8 bg-yellow-200/40 mix-blend-multiply z-20 pointer-events-none origin-left -rotate-2"
                                          style={{ clipPath: "polygon(0 0, 100% 0, 95% 100%, 5% 100%)" }}></div>
 
@@ -292,7 +307,7 @@
                                         
                                         <div className="flex items-start justify-between">
                                             <div className="flex gap-4">
-                                                <div className={`${day.color} text-white w-12 h-12 rounded-2xl flex flex-col items-center justify-center font-black shadow-lg shadow-${day.color.split('-')[1]}-500/20 shrink-0`}>
+                                                <div className={`${day.color} text-white w-12 h-12 rounded-2xl flex flex-col items-center justify-center font-black shadow-lg shrink-0`}>
                                                     <span className="text-[10px] opacity-70">DAY</span>
                                                     <span className="text-xl leading-none">{day.day}</span>
                                                 </div>
@@ -317,11 +332,21 @@
                                                     <div className="pt-8 mt-6 border-t border-dashed border-stone-100 grid md:grid-cols-2 gap-8">
                                                         <div className="space-y-4">
                                                             {day.items.map((item, i) => (
-                                                                <div key={i} className="flex gap-3">
-                                                                    <span className="text-xl shrink-0">{item.icon}</span>
+                                                                <div key={i} className="flex gap-3 items-start group/item">
+                                                                    <span className="text-xl shrink-0 mt-1">{item.icon}</span>
                                                                     <div>
-                                                                        <span className="text-[10px] font-black text-emerald-500 bg-emerald-50 px-1.5 py-0.5 rounded mr-2 tracking-widest">{item.time}</span>
-                                                                        <span className="text-sm font-bold text-stone-600">{item.text}</span>
+                                                                        <div className="flex items-center gap-2">
+                                                                            <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded tracking-widest leading-none">{item.time}</span>
+                                                                            {item.link ? (
+                                                                                <a href={item.link} target="_blank" rel="noopener noreferrer" 
+                                                                                   className="text-sm font-bold text-emerald-700 underline decoration-emerald-200 decoration-2 underline-offset-4 hover:text-emerald-900 transition-colors flex items-center gap-1"
+                                                                                   onClick={(e) => e.stopPropagation()}>
+                                                                                    {item.text} 🔗
+                                                                                </a>
+                                                                            ) : (
+                                                                                <span className="text-sm font-bold text-stone-600">{item.text}</span>
+                                                                            )}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             ))}
@@ -329,9 +354,9 @@
                                                         <div className="relative">
                                                             <div className="bg-orange-50/50 p-5 rounded-3xl border border-orange-100/50 relative z-10">
                                                                 <div className="text-xs font-black text-orange-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                                                                    <span className="w-4 h-[2px] bg-orange-200"></span> 貼心筆記
+                                                                    <span className="w-4 h-[2px] bg-orange-200"></span> 林北的筆記
                                                                 </div>
-                                                                <p className="text-sm text-stone-500 font-medium leading-relaxed italic">「{day.note}」</p>
+                                                                <p className="text-sm text-stone-500 font-medium leading-relaxed italic font-handwritten">「{day.note}」</p>
                                                             </div>
                                                             <img src={resolveImage(PORTAL_ASSETS.car)} className="absolute -bottom-6 -right-4 w-24 h-auto opacity-10 grayscale pointer-events-none" />
                                                         </div>
@@ -352,7 +377,7 @@
                             
                             <div className="relative z-10">
                                 <h3 className="text-2xl font-black mb-6 flex items-center gap-3">
-                                    <span className="text-3xl">🚐</span> 給包車司機的資訊摘要
+                                    <span className="text-3xl">🚐</span> 包車資訊摘要
                                 </h3>
                                 <div className="grid md:grid-cols-2 gap-6 font-mono text-sm text-stone-300">
                                     <div className="space-y-2">
@@ -371,13 +396,13 @@
                     </section>
 
                     <footer className="mt-20 py-12 text-center text-stone-400">
-                        <p className="font-handwritten text-2xl mb-2">Have an amazing trip! 🐾🏝️</p>
+                        <p className="font-handwritten text-2xl mb-2">Have a sweet healing trip! 🏝️</p>
                         <p className="text-[10px] uppercase tracking-[0.4em] font-black">© 2026 LINBEI FAMILY JOURNAL</p>
                     </footer>
 
                     {/* 互動吉祥物 */}
                     <div className="fixed bottom-6 right-6 z-[100] cursor-pointer" onClick={() => {
-                        const msgs = ['Puppy Yoga 超可愛！', 'One Eighty 很美喔', '記得多喝水！', '出團出團！'];
+                        const msgs = ['Puppy Yoga 記得預約喔！', 'One Eighty 透明泳池超美的', '峇里島咖啡每天都要喝一杯', '快點出發吧！🐾'];
                         alert(msgs[Math.floor(Math.random() * msgs.length)]);
                     }}>
                         <motion.img animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3 }}
