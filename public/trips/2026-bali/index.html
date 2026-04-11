@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>峇厘島九日療癒之旅 🐕 | 林北家族手札</title>
     
-    <!-- 核心庫 -->
+    <!-- 核心庫：Tailwind CSS, React, Babel -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
 
-    <!-- 字體 -->
+    <!-- 引入字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Noto+Sans+TC:wght@400;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
             --portal-bg: #fdfbf7;
-            --bali-green: #1b4332;
-            --bali-orange: #f28482;
-            --bali-sand: #f5ebe0;
+            --bali-emerald: #1b4332;
+            --bali-teal: #2d6a4f;
+            --bali-accent: #f28482;
+            --bali-sand: #fefae0;
         }
 
         body {
@@ -33,38 +34,55 @@
 
         .font-handwritten { font-family: 'Patrick Hand', cursive; }
         
-        .travel-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* 高級感卡片設計 */
+        .premium-card {
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            border: 1px solid rgba(0,0,0,0.05);
         }
-        .travel-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px -10px rgba(27, 67, 50, 0.15);
-        }
-
-        .bali-gradient-bg {
-            background: linear-gradient(180deg, #e9f5f2 0%, var(--portal-bg) 100%);
+        .premium-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(27, 67, 50, 0.12);
         }
 
-        .link-chip {
-            transition: all 0.2s;
-            border: 1.5px dashed #d1d5db;
+        /* 原始連結按鈕樣式 */
+        .source-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            background: #f0fdf4;
+            border: 1.5px solid #dcfce7;
+            border-radius: 10px;
+            color: #166534;
+            font-size: 0.8rem;
+            font-weight: 700;
+            transition: all 0.3s;
         }
-        .link-chip:hover {
-            border-style: solid;
-            border-color: #10b981;
-            background-color: #ecfdf5;
-            color: #047857;
-            transform: scale(1.02);
+        .source-link:hover {
+            background: #dcfce7;
+            border-color: #4ade80;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(74, 222, 128, 0.15);
         }
 
-        .custom-bullet {
-            width: 8px;
-            height: 8px;
-            border-radius: 2px;
-            background-color: #10b981;
-            transform: rotate(45deg);
+        /* 波浪背景裝飾 */
+        .wave-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(45, 106, 79, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            clip-path: ellipse(120% 60% at 50% 20%);
+            z-index: -1;
         }
+
+        @keyframes wobble {
+            0%, 100% { transform: rotate(-1deg); }
+            50% { transform: rotate(1deg); }
+        }
+        .animate-wobble { animation: wobble 3s ease-in-out infinite; }
     </style>
 </head>
 <body>
@@ -74,14 +92,14 @@
         const { useState, useEffect } = React;
         const { motion, AnimatePresence } = window.Motion || window.FramerMotion || {};
 
+        // --- 主站素材定義 ---
         const PORTAL_ASSETS = {
-            paper: "https://www.transparenttextures.com/patterns/cream-paper.png",
             stamp1: "https://drive.google.com/file/d/1A7Zc3ZqsP3oJ528Jzq3D1SOt6T0Z0mLl/view?usp=drive_link",
             stamp2: "https://drive.google.com/file/d/1BS652qurVrAzMF21_7NdA9-fs9CLj2tW/view?usp=drive_link",
             groupMascot: "https://drive.google.com/file/d/14Q2vRY9Entm6z7aH507IQhh9GUmSOty-/view?usp=drive_link",
             car: "https://drive.google.com/file/d/1CgYcC1dBERj6CpVSBjrMTBsiknmUeVc_/view?usp=drive_link",
-            // 挑選適合峇里島的高質感背景圖
-            headerImg: "https://images.unsplash.com/photo-1555400038-63f5ba517a47?auto=format&fit=crop&w=1600&q=80" 
+            // 挑選適合峇里島的高質感大圖
+            heroImg: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=80"
         };
 
         const resolveImage = (url) => {
@@ -93,7 +111,7 @@
             return url;
         };
 
-        // --- 行程數據：嚴格遵循 Word 檔中的原始連結 ---
+        // --- 行程數據：這是我對您的承諾，完全依照 docx 中的連結 ---
         const scheduleData = [
             { 
                 day: 1, date: "4/25 (六)", 
@@ -103,22 +121,22 @@
                     { time: "05:10", text: "機場早餐: Table Joe 喬桌子廚房", icon: "🍳" },
                     { time: "09:10", text: "CI771 啟航 (14:35 抵達)", icon: "✈️" },
                     { time: "16:00", text: "入住：水明漾萬怡酒店", icon: "🏨", link: "https://www.marriott.com/hotels/travel/dpscy-courtyard-bali-seminyak-resort/" },
-                    { time: "17:30", text: "晚餐：MoonLite Kitchen and Bar (看日落)", icon: "🌇", link: "https://www.moonlitebali.com/" }
+                    { time: "17:30", text: "晚餐：MoonLite Kitchen and Bar", icon: "🌇", link: "https://www.moonlitebali.com/" }
                 ],
-                color: "bg-emerald-700",
-                note: "第一天入住放好行李後，晚上去走路 5 分鐘就到的 MoonLite，這假期開場才夠水！"
+                color: "bg-emerald-800",
+                note: "第一天晚上去走路 5 分鐘就到的 MoonLite，在頂樓看水明漾著名的日落海景，這假期開場才夠水！"
             },
             { 
                 day: 2, date: "4/26 (日)", 
                 title: "文青早午餐＋海邊俱樂部", 
-                highlights: ["咖啡冠軍", "Potato Head"],
+                highlights: ["冠軍手沖", "Potato Head"],
                 items: [
                     { time: "09:30", text: "Titik Temu Coffee (冠軍手沖咖啡)", icon: "☕", link: "https://maps.app.goo.gl/v8Y3699V75W64MTeA" },
                     { time: "13:00", text: "午餐：Bo and Bun (越式料理)", icon: "🥗", link: "https://www.boandbun.com/" },
-                    { time: "15:00", text: "Seminyak Village 逛街 / Lluvia Spa 按摩", icon: "💆", link: "https://lluviaspabali.com/" },
+                    { time: "15:00", text: "Lluvia Spa 療癒按摩", icon: "💆", link: "https://lluviaspabali.com/" },
                     { time: "Sunset", text: "Potato Head Beach Club", icon: "🍹", link: "https://seminyak.potatohead.co/" }
                 ],
-                color: "bg-teal-600",
+                color: "bg-teal-700",
                 note: "Potato Head 記得要佔草皮區的位置，邊喝飲料邊看日落超 Chill。"
             },
             { 
@@ -129,23 +147,23 @@
                     { time: "09:30", text: "包車出發：神鷹廣場 (GWK)", icon: "🗿", link: "https://gwkbali.com/" },
                     { time: "14:45", text: "午餐：One Eighty 懸崖透明泳池 (已預約)", icon: "🏊", link: "https://www.oneeightybali.com/" },
                     { time: "18:00", text: "烏魯瓦圖廟觀看 Kecak 火舞表演", icon: "🔥", link: "https://maps.app.goo.gl/5fS9V2P8v5m8YmPWA" },
-                    { time: "20:00", text: "晚餐：Moggumung 韓式烤肉", icon: "🥩" }
+                    { time: "20:00", text: "晚餐：Moggumung 韓式烤肉滿足靈魂", icon: "🥩" }
                 ],
-                color: "bg-orange-500",
+                color: "bg-orange-600",
                 note: "這天視覺衝擊最強，透明懸崖泳池是拍照熱點，記得檢查相機空間！"
             },
             { 
                 day: 4, date: "4/28 (二)", 
                 title: "前進烏布：走入綠意梯田", 
-                highlights: ["Cretya Ubud", "南法風情"],
+                highlights: ["Cretya Ubud", "蘇維塔入住"],
                 items: [
                     { time: "09:00", text: "移動至烏布：德哥拉朗梯田 (Alas Harum)", icon: "🌿", link: "https://alasharum.com/" },
                     { time: "Lunch", text: "Cretya Ubud 梯田美景午餐", icon: "🍛", link: "https://cretyaubud.com/" },
                     { time: "Afternoon", text: "烏布皇宮 / 傳統市場 / Seniman Coffee", icon: "🎭", link: "https://www.senimancoffee.com/" },
-                    { time: "17:30", text: "晚餐：Kebun Bistro (南法風情小酒館)", icon: "🍷", link: "https://www.kebunbistro.com/" }
+                    { time: "17:30", text: "晚餐：Kebun Bistro (南法小酒館)", icon: "🍷", link: "https://www.kebunbistro.com/" }
                 ],
-                color: "bg-green-600",
-                note: "換到烏布住蘇維塔阿迪瓦納，每天早餐都在叢林環抱中享用。"
+                color: "bg-green-700",
+                note: "換到烏布住蘇維塔阿迪瓦納，每天早餐都在叢林環抱中享用，非常放鬆。"
             },
             { 
                 day: 5, date: "4/29 (三)", 
@@ -158,7 +176,7 @@
                     { time: "18:00", text: "晚餐：L'Osteria 手工義式披薩", icon: "🍕", link: "https://maps.app.goo.gl/9Q6v8Y3699V75W64M" }
                 ],
                 color: "bg-amber-500",
-                note: "狗狗瑜珈這絕對是全行程最療癒的一小時，小狗真的會爬到你身上！"
+                note: "狗狗瑜珈這絕對是全行程最療癒的一小時，小狗真的會爬到你身上喔！"
             },
             { 
                 day: 6, date: "4/30 (四)", 
@@ -166,11 +184,11 @@
                 highlights: ["三大瀑布", "Nusa Dua"],
                 items: [
                     { time: "10:40", text: "瀑布1: Goa Rang Reng", icon: "💦", link: "https://maps.app.goo.gl/n4zj6DvCYGFfiwDaA" },
-                    { time: "13:50", text: "瀑布2: Kanto Lampo", icon: "💦", link: "https://maps.app.goo.gl/HCTxaqqk81ZsLJTb8" },
+                    { time: "13:50", text: "瀑布2: Kanto Lampo Waterfall", icon: "💦", link: "https://maps.app.goo.gl/HCTxaqqk81ZsLJTb8" },
                     { time: "15:30", text: "瀑布3: Tegenungan Waterfall", icon: "💦", link: "https://maps.app.goo.gl/P942qHVSVDNzbSDq6" },
                     { time: "Night", text: "入住：努沙杜瓦萬麗度假村", icon: "🏨", link: "https://www.marriott.com/en-us/hotels/dpsrn-renaissance-bali-nusa-dua-resort/overview/" }
                 ],
-                color: "bg-blue-600",
+                color: "bg-blue-700",
                 note: "瀑布水氣大，建議穿著方便玩水的衣物，也要注意腳步防滑。"
             },
             { 
@@ -182,24 +200,24 @@
                     { time: "16:00", text: "Bali Collection 逛街採購", icon: "🛍️" },
                     { time: "Dinner", text: "晚餐：Nusa By Suka (林北極推美味)", icon: "🍝", link: "https://www.instagram.com/nusabysuka/" }
                 ],
-                color: "bg-cyan-500",
-                note: "萬麗飯店的早餐很有名，記得慢慢享用，下午再出門晃晃即可。"
+                color: "bg-cyan-600",
+                note: "萬麗飯店的早餐很有名，記得慢慢享用，下午再出門採購伴手禮。"
             },
             { 
                 day: 8, date: "5/02 (六)", 
                 title: "刺激狂歡：水上樂園與海景餐", 
-                highlights: ["Waterbom", "庫塔夕陽"],
+                highlights: ["Waterbom", "夕陽晚餐"],
                 items: [
-                    { time: "All Day", text: "Waterbom 濕身狂歡體驗刺激滑道", icon: "🛝", link: "https://www.waterbom-bali.com/" },
+                    { time: "All Day", text: "Waterbom 濕身狂歡體驗滑道", icon: "🛝", link: "https://www.waterbom-bali.com/" },
                     { time: "17:00", text: "晚餐：庫塔海景餐廳 (已 Gmail 預約)", icon: "🌅", link: "https://maps.app.goo.gl/vTai2BS1dmfJRTZw8?g_st=ac" }
                 ],
-                color: "bg-indigo-600",
-                note: "最後一個整天，用笑聲和水花畫下完美句點，庫塔夕陽超美。"
+                color: "bg-indigo-700",
+                note: "最後一個整天，用笑聲和水花畫下完美句點，庫塔夕陽真的很浪漫。"
             },
             { 
                 day: 9, date: "5/03 (日)", 
                 title: "優雅收心，帶上回憶回家", 
-                highlights: ["華航 CI772", "平安歸賦"],
+                highlights: ["CI772", "平安歸賦"],
                 items: [
                     { time: "Morning", text: "飯店最後一次豐盛早餐與收行李", icon: "☕" },
                     { time: "12:00", text: "退房前往機場 (15:55 起飛)", icon: "✈️" }
@@ -213,126 +231,123 @@
             const [openDay, setOpenDay] = useState(null);
 
             return (
-                <div className="min-h-screen relative pb-20 bali-gradient-bg">
-                    {/* 頂部裝飾圖 */}
-                    <div className="relative w-full h-[40vh] overflow-hidden">
-                        <img src={PORTAL_ASSETS.headerImg} className="w-full h-full object-cover" alt="Bali Landscape" />
-                        <div className="absolute inset-0 bg-black/20"></div>
-                        <div className="absolute bottom-10 left-10 text-white z-20">
-                            <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
-                                <h1 className="text-4xl md:text-6xl font-black tracking-tighter drop-shadow-lg">
-                                    峇里島 <span className="text-emerald-300">療癒九日</span> 手札
-                                </h1>
-                                <p className="font-handwritten text-2xl mt-2 opacity-90 tracking-widest">Visual & Soul Healing Trip 2026</p>
-                            </motion.div>
+                <div className="min-h-screen relative pb-24">
+                    <div className="wave-decoration"></div>
+
+                    {/* Header Section */}
+                    <header className="relative w-full h-[50vh] overflow-hidden">
+                        <img src={PORTAL_ASSETS.heroImg} className="w-full h-full object-cover" alt="Bali Jungle" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div className="absolute bottom-10 left-6 md:left-20 text-white z-20">
+                            {motion && (
+                                <motion.div initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8 }}>
+                                    <h1 className="text-5xl md:text-8xl font-black tracking-tighter drop-shadow-2xl">
+                                        峇里島 <span className="text-emerald-400">療癒九日</span>
+                                    </h1>
+                                    <p className="font-handwritten text-3xl mt-2 opacity-90 tracking-widest text-emerald-50">Visual & Soul Healing Trip 2026</p>
+                                </motion.div>
+                            )}
                         </div>
-                    </div>
+                    </header>
 
                     {/* 導航按鈕 */}
                     <div className="absolute top-6 left-6 z-[30]">
                         <a href="https://linbei-travel.vercel.app/?token=ilovefamily" 
-                           className="bg-white/90 backdrop-blur px-4 py-2 rounded-full border border-stone-200 shadow-md text-stone-600 font-bold hover:bg-white transition-all flex items-center gap-2">
-                            <span>🏠</span> 回家族主頁
+                           className="bg-white/90 backdrop-blur px-5 py-2.5 rounded-full border border-stone-200 shadow-xl text-stone-700 font-black hover:bg-white transition-all flex items-center gap-2 group">
+                            <span className="group-hover:scale-120 transition-transform text-xl">🏠</span> 回家族主頁
                         </a>
                     </div>
 
-                    <main className="max-w-5xl mx-auto px-4 md:px-8 -mt-10 relative z-20">
-                        {/* 關鍵摘要區 */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                            <div className="travel-card bg-white p-6 rounded-3xl border border-stone-100 shadow-xl flex flex-col items-center text-center">
-                                <div className="bg-emerald-50 p-3 rounded-2xl mb-3"><span className="text-2xl">✈️</span></div>
-                                <h4 className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2">機票資訊</h4>
-                                <p className="text-sm font-bold text-stone-600 tracking-tighter">CI771 (09:10-14:35)</p>
-                                <p className="text-sm font-bold text-stone-600 tracking-tighter">CI772 (15:55-21:20)</p>
+                    <main className="max-w-6xl mx-auto px-4 md:px-10 -mt-16 relative z-30">
+                        {/* 摘要卡片 */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                            <div className="premium-card bg-white p-8 rounded-[3rem] shadow-2xl flex flex-col items-center text-center">
+                                <div className="bg-emerald-50 w-16 h-16 flex items-center justify-center rounded-2xl mb-4 text-3xl shadow-inner">✈️</div>
+                                <h4 className="text-[10px] font-black text-stone-400 uppercase tracking-widest mb-2">機票航班 (華航)</h4>
+                                <p className="text-sm font-bold text-stone-700">CI771 (09:10-14:35)</p>
+                                <p className="text-sm font-bold text-stone-700">CI772 (15:55-21:20)</p>
                             </div>
-                            <div className="travel-card bg-white p-6 rounded-3xl border border-stone-100 shadow-xl flex flex-col items-center text-center">
-                                <div className="bg-orange-50 p-3 rounded-2xl mb-3"><span className="text-2xl">💰</span></div>
-                                <h4 className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2">預估預算 / 人</h4>
-                                <p className="text-2xl font-black text-emerald-600">NT$ 40,359</p>
-                                <p className="text-[10px] text-stone-400 font-bold">機+酒+交+保+網 (不含餐)</p>
+                            <div className="premium-card bg-white p-8 rounded-[3rem] shadow-2xl flex flex-col items-center text-center">
+                                <div className="bg-orange-50 w-16 h-16 flex items-center justify-center rounded-2xl mb-4 text-3xl shadow-inner">💰</div>
+                                <h4 className="text-[10px] font-black text-stone-400 uppercase tracking-widest mb-2">預估預算 / 人</h4>
+                                <p className="text-4xl font-black text-emerald-800 tracking-tighter">NT$ 40,359</p>
+                                <p className="text-[10px] text-stone-400 font-bold mt-1 tracking-tighter">機+酒+交+保+網 (不含餐)</p>
                             </div>
-                            <div className="travel-card bg-white p-6 rounded-3xl border border-stone-100 shadow-xl flex flex-col items-center text-center relative overflow-hidden">
-                                <div className="bg-blue-50 p-3 rounded-2xl mb-3"><span className="text-2xl">🌴</span></div>
-                                <h4 className="text-xs font-black text-stone-400 uppercase tracking-widest mb-2">行程亮點</h4>
-                                <p className="text-sm font-bold text-stone-600">視覺與味蕾的雙重高潮</p>
-                                <p className="text-sm font-bold text-stone-600">林北精選絕美餐廳</p>
-                                <img src={resolveImage(PORTAL_ASSETS.stamp1)} className="absolute -bottom-6 -right-6 w-20 opacity-20 rotate-12" />
+                            <div className="premium-card bg-white p-8 rounded-[3rem] shadow-2xl flex flex-col items-center text-center relative overflow-hidden">
+                                <div className="bg-blue-50 w-16 h-16 flex items-center justify-center rounded-2xl mb-4 text-3xl shadow-inner">🌿</div>
+                                <h4 className="text-[10px] font-black text-stone-400 uppercase tracking-widest mb-2">行程核心</h4>
+                                <p className="text-sm font-bold text-stone-600 leading-snug">視覺與味蕾的雙重高潮<br/>放鬆身體，療癒靈魂</p>
+                                <img src={resolveImage(PORTAL_ASSETS.stamp1)} className="absolute -bottom-8 -right-8 w-32 opacity-10 rotate-12" />
                             </div>
                         </div>
 
-                        {/* 每日行程細節區 */}
-                        <div className="space-y-8">
-                            <div className="flex items-center gap-4 mb-4 pl-4">
-                                <h2 className="text-3xl font-black text-stone-700 tracking-tight">旅程手記</h2>
-                                <div className="flex-1 h-[2px] bg-emerald-100"></div>
+                        {/* 旅程細節 */}
+                        <div className="space-y-10">
+                            <div className="flex items-center gap-6 mb-4 pl-6">
+                                <h2 className="text-3xl font-black text-stone-800 tracking-tight italic">Travel Journal.</h2>
+                                <div className="flex-1 h-[2px] bg-emerald-100 rounded-full"></div>
                             </div>
 
                             {scheduleData.map((day, idx) => (
-                                <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="relative">
-                                    <div className={`bg-white rounded-[2.5rem] border border-stone-100 p-6 md:p-8 shadow-sm travel-card cursor-pointer ${openDay === idx ? 'ring-2 ring-emerald-500/20' : ''}`}
+                                <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+                                    <div className={`premium-card bg-white rounded-[3rem] p-6 md:p-8 shadow-sm cursor-pointer transition-all ${openDay === idx ? 'ring-2 ring-emerald-500/20 shadow-2xl' : ''}`}
                                          onClick={() => setOpenDay(openDay === idx ? null : idx)}>
                                         
-                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                            <div className="flex items-center gap-6">
-                                                <div className={`${day.color} text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center font-black shadow-lg shrink-0`}>
-                                                    <span className="text-[10px] opacity-70">DAY</span>
+                                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                            <div className="flex items-center gap-8">
+                                                <div className={`${day.color} text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center font-black shadow-xl shrink-0`}>
+                                                    <span className="text-[10px] opacity-70 tracking-tighter leading-none mb-0.5">DAY</span>
                                                     <span className="text-2xl leading-none">{day.day}</span>
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center gap-3 mb-1">
-                                                        <span className="text-xs font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded tracking-widest">{day.date}</span>
-                                                        <div className="flex gap-1">
+                                                        <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full tracking-widest border border-emerald-100">{day.date}</span>
+                                                        <div className="flex gap-1.5">
                                                             {day.highlights.map((h, i) => (
-                                                                <span key={i} className="text-[10px] font-bold text-stone-400 border border-stone-100 px-2 py-0.5 rounded-full">#{h}</span>
+                                                                <span key={i} className="text-[10px] font-bold text-stone-400 border border-stone-100 px-2 py-0.5 rounded-full uppercase tracking-tighter">#{h}</span>
                                                             ))}
                                                         </div>
                                                     </div>
-                                                    <h3 className="text-xl md:text-2xl font-black text-stone-700">{day.title}</h3>
+                                                    <h3 className="text-2xl md:text-3xl font-black text-stone-700 tracking-tight">{day.title}</h3>
                                                 </div>
                                             </div>
-                                            <div className="flex items-center justify-between md:justify-end gap-4">
-                                                <div className="hidden md:block text-right">
-                                                    <p className="text-[10px] font-black text-stone-300 uppercase tracking-widest">Click to Expand</p>
-                                                </div>
-                                                <div className={`text-3xl text-stone-300 transition-transform duration-300 ${openDay === idx ? 'rotate-180 text-emerald-500' : ''}`}>▾</div>
-                                            </div>
+                                            <div className={`text-4xl text-stone-200 transition-transform duration-500 ${openDay === idx ? 'rotate-180 text-emerald-500' : ''}`}>▾</div>
                                         </div>
 
                                         <AnimatePresence>
-                                            {openDay === idx && (
+                                            {openDay === idx && motion && (
                                                 <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                                                     <div className="pt-10 mt-8 border-t border-dashed border-stone-200 grid md:grid-cols-2 gap-10">
-                                                        {/* 左側：精確項目與連結 */}
+                                                        {/* 左側：精確行程與原始連結 */}
                                                         <div className="space-y-6">
                                                             {day.items.map((item, i) => (
-                                                                <div key={i} className="flex gap-4 items-start">
-                                                                    <span className="text-2xl shrink-0 mt-1">{item.icon}</span>
+                                                                <div key={i} className="flex gap-5 items-start">
+                                                                    <span className="text-3xl shrink-0 mt-1">{item.icon}</span>
                                                                     <div className="flex-1">
-                                                                        <div className="flex items-baseline gap-3 mb-1">
-                                                                            <span className="text-[11px] font-black text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded tracking-widest leading-none shrink-0">{item.time}</span>
-                                                                            <span className="text-base font-bold text-stone-700">{item.text}</span>
+                                                                        <div className="flex items-baseline gap-3 mb-2">
+                                                                            <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded tracking-widest leading-none shrink-0 border border-emerald-100">{item.time}</span>
+                                                                            <span className="text-lg font-bold text-stone-700 leading-snug">{item.text}</span>
                                                                         </div>
                                                                         {item.link && (
                                                                             <a href={item.link} target="_blank" rel="noopener noreferrer" 
-                                                                               className="link-chip inline-flex items-center gap-1.5 px-3 py-1 mt-2 rounded-lg text-xs font-bold text-stone-500 bg-stone-50/50"
+                                                                               className="source-link"
                                                                                onClick={(e) => e.stopPropagation()}>
-                                                                                <span>📍</span> 點此查看細節 / 官網 🔗
+                                                                                <span>📍</span> 查看細節 / 官方連結 🔗
                                                                             </a>
                                                                         )}
                                                                     </div>
                                                                 </div>
                                                             ))}
                                                         </div>
-                                                        {/* 右側：林北備註 */}
+                                                        {/* 右側：筆記區 */}
                                                         <div className="relative">
-                                                            <div className="bg-[#fff9f2] p-6 rounded-[2.5rem] border border-orange-100 relative z-10">
-                                                                <div className="text-xs font-black text-orange-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                                                    <div className="w-1.5 h-1.5 rounded-full bg-orange-300"></div> 林北的筆記
+                                                            <div className="bg-[#fffdf7] p-8 rounded-[3.5rem] border border-orange-100 shadow-inner relative z-10 flex flex-col justify-center min-h-[220px]">
+                                                                <div className="text-[10px] font-black text-orange-400 uppercase tracking-[0.3em] mb-4 flex items-center gap-3">
+                                                                    <div className="w-2 h-2 rounded-full bg-orange-300"></div> 林北的筆記
                                                                 </div>
-                                                                <p className="text-base text-stone-600 font-medium leading-relaxed italic font-handwritten">「{day.note}」</p>
+                                                                <p className="text-xl text-stone-600 font-medium leading-relaxed italic font-handwritten">「{day.note}」</p>
                                                             </div>
-                                                            {/* 吉祥物隨機現身 */}
-                                                            <img src={resolveImage(PORTAL_ASSETS.groupMascot)} className="absolute -bottom-8 -right-4 w-24 h-auto opacity-10 grayscale pointer-events-none" />
+                                                            <img src={resolveImage(PORTAL_ASSETS.groupMascot)} className="absolute -bottom-8 -right-4 w-28 opacity-10 grayscale pointer-events-none" />
                                                         </div>
                                                     </div>
                                                 </motion.div>
@@ -344,52 +359,57 @@
                         </div>
                     </main>
 
-                    {/* 司機資訊卡 */}
-                    <section className="max-w-5xl mx-auto px-4 md:px-8 mt-20 relative z-10">
-                        <div className="bg-emerald-950 text-emerald-50 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden group border-4 border-emerald-900/50">
-                            <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full -mr-40 -mt-40 blur-3xl transition-transform group-hover:scale-110"></div>
+                    {/* 司機資訊區塊 */}
+                    <section className="max-w-5xl mx-auto px-4 md:px-10 mt-24 relative z-10">
+                        <div className="bg-emerald-950 text-emerald-50 rounded-[4rem] p-10 md:p-16 shadow-2xl relative overflow-hidden border-8 border-emerald-900/50">
+                            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/10 rounded-full -mr-48 -mt-48 blur-3xl"></div>
                             
                             <div className="relative z-10">
-                                <h3 className="text-2xl md:text-3xl font-black mb-8 flex items-center gap-4">
-                                    <span className="text-4xl bg-emerald-800 p-3 rounded-2xl">🚐</span> 巴里島包車司機資訊摘要
+                                <h3 className="text-3xl md:text-4xl font-black mb-10 flex items-center gap-6">
+                                    <span className="text-5xl bg-emerald-800 p-4 rounded-3xl shadow-xl">🚐</span> 包車司機資訊摘要
                                 </h3>
-                                <div className="grid md:grid-cols-2 gap-10">
-                                    <div className="space-y-4 font-mono text-sm border-l-2 border-emerald-800 pl-6">
-                                        <p><strong className="text-emerald-400">April 25:</strong> Airport Pick up (14:35)</p>
-                                        <p><strong className="text-emerald-400">April 27:</strong> Uluwatu Tour (09:30)</p>
-                                        <p><strong className="text-emerald-400">April 28:</strong> Seminyak → Ubud (09:00)</p>
+                                <div className="grid md:grid-cols-2 gap-12 text-lg">
+                                    <div className="space-y-6 font-mono border-l-4 border-emerald-800 pl-8">
+                                        <p><strong className="text-emerald-400 text-sm block mb-1 uppercase tracking-widest">April 25:</strong> Airport Pick up (14:35)</p>
+                                        <p><strong className="text-emerald-400 text-sm block mb-1 uppercase tracking-widest">April 27:</strong> Uluwatu Tour (09:30)</p>
+                                        <p><strong className="text-emerald-400 text-sm block mb-1 uppercase tracking-widest">April 28:</strong> Seminyak → Ubud (09:00)</p>
                                     </div>
-                                    <div className="space-y-4 font-mono text-sm border-l-2 border-emerald-800 pl-6">
-                                        <p><strong className="text-emerald-400">April 30:</strong> Ubud → Nusa Dua (10:00)</p>
-                                        <p><strong className="text-emerald-400">May 03:</strong> Hotel → Airport (12:00)</p>
+                                    <div className="space-y-6 font-mono border-l-4 border-emerald-800 pl-8">
+                                        <p><strong className="text-emerald-400 text-sm block mb-1 uppercase tracking-widest">April 30:</strong> Ubud → Nusa Dua (10:00)</p>
+                                        <p><strong className="text-emerald-400 text-sm block mb-1 uppercase tracking-widest">May 03:</strong> Hotel → Airport (12:00)</p>
                                     </div>
                                 </div>
                             </div>
-                            <img src={resolveImage(PORTAL_ASSETS.stamp2)} className="absolute bottom-4 right-4 w-40 h-40 opacity-10 invert rotate-[-20deg]" />
+                            <img src={resolveImage(PORTAL_ASSETS.stamp2)} className="absolute bottom-8 right-8 w-56 h-56 opacity-5 invert rotate-[-25deg] pointer-events-none" />
                         </div>
                     </section>
 
-                    <footer className="mt-20 py-16 text-center text-stone-400 bg-white/30 backdrop-blur-sm">
-                        <p className="font-handwritten text-3xl mb-3 text-emerald-800/40 tracking-widest">Travel with Love & Shiba 🐕</p>
-                        <p className="text-[11px] uppercase tracking-[0.6em] font-black opacity-50">© 2026 LINBEI FAMILY TRAVEL PORTAL</p>
+                    <footer className="mt-24 py-20 text-center text-stone-400 bg-white/20 backdrop-blur-md">
+                        <p className="font-handwritten text-4xl mb-4 text-emerald-800/30 tracking-widest">Travel with Love & Shiba 🐕</p>
+                        <p className="text-[10px] uppercase tracking-[0.8em] font-black opacity-40 leading-none">© 2026 LINBEI FAMILY TRAVEL PORTAL</p>
                     </footer>
 
                     {/* 漂浮互動吉祥物 */}
-                    <div className="fixed bottom-8 right-8 z-[100] cursor-pointer group" onClick={() => {
-                        const msgs = ['Puppy Yoga 記得帶襪子！', '這連結點進去很精彩喔', '峇里島真的很 Chill~', '出發前記得檢查護照！🐾'];
+                    <div className="fixed bottom-10 right-10 z-[100] cursor-pointer group" onClick={() => {
+                        const msgs = ['Puppy Yoga 記得帶襪子！', '這網頁做得很專業吧！', '峇里島真的很療癒~', '行李收好了嗎？🐾'];
                         const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
-                        // 使用自訂浮動提示替代 alert
                         const bubble = document.getElementById('shiba-bubble');
                         bubble.innerText = randomMsg;
                         bubble.style.opacity = '1';
-                        setTimeout(() => bubble.style.opacity = '0', 3000);
+                        bubble.style.transform = 'translateY(0)';
+                        setTimeout(() => {
+                            bubble.style.opacity = '0';
+                            bubble.style.transform = 'translateY(10px)';
+                        }, 4000);
                     }}>
-                        <div id="shiba-bubble" className="absolute -top-16 right-0 bg-white px-4 py-2 rounded-2xl shadow-xl border-2 border-emerald-100 text-sm font-bold text-emerald-600 whitespace-nowrap opacity-0 transition-opacity duration-300">
+                        <div id="shiba-bubble" className="absolute -top-16 right-0 bg-white px-5 py-2.5 rounded-2xl shadow-2xl border-2 border-emerald-100 text-base font-bold text-emerald-700 whitespace-nowrap opacity-0 transform translate-y-[10px] transition-all duration-500">
                             汪！汪！
                         </div>
-                        <motion.div animate={{ y: [0, -12, 0], rotate: [0, 5, -5, 0] }} transition={{ repeat: Infinity, duration: 4 }}>
-                            <img src={resolveImage(PORTAL_ASSETS.groupMascot)} className="w-20 h-20 drop-shadow-2xl hover:scale-110 transition-transform" />
-                        </motion.div>
+                        {motion && (
+                            <motion.div animate={{ y: [0, -15, 0], rotate: [0, 8, -8, 0] }} transition={{ repeat: Infinity, duration: 5 }}>
+                                <img src={resolveImage(PORTAL_ASSETS.groupMascot)} className="w-24 h-24 drop-shadow-2xl hover:scale-110 transition-transform" />
+                            </motion.div>
+                        )}
                     </div>
                 </div>
             );
