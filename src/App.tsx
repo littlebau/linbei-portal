@@ -1387,7 +1387,8 @@ const allTrips: Trip[] = [
     images: ["https://lh3.googleusercontent.com/pw/AP1GczOwptGviBLuOYKweQ1j9pDsmG1ZvNya_v5aPP0pR8bMkZpXBSti6O_hAT6f-osKAXOAt0nkCsH2lNjcE3Rjscmga_5INWJFNepNlMmqJvh1AGOyuVET32gOYReryKwDR9xLbwgbR_oxUFxYAP8_t6tTvQ=w1304-h869-s-no-gm?authuser=0"],
     album: "https://photos.google.com/share/AF1QipM_SjQctVFPK9CaA2YOb2_DOEpeKxFoXY1CP6VfLe0asFqEBmWizzyrVnJHXy8S2A?key=MjJsbmFhbm5CLTBBNFRYbk9GR25MNDdmQ3IyWjB3", 
     plan: "https://docs.google.com/document/d/1-4yHFrFozhLuGazQj6jzCq7lzwB6TtsV/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "https://www.youtube.com/watch?v=OkN0_K_OtyE" 
+    vlog: "https://www.youtube.com/watch?v=OkN0_K_OtyE",
+    tripPage: "/trips/2026-okinawa/"
   },
 
   // Existing 2025
@@ -1401,7 +1402,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/hP631FQAmCgxUpoL8",
     plan: "https://docs.google.com/document/d/1BAFg8ngF0yvULcSp7SLqvflTe6oxSSRZ/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "https://youtu.be/DSEI095uOJM"
+    vlog: "https://youtu.be/DSEI095uOJM",
+    tripPage: "/trips/2025-tohoku/"
   },
   { 
     year: 2025, season: "春假", title: "紐西蘭", location: "紐西蘭", status: "Done", type: "past",
@@ -1415,7 +1417,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/S1CzpJ9nt5PQgR7J7",
     plan: "https://docs.google.com/document/d/13Tg1tbjXMauMIuIlisPgrwgdt9h-0BF9/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "https://youtu.be/CeH0dgQCtPY" 
+    vlog: "https://youtu.be/CeH0dgQCtPY",
+    tripPage: "/trips/2025-newzealand/"
   },
   // Existing 2024
   { 
@@ -1427,7 +1430,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/Ntntxma3tJJF2zvR8",
     plan: "https://docs.google.com/document/d/19k4b5TZ9R-bfBAuEMlQUkMOWeYpSjVz4/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
-    vlog: "https://youtu.be/dOBlBRTxPTU"
+    vlog: "https://youtu.be/dOBlBRTxPTU",
+    tripPage: "/trips/2024-nagoya/"
   },
   { 
     year: 2024, season: "暑假", title: "泰國喀比島+芭達雅", location: "泰國 喀比/芭達雅", status: "Done", type: "past",
@@ -1440,7 +1444,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/Pewtpp8aaH5Jt3vL7",
     plan: "https://docs.google.com/document/d/1BgiWNLVZqKV3Wzj-spiHTA9RLL7lMf3u/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
-    vlog: "https://youtu.be/QDROySj-56A"
+    vlog: "https://youtu.be/QDROySj-56A",
+    tripPage: "/trips/2024-thailand/"
   },
   { 
     year: 2024, season: "春假", title: "馬來西亞沙巴", location: "馬來西亞 沙巴", status: "Done", type: "past",
@@ -1453,7 +1458,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/xVrTKHo2T2uYLkHx6",
     plan: "https://docs.google.com/document/d/1kTI_pd3t2UpaU1F-seRqsN4tftGl2ZIy/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
-    vlog: "https://youtu.be/1pxgzINsQkg"
+    vlog: "https://youtu.be/1pxgzINsQkg",
+    tripPage: "/trips/2024-sabah/"
   },
   // Existing 2023
   { 
@@ -1467,7 +1473,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/LRERnQ9bv16G1wUw7",
     plan: "https://docs.google.com/document/d/1lidmmVOxq7J52-pA-eSYQXTdHtc4hTMn/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
-    vlog: "https://youtu.be/ZDzI_i8r54E"
+    vlog: "https://youtu.be/ZDzI_i8r54E",
+    tripPage: "/trips/2023-tokyo/"
   },
   { 
     year: 2023, season: "春假", title: "阿里山+墾丁", location: "台灣 阿里山+墾丁", status: "Done", type: "past",
@@ -1480,7 +1487,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/6Tm4xnSpEiMQKpFD9",
     plan: "https://docs.google.com/document/d/1PYevx-l8pimaWODh2JkjZLyz-8xXUVX9/edit?usp=sharing&ouid=107075976967006832590&rtpof=true&sd=true",
-    vlog: "https://youtu.be/H3iL7GCYOCo"
+    vlog: "https://youtu.be/H3iL7GCYOCo",
+    tripPage: "/trips/2023-alishan/"
   },
   // New 2022
   { 
@@ -1494,7 +1502,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/mzw2SFgtotUeyvuQA",
     plan: "https://docs.google.com/document/d/19ejwcXm1rbVKTpVYrv3bB0djDR7FpDbL/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true",
-    vlog: "https://youtu.be/qgYisyxXANc"
+    vlog: "https://youtu.be/qgYisyxXANc",
+    tripPage: "/trips/2022-kinmen/"
   },
   { 
     year: 2022, season: "春假", title: "鄧家家族台南旅遊", location: "台灣 台南", status: "Done", type: "past", 
@@ -1506,7 +1515,8 @@ const allTrips: Trip[] = [
 "https://lh3.googleusercontent.com/pw/AP1GczNoJcOzWiC1800WK2KRcgNHQHjUmPNC6h0-5GlQJ_2XoYoRyLeZAO7WsuqN1yMD0zKa3QGm1tRrhTWUmxQOdcrtpeV5KRMPfrsQKRWKBejZ5NygaxNVG7dyv-jBa1zvHLu0gTRAmsgg_UWDiKVyxyeSXg=w1159-h869-s-no-gm?authuser=0"],
     album: "https://photos.app.goo.gl/nhqBPBhprt8cVWYb7", 
     plan: "https://docs.google.com/document/d/1hwImkN5kfL6ZXZPxy4eEWQ3hpdI9AOiDzXypCnVyyAM/edit?usp=sharing", 
-    vlog: "" 
+    vlog: "",
+    tripPage: "/trips/2022-tainan/"
   },
   // New 2021
   { 
@@ -1518,7 +1528,8 @@ const allTrips: Trip[] = [
 "https://lh3.googleusercontent.com/pw/AP1GczMLc_M9YJXg_hATSn3oaYbrYKbYD_O1cJidigP7sb7a5szKFCRCl6-PC2vBMKEagYRyiutDTEvghb0T8-Pmy8eBJR1m8NGwwJvdDh75PN93MD4L-8cKvJF99VLQv1ad5AnaFFM0_Qz64ra8tW2AJJbfZA=w651-h869-s-no-gm?authuser=0"],
     album: "https://photos.app.goo.gl/ZjqDsUssKqur5ks7A", 
     plan: "https://docs.google.com/document/d/1SiQ0EF7aLXrQvFnk_FCZT_yU-g_-Z39g/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "" 
+    vlog: "",
+    tripPage: "/trips/2021-nantou/"
   },
   { 
     year: 2021, season: "春假", title: "澎湖", location: "台灣 澎湖", status: "Done", type: "past",
@@ -1532,7 +1543,8 @@ const allTrips: Trip[] = [
     ],
     album: "https://photos.app.goo.gl/VDvduGyLpJrJRWvK9",
     plan: "https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ/edit?usp=drive_link",
-    vlog: ""
+    vlog: "",
+    tripPage: "/trips/2021-penghu/"
   },
   // Existing 2020
   { 

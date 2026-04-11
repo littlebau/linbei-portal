@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本名古屋 2024 | 林北家族旅遊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'PingFang TC', sans-serif; }
+        .day-body { display: none; }
+        .day-body.open { display: block; }
+        .chev { transition: transform 0.25s ease; }
+        .chev.rotated { transform: rotate(180deg); }
+        #lightbox { display: none; }
+        #lightbox.open { display: flex; }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-100">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors text-sm font-medium">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                回到主頁
+            </a>
+            <span class="text-sm text-stone-400">🐕 林北家族旅遊</span>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="relative overflow-hidden" style="height:65vh;">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczPz5c5_TGCYL2Mc4nJBFDLW-k0eJO4hJqR59VKR4LTd_Dj7YEjkjINmW7CWGW-UNIUT9t6z7Q_yMnICIqzSIYU3XnLFVJKAbJW3FdR8pUAj3jc5sI=w1367-h911-s-no-gm?authuser=0"
+             class="absolute inset-0 w-full h-full object-cover" alt="日本名古屋"
+             onerror="this.src='https://images.unsplash.com/photo-1706819900949-e7e79e4c5fb5?w=1400&q=80'">
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 50%,transparent 100%)"></div>
+        <div class="absolute bottom-0 inset-x-0 text-white text-center pb-10 pt-20 px-4">
+            <p class="text-xs tracking-[6px] uppercase opacity-70 mb-2">2024 · 秋假</p>
+            <h1 class="text-4xl md:text-5xl font-black mb-2">日本名古屋</h1>
+            <p class="text-sm opacity-70">📍 名古屋 · 伊勢 · 吉卜力公園 · 香嵐溪 · 白川鄉</p>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">📅</div><div class="text-xs text-stone-400 mb-0.5">日期</div>
+                <div class="text-sm font-bold text-stone-700">11/2 – 11/9</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🗓️</div><div class="text-xs text-stone-400 mb-0.5">天數</div>
+                <div class="text-sm font-bold text-stone-700">8 天 7 夜</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">✈️</div><div class="text-xs text-stone-400 mb-0.5">航班</div>
+                <div class="text-sm font-bold text-stone-700">虎航 IT206</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🚄</div><div class="text-xs text-stone-400 mb-0.5">交通</div>
+                <div class="text-sm font-bold text-stone-700">大眾交通</div>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://photos.app.goo.gl/mzKkNWpNNNNNNNNNA" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📷 查看相簿</a>
+            <a href="https://docs.google.com/document/d/1lzKJXMr9q47FuLOVPq5FoFbUMqnTxXH6/edit" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📋 完整計畫書</a>
+        </div>
+    </div>
+
+    <!-- Itinerary -->
+    <div class="max-w-3xl mx-auto px-4 pb-10">
+        <h2 class="text-xl font-bold text-stone-800 mb-5">🏯 逐日行程</h2>
+        <div class="space-y-3">
+
+            <!-- Day 1 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-red-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">1</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/2 (六)</p>
+                        <h3 class="font-bold text-stone-800">抵達名古屋 · 名古屋城</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏯 日本三名城之首</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>✈️</span><span>虎航 IT206 飛抵名古屋中部國際機場</span></li>
+                        <li class="flex gap-2"><span>🏯</span><span><strong>名古屋城</strong> — 日本三大名城，金鯱屋頂城堡，本丸御殿全面復原</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>東橫INN 名古屋</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-orange-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">2</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/3 (日)</p>
+                        <h3 class="font-bold text-stone-800">大須商店街 + 熱田神宮</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">⛩️ 草薙神劍 · 千年老松參道</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛍️</span><span><strong>大須商店街</strong> — 名古屋最熱鬧商業區，古著、電子、小吃、咖啡應有盡有</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>熱田神宮</strong> — 供奉三神器之一「草薙神劍」，千年老松神道，傳說充滿神秘力量</span></li>
+                        <li class="flex gap-2"><span>🍜</span><span>名古屋飛碟麵（台灣拉麵）& 鰻魚飯（Hitsumabushi）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Dormy Inn Premium Sakae（住 3 晚，附天然溫泉大浴場）</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-amber-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">3</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/4 (一)</p>
+                        <h3 class="font-bold text-stone-800">覺王山散策日</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">☕ 名古屋最文青街區</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🏛️</span><span><strong>覚王山日泰寺</strong> — 日本唯一供奉真正釋迦佛骨的寺廟，多國風格建築</span></li>
+                        <li class="flex gap-2"><span>☕</span><span><strong>覚王山商店街</strong> — 文青咖啡廳、古著潮店、創意甜點，名古屋最有個性的街區</span></li>
+                        <li class="flex gap-2"><span>🏯</span><span>名古屋城区散步</span></li>
+                        <li class="flex gap-2"><span>🍜</span><span>名古屋味噌豬排（矢場とん）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Dormy Inn Premium Sakae</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-yellow-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">4</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/5 (二)</p>
+                        <h3 class="font-bold text-stone-800">伊勢神宮朝聖</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">⛩️ 日本第一神社 · 內宮 + 外宮 · 赤福</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚄</span><span>從名古屋搭電車前往伊勢（約 1.5 小時）</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>伊勢神宮外宮</strong> — 供奉豐受大神（食物之神），每 20 年重建一次</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>伊勢神宮內宮</strong> — 供奉天照大神，日本最神聖的神社，千年歷史古杉木道</span></li>
+                        <li class="flex gap-2"><span>🍡</span><span><strong>おかげ横丁</strong> — 江戶風情商店街，必買名物赤福餅</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Dormy Inn Premium Sakae</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-lime-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">5</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/6 (三)</p>
+                        <h3 class="font-bold text-stone-800">吉卜力公園</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🌳 龍貓之森 · 異世界入口</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🌳</span><span><strong>吉卜力公園</strong> — 全球首座以宮崎駿作品為主題的主題公園，愛知萬博舊址改建</span></li>
+                        <li class="flex gap-2"><span>🏠</span><span>青春の丘（天空之城入口）、どんどこ森（龍貓之家「草壁家」）</span></li>
+                        <li class="flex gap-2"><span>🐱</span><span>貓公車、大龍貓、胡蘿蔔環境盒（須事先預約接送服務）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Dormy Inn Premium Sakae</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-red-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">6</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/7 (四)</p>
+                        <h3 class="font-bold text-stone-800">香嵐溪賞楓</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🍁 日本中部最美楓葉秘境</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🍁</span><span><strong>香嵐溪（豊田市足助町）</strong> — 日本中部最知名賞楓勝地，4000棵楓樹沿溪谷排開，夜楓更是夢幻</span></li>
+                        <li class="flex gap-2"><span>💡</span><span>平日前往避開人潮，從名古屋搭巴士前往（約 1.5 小時）</span></li>
+                        <li class="flex gap-2"><span>🍢</span><span>五平餅、炸豆腐、農村料理</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>名古屋市區飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-stone-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">7</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/8 (五)</p>
+                        <h3 class="font-bold text-stone-800">飛驒高山 + 白川合掌村</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏔️ KKday 一日遊 · 世界遺產</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚌</span><span>KKday 一日遊 巴士（4,305 元/位，名古屋出發）</span></li>
+                        <li class="flex gap-2"><span>🏘️</span><span><strong>飛驒高山</strong> — 江戶時代古城下町，三之町老街，醬油店、清酒試飲、酒盒子</span></li>
+                        <li class="flex gap-2"><span>🏠</span><span><strong>白川鄉合掌村（世界遺產）</strong> — 雪國茅草三角屋頂聚落，已有數百年歷史，秋楓映照格外美麗</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>名古屋市區飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 8 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-blue-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">8</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/9 (六)</p>
+                        <h3 class="font-bold text-stone-800">中部機場 → 回台灣</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">✈️ 虎航 IT207 · 台灣見！</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛍️</span><span>最後血拼購物、藥妝、伴手禮</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>虎航 IT207 — 名古屋 13:15 → 桃園 15:50</span></li>
+                        <li class="flex gap-2"><span>🏠</span><span>圓滿回家！</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="text-center py-8 text-sm text-stone-400 border-t border-stone-100">🐕 林北家族旅遊紀錄</footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-6 text-white text-4xl leading-none">×</button>
+        <img id="lb-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg" onclick="event.stopPropagation()" alt="">
+    </div>
+
+    <script>
+        function toggleDay(btn) {
+            const body = btn.nextElementSibling;
+            const chev = btn.querySelector('.chev');
+            const open = body.classList.toggle('open');
+            chev.classList.toggle('rotated', open);
+        }
+        function openLightbox(src) {
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>

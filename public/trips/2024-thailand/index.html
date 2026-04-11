@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>泰國甲米 + 芭達雅 2024 | 林北家族旅遊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'PingFang TC', sans-serif; }
+        .day-body { display: none; }
+        .day-body.open { display: block; }
+        .chev { transition: transform 0.25s ease; }
+        .chev.rotated { transform: rotate(180deg); }
+        #lightbox { display: none; }
+        #lightbox.open { display: flex; }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-100">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors text-sm font-medium">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                回到主頁
+            </a>
+            <span class="text-sm text-stone-400">🐕 林北家族旅遊</span>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="relative overflow-hidden" style="height:65vh;">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczOuEZ9GmmDfXV9oW3lxUkqWMbSNxJK8xasq5E5KGCHMpCYVuL2OE-kv-V2nK3lHlMbGlqKxWrM3WyrJVaqF-cLFWrpRmCH0tCL55jUCG0BCbbm2yHg=w1367-h911-s-no-gm?authuser=0"
+             class="absolute inset-0 w-full h-full object-cover" alt="泰國甲米芭達雅"
+             onerror="this.src='https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=1400&q=80'">
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 50%,transparent 100%)"></div>
+        <div class="absolute bottom-0 inset-x-0 text-white text-center pb-10 pt-20 px-4">
+            <p class="text-xs tracking-[6px] uppercase opacity-70 mb-2">2024 · 暑假</p>
+            <h1 class="text-4xl md:text-5xl font-black mb-2">泰國喀比島 + 芭達雅</h1>
+            <p class="text-sm opacity-70">📍 甲米 → 皮皮島 → 叢林冒險 → 芭達雅</p>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">📅</div><div class="text-xs text-stone-400 mb-0.5">日期</div>
+                <div class="text-sm font-bold text-stone-700">7/21 – 7/28</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🗓️</div><div class="text-xs text-stone-400 mb-0.5">天數</div>
+                <div class="text-sm font-bold text-stone-700">8 天 7 夜</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🌊</div><div class="text-xs text-stone-400 mb-0.5">主題</div>
+                <div class="text-sm font-bold text-stone-700">海島冒險</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">✈️</div><div class="text-xs text-stone-400 mb-0.5">進出</div>
+                <div class="text-sm font-bold text-stone-700">獅航 + 亞航</div>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://photos.app.goo.gl/example" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📷 查看相簿</a>
+            <a href="https://docs.google.com/document/d/1FxO-lY4Ps8-vEDmq7ctX7aIq5pBBhtF5/edit" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📋 完整計畫書</a>
+        </div>
+    </div>
+
+    <!-- Itinerary -->
+    <div class="max-w-3xl mx-auto px-4 pb-10">
+        <h2 class="text-xl font-bold text-stone-800 mb-5">🏖️ 逐日行程</h2>
+        <div class="space-y-3">
+
+            <!-- Day 1 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-cyan-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">1</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/21 (日)</p>
+                        <h3 class="font-bold text-stone-800">台灣 → 甲米</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">✈️ 獅航 + 亞航 · 甲米渡假村</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>✈️</span><span>獅航 SL399 — 桃園 10:20 → 曼谷廊曼 DMK</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>亞航 FD3215 — 曼谷廊曼 DMK → 甲米</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Sea Seeker Krabi Resort（甲米渡假村，游泳池）</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-teal-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">2</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/22 (一)</p>
+                        <h3 class="font-bold text-stone-800">大象保護區 + 攀岩</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🐘 與大象共浴 · 甲米石灰岩攀岩</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🐘</span><span><strong>大象保護區（上午）</strong> — 與大象近距離接觸、餵食、共浴，倫理道德保護方式（不騎象）</span></li>
+                        <li class="flex gap-2"><span>🧗</span><span><strong>甲米攀岩（下午）</strong> — 世界級石灰岩岩壁，已預訂半日教學課程</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Sea Seeker Krabi Resort</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-blue-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">3</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/23 (二)</p>
+                        <h3 class="font-bold text-stone-800">洪島皮划艇長尾船</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🚣 穿越紅樹林 · 海上美景</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚣</span><span><strong>洪島皮划艇</strong> — 搭長尾船出海，划獨木舟穿越海上紅樹林、石灰岩洞穴，已預訂</span></li>
+                        <li class="flex gap-2"><span>🌊</span><span>四岛遊（Ko Hong）周边透明海水浮潜</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Sea Seeker Krabi Resort</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-sky-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">4</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/24 (三)</p>
+                        <h3 class="font-bold text-stone-800">皮皮島全日遊</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏝️ 全球最美小島之一</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🏝️</span><span><strong>皮皮島全日遊</strong> — 從甲米搭快船前往，電影《海灘》取景地瑪雅灣已重開</span></li>
+                        <li class="flex gap-2"><span>🐟</span><span>浮潛看珊瑚礁魚群、海浪 SUP</span></li>
+                        <li class="flex gap-2"><span>🌅</span><span>Viewpoint 攀登制高點，俯瞰皮皮島全景落日</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>Sea Seeker Krabi Resort</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-green-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">5</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/25 (四)</p>
+                        <h3 class="font-bold text-stone-800">叢林冒險 → 芭達雅</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🌴 高空滑索 · 飛曼谷 → 芭達雅</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🌴</span><span><strong>叢林探險高空滑索（上午）</strong> — 在雨林樹冠層間飛翔，嚇破膽的刺激冒險</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>甲米機場 → 曼谷 → 搭大巴至芭達雅</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>芭達雅飯店（3晚）</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-blue-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">6</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/26 (五)</p>
+                        <h3 class="font-bold text-stone-800">水世界豪玩一天</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">💦 Cartoon Network Amazone</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>💦</span><span><strong>水世界（Cartoon Network Amazone）</strong> — 亞洲最大卡通主題水樂園，各種水滑道、漂漂河，玩到爽</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>芭達雅飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-purple-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">7</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/27 (六)</p>
+                        <h3 class="font-bold text-stone-800">芭達雅景點巡禮</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🔱 真理寺 · 冰雕世界 · Terminal 21</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🔱</span><span><strong>真理寺（Sanctuary of Truth）</strong> — 全木製百公尺神殿，雕刻工藝令人窒息，中文導覽</span></li>
+                        <li class="flex gap-2"><span>🧊</span><span><strong>Frost Magical Ice of Siam</strong> — 零下8度冰雕藝術世界，提供禦寒外套</span></li>
+                        <li class="flex gap-2"><span>🛍️</span><span><strong>Terminal 21 Pattaya</strong> — 以世界各大城市為主題的購物中心，超吸睛</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>芭達雅飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 8 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-stone-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">8</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">7/28 (日)</p>
+                        <h3 class="font-bold text-stone-800">深夜班機回台灣</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">✈️ 泰越捷 VZ566 · 凌晨出發</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚌</span><span>搭大巴回曼谷蘇萬那普機場</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>泰越捷 VZ566 — 曼谷 BKK 00:35 → 桃園 05:25</span></li>
+                        <li class="flex gap-2"><span>🏠</span><span>天亮回到台灣！精彩旅程圓滿結束</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="text-center py-8 text-sm text-stone-400 border-t border-stone-100">🐕 林北家族旅遊紀錄</footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-6 text-white text-4xl leading-none">×</button>
+        <img id="lb-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg" onclick="event.stopPropagation()" alt="">
+    </div>
+
+    <script>
+        function toggleDay(btn) {
+            const body = btn.nextElementSibling;
+            const chev = btn.querySelector('.chev');
+            const open = body.classList.toggle('open');
+            chev.classList.toggle('rotated', open);
+        }
+        function openLightbox(src) {
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>

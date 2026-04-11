@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 沖繩家族旅行 — 林北家族旅遊</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+    .hero-img { object-fit: cover; width: 100%; height: 100%; }
+    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.7); }
+  </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center gap-3">
+    <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-cyan-700 transition font-medium text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      回到主頁
+    </a>
+    <span class="text-stone-300">|</span>
+    <span class="text-stone-700 font-bold text-sm">🐕 林北家族旅遊</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="relative w-full h-72 sm:h-96 mt-12 overflow-hidden">
+    <img src="https://lh3.googleusercontent.com/pw/AP1GczOwptGviBLuOYKweQ1j9pDsmG1ZvNya_v5aPP0pR8bMkZpXBSti6O_hAT6f-osKAXOAt0nkCsH2lNjcE3Rjscmga_5INWJFNepNlMmqJvh1AGOyuVET32gOYReryKwDR9xLbwgbR_oxUFxYAP8_t6tTvQ=w1304-h869-s-no-gm?authuser=0"
+      alt="2026 沖繩家族旅行" class="hero-img" loading="eager" />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 flex flex-col justify-end p-6">
+      <div class="flex flex-wrap gap-2 mb-2">
+        <span class="bg-cyan-500 text-white text-xs font-bold px-3 py-1 rounded-full">2026 寒假</span>
+        <span class="bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">Planning 計劃中</span>
+        <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">日本 沖繩</span>
+      </div>
+      <h1 class="text-white text-3xl sm:text-4xl font-black drop-shadow-lg">沖繩家族旅行</h1>
+      <p class="text-white/80 text-sm mt-1 drop-shadow">2026 寒假 · 日本 沖繩 · 規劃中</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 py-8">
+
+    <!-- Planning Notice -->
+    <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-5 mb-6 flex items-start gap-3">
+      <span class="text-2xl shrink-0">🗺️</span>
+      <div>
+        <div class="font-bold text-yellow-800 mb-1">行程規劃中</div>
+        <div class="text-sm text-yellow-700">這趟沖繩之旅目前正在規劃當中！詳細行程將在出發前更新。請點擊下方計畫書按鈕查看最新規劃進度。</div>
+      </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">📅</div>
+        <div class="text-xs text-stone-500 mb-1">時間</div>
+        <div class="text-sm font-bold text-stone-800">2026 寒假</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">📍</div>
+        <div class="text-xs text-stone-500 mb-1">目的地</div>
+        <div class="text-sm font-bold text-stone-800">日本 沖繩</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">👨‍👩‍👧‍👦</div>
+        <div class="text-xs text-stone-500 mb-1">成員</div>
+        <div class="text-sm font-bold text-stone-800">林北家族</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">✅</div>
+        <div class="text-xs text-stone-500 mb-1">狀態</div>
+        <div class="text-sm font-bold text-cyan-600">規劃中</div>
+      </div>
+    </div>
+
+    <!-- Wishlist -->
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-stone-100 mb-6">
+      <h2 class="text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">🌟</span> 期待清單
+      </h2>
+      <ul class="space-y-3 text-stone-700">
+        <li class="flex items-start gap-3">
+          <span class="text-cyan-500 text-lg mt-0.5">🌊</span>
+          <div>
+            <div class="font-semibold">美麗海水族館</div>
+            <div class="text-sm text-stone-500">黑潮之海水槽，與巨大鯨鯊同游泳道的震撼體驗</div>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-red-400 text-lg mt-0.5">🏯</span>
+          <div>
+            <div class="font-semibold">首里城</div>
+            <div class="text-sm text-stone-500">琉球王國的象徵，感受獨特的琉球文化與歷史</div>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-green-500 text-lg mt-0.5">🌴</span>
+          <div>
+            <div class="font-semibold">古宇利島 · 宮古島</div>
+            <div class="text-sm text-stone-500">沖繩最美的島嶼，心型礁石與透明的碧藍海水</div>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-orange-500 text-lg mt-0.5">🍜</span>
+          <div>
+            <div class="font-semibold">沖繩麵 · 塔可飯 · 琉球料理</div>
+            <div class="text-sm text-stone-500">品嚐融合日本與琉球文化的獨特島國料理</div>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="text-pink-400 text-lg mt-0.5">🛍️</span>
+          <div>
+            <div class="font-semibold">國際通 · 公設市場購物血拼</div>
+            <div class="text-sm text-stone-500">沖繩潮流商圈，帶回各種限定伴手禮</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 mb-8">
+      <a href="https://photos.google.com/share/AF1QipM_SjQctVFPK9CaA2YOb2_DOEpeKxFoXY1CP6VfLe0asFqEBmWizzyrVnJHXy8S2A?key=MjJsbmFhbm5CLTBBNFRYbk9GR25MNDdmQ3IyWjB3" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📷</span> 相簿
+      </a>
+      <a href="https://www.youtube.com/watch?v=OkN0_K_OtyE" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">▶</span> Vlog
+      </a>
+      <a href="https://docs.google.com/document/d/1-4yHFrFozhLuGazQj6jzCq7lzwB6TtsV" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📋</span> 計畫書
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 text-stone-400 text-sm">
+    <p>🐕 林北家族旅遊 · 2026 寒假</p>
+  </footer>
+</body>
+</html>

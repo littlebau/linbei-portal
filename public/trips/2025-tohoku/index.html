@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日本東北賞楓 2025 | 林北家族旅遊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'PingFang TC', sans-serif; }
+        .day-body { display: none; }
+        .day-body.open { display: block; }
+        .chev { transition: transform 0.25s ease; }
+        .chev.rotated { transform: rotate(180deg); }
+        #lightbox { display: none; }
+        #lightbox.open { display: flex; }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-100">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors text-sm font-medium">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                回到主頁
+            </a>
+            <span class="text-sm text-stone-400">🐕 林北家族旅遊</span>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="relative overflow-hidden" style="height:65vh;">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0"
+             class="absolute inset-0 w-full h-full object-cover" alt="日本東北賞楓">
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 50%,transparent 100%)"></div>
+        <div class="absolute bottom-0 inset-x-0 text-white text-center pb-10 pt-20 px-4">
+            <p class="text-xs tracking-[6px] uppercase opacity-70 mb-2">2025 · 秋假</p>
+            <h1 class="text-4xl md:text-5xl font-black mb-2">日本東北賞楓</h1>
+            <p class="text-sm opacity-70">📍 福島 → 會津若松 → 山形 → 仙台</p>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">📅</div><div class="text-xs text-stone-400 mb-0.5">日期</div>
+                <div class="text-sm font-bold text-stone-700">11/1 – 11/9</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🗓️</div><div class="text-xs text-stone-400 mb-0.5">天數</div>
+                <div class="text-sm font-bold text-stone-700">9 天 8 夜</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">👨‍👩‍👧</div><div class="text-xs text-stone-400 mb-0.5">成員</div>
+                <div class="text-sm font-bold text-stone-700">三人行</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🚗</div><div class="text-xs text-stone-400 mb-0.5">交通</div>
+                <div class="text-sm font-bold text-stone-700">自駕自由行</div>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://photos.app.goo.gl/hP631FQAmCgxUpoL8" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📷 查看相簿</a>
+            <a href="https://youtu.be/DSEI095uOJM" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full font-semibold text-sm transition-colors shadow">▶ 觀看 Vlog</a>
+            <a href="https://docs.google.com/document/d/1BAFg8ngF0yvULcSp7SLqvflTe6oxSSRZ/edit" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📋 完整計畫書</a>
+        </div>
+    </div>
+
+    <!-- Itinerary -->
+    <div class="max-w-3xl mx-auto px-4 pb-10">
+        <h2 class="text-xl font-bold text-stone-800 mb-5">🍁 逐日行程</h2>
+        <div class="space-y-3">
+
+            <!-- Day 1 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-red-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">1</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/1 (六)</p>
+                        <h3 class="font-bold text-stone-800">台北 → 花卷機場 → 福島</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">✈️ 飛行日 · 抵達福島</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>✈️</span><span>虎航 IT258 – 桃園 12:15 → 花卷 16:35</span></li>
+                        <li class="flex gap-2"><span>🚌</span><span>計程車至新花卷JR → JR至福島станці（約 1,600 元/人）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>福島站前里士滿飯店（Richmond Hotel）</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-orange-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">2</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/2 (日)</p>
+                        <h3 class="font-bold text-stone-800">福島 → 會津若松</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🌿 吾妻公園 · 土津神社 · 豬苗代湖 · 食丸小學</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚗</span><span>取租車 Toyota SIENTA 七人座油電</span></li>
+                        <li class="flex gap-2"><span>🌿</span><span><strong>福島吾妻綜合運動公園</strong> — 落羽杉與銀杏並木道，秋色絕美</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>土津神社</strong> — 紅葉林中的白色鳥居，福島楓葉必來景點</span></li>
+                        <li class="flex gap-2"><span>🦢</span><span><strong>豬苗代湖 長濱</strong> — 天鵝與野鴨，靜謐湖景</span></li>
+                        <li class="flex gap-2"><span>🏫</span><span><strong>喰丸小學校</strong> — 廢校銀杏黃葉，木造校舍超上鏡</span></li>
+                        <li class="flex gap-2"><span>🍽️</span><span><strong>晚餐：</strong>Teppan Aizuya 高級鐵板燒</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>會津若松獨棟 Airbnb</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-amber-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">3</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/3 (一)</p>
+                        <h3 class="font-bold text-stone-800">磐梯高原 深探</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">💎 五色沼 · 中津川溪谷 · 磐梯Lake Line</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>土津神社</strong> — 再遊白色鳥居</span></li>
+                        <li class="flex gap-2"><span>💎</span><span><strong>五色沼自然探勝路步道</strong> — 磐梯高原夢幻湖沼紅葉，湖色如翡翠</span></li>
+                        <li class="flex gap-2"><span>🍂</span><span><strong>磐梯吾妻 Lake Line / 中津川溪谷</strong> — 秋季限定，百公尺峽谷楓紅</span></li>
+                        <li class="flex gap-2"><span>🦆</span><span><strong>豬苗代湖 長濱</strong> — 傍晚湖景散步</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>會津若松獨棟 Airbnb</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-yellow-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">4</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/4 (二)</p>
+                        <h3 class="font-bold text-stone-800">會津若松 → 山形</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🍂 鶴布山珍藏寺 · 熊野大社 850年銀杏</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🍄</span><span><strong>鶴布山珍藏寺</strong> — 超誇張滿地金黃銀杏地毯，白鶴報恩傳說起源地</span></li>
+                        <li class="flex gap-2"><span>🌳</span><span><strong>熊野大社</strong> — 山形必訪神社，850 年老銀杏，「結緣之神」</span></li>
+                        <li class="flex gap-2"><span>🌄</span><span><strong>烏帽子山公園</strong> — 城市俯瞰景色</span></li>
+                        <li class="flex gap-2"><span>🍲</span><span><strong>晚餐：</strong>壽喜鍋（飯店步行4分鐘）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>山形市 大和 Roynet Hotel（含早餐、浴缸、洗衣機）</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-lime-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">5</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/5 (三)</p>
+                        <h3 class="font-bold text-stone-800">山形 精華日</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">⛩️ 山寺千級石階 · 鳴子峽東北最美峽谷</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🌿</span><span><strong>山形縣綜合運動公園</strong> — 秋天限定銀杏大道</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>山寺（立石寺）</strong> — 爬千級石階抵達絕壁廟宇，松尾芭蕉「蟬鳴聲滲入石」名句之地</span></li>
+                        <li class="flex gap-2"><span>🌁</span><span><strong>鳴子峽</strong> — 宮城縣名勝，100公尺斷崖峽谷紅葉，東北最美賞楓地之一</span></li>
+                        <li class="flex gap-2"><span>🛍️</span><span>Mont Bell Outlet（飯店步行3分鐘，日本登山品牌必逛）</span></li>
+                        <li class="flex gap-2"><span>🥩</span><span><strong>晚餐：</strong>山形牛和牛燒肉</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>山形市 大和 Roynet Hotel</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-teal-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">6</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/6 (四)</p>
+                        <h3 class="font-bold text-stone-800">山形 → 仙台</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🚡 藏王纜車 · 秋保神社 · 秋保大瀑布</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚡</span><span><strong>藏王纜車</strong> — 橫跨宮城/山形兩縣，最高峰 1,841m，9月起秋紅滿山</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>秋保神社</strong> — 千年古神社，祭祀「勝負之神」</span></li>
+                        <li class="flex gap-2"><span>💦</span><span><strong>秋保大瀑布</strong> — 仙台近郊名瀑，秋楓圍繞</span></li>
+                        <li class="flex gap-2"><span>🥩</span><span><strong>晚餐：</strong>低溫熟成豬排（飯店步行3分鐘）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>仙台威斯特酒店（附大浴場）</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-blue-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">7</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/7 (五)</p>
+                        <h3 class="font-bold text-stone-800">世界遺產巡禮 · 還車</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🛶 猊鼻溪遊船 · 中尊寺 · 毛越寺</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛶</span><span><strong>猊鼻溪遊船</strong> — 人力木舟 90 分鐘，日本唯一人力往返溪流泛舟，船夫歌聲迴盪峽谷</span></li>
+                        <li class="flex gap-2"><span>🏯</span><span><strong>中尊寺（世界遺產）</strong> — 奧州藤原氏遺跡，國寶金色堂</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>毛越寺（世界遺產）</strong> — 平安時代淨土式庭園</span></li>
+                        <li class="flex gap-2"><span>🚗</span><span>仙台市區還車</span></li>
+                        <li class="flex gap-2"><span>🥩</span><span><strong>晚餐：</strong>仔虎燒肉（米澤牛）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>仙台威斯特酒店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 8 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-violet-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">8</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/8 (六)</p>
+                        <h3 class="font-bold text-stone-800">仙台 + 松島夜楓</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🍁 圓通院夜間楓紅 · 瑞嚴寺 · 逛街</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛍️</span><span><strong>仙台百貨逛街</strong> — GU、Animate、吉卜力商店</span></li>
+                        <li class="flex gap-2"><span>🌿</span><span><strong>松島 圓通院</strong> — 夜間楓紅參拜，秋詩篇篇</span></li>
+                        <li class="flex gap-2"><span>⛩️</span><span><strong>瑞嚴寺</strong> — 松島名剎，桃山文化遺跡</span></li>
+                        <li class="flex gap-2"><span>🥟</span><span><strong>晚餐：</strong>仙台肉汁餃子</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>仙台威斯特酒店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 9 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-stone-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">9</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">11/9 (日)</p>
+                        <h3 class="font-bold text-stone-800">仙台 → 回台灣</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏠 一番町逛街 · 仙台機場</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛍️</span><span><strong>仙台一番町商店街</strong> — 最後血拼，藥妝、伴手禮</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>虎航 IT255 — 仙台 19:00 → 桃園 23:00</span></li>
+                        <li class="flex gap-2"><span>🏠</span><span>回到溫暖的家！</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Gallery -->
+    <div class="max-w-3xl mx-auto px-4 pb-20">
+        <h2 class="text-lg font-bold text-stone-700 mb-5">📸 旅途照片</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="aspect-[4/3] overflow-hidden rounded-2xl cursor-pointer group shadow-md" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0')">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczMcbMORd3qssAAAygutlCGQGvpgnFJ3KBnO6yWZPet3L3Pv6nOtmcfgqDzlIbkB4aqRXNyK3FLwLabLpbg7b3GtsYkX_NOfYxrMDWzxwdq3enVw2FQqbsyPTt9le0xfFt7Cmwh2xJCwqreHk4kvVB90Gg=w1367-h911-s-no-gm?authuser=0"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" alt="">
+            </div>
+            <div class="aspect-[4/3] overflow-hidden rounded-2xl cursor-pointer group shadow-md" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczODjmS_gW43khZYdutZC57zearwSwMszt_XfUhy7cxbDbAcFRwHg4rwmo0IiV1nEXqGbcg843zDGoDoYgi-uE0ADLECT-S8zA5gVUnecy7i8u7N5EfozjGzgzSORANTF0WsxKC-0hq7sGvyhVNeu3-w_A=w1304-h869-s-no-gm?authuser=0')">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczODjmS_gW43khZYdutZC57zearwSwMszt_XfUhy7cxbDbAcFRwHg4rwmo0IiV1nEXqGbcg843zDGoDoYgi-uE0ADLECT-S8zA5gVUnecy7i8u7N5EfozjGzgzSORANTF0WsxKC-0hq7sGvyhVNeu3-w_A=w1304-h869-s-no-gm?authuser=0"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" alt="">
+            </div>
+            <div class="aspect-[4/3] overflow-hidden rounded-2xl cursor-pointer group shadow-md" onclick="openLightbox('https://lh3.googleusercontent.com/pw/AP1GczNgkhapuKI3ZWZ_igxIXGYyD8izRa5_q6wMIl6UOY9qD3qdYYfs08wH7tmi8_481iyf76HWyFoY4Z51Dhtv71dwyUTYbWaZo_-cF-sukYWTZqLXhGatZFbS-j9ZHndVSAsfvoy2WwwctxfPSa__QYR4YA=w1304-h869-s-no-gm?authuser=0')">
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczNgkhapuKI3ZWZ_igxIXGYyD8izRa5_q6wMIl6UOY9qD3qdYYfs08wH7tmi8_481iyf76HWyFoY4Z51Dhtv71dwyUTYbWaZo_-cF-sukYWTZqLXhGatZFbS-j9ZHndVSAsfvoy2WwwctxfPSa__QYR4YA=w1304-h869-s-no-gm?authuser=0"
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" alt="">
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-8 text-sm text-stone-400 border-t border-stone-100">🐕 林北家族旅遊紀錄</footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-6 text-white text-4xl leading-none">×</button>
+        <img id="lb-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg" onclick="event.stopPropagation()" alt="">
+    </div>
+
+    <script>
+        function toggleDay(btn) {
+            const body = btn.nextElementSibling;
+            const chev = btn.querySelector('.chev');
+            const open = body.classList.toggle('open');
+            chev.classList.toggle('rotated', open);
+        }
+        function openLightbox(src) {
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>

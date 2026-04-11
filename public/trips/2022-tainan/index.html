@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2022 鄧家家族台南旅遊 — 林北家族旅遊</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+    .hero-img { object-fit: cover; width: 100%; height: 100%; }
+    .day-body { display: none; }
+    .day-body.open { display: block; }
+    .chev { transition: transform 0.3s; }
+    .chev.rotated { transform: rotate(180deg); }
+    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.7); }
+    .gallery-img { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .gallery-img:hover { transform: scale(1.03); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+  </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center gap-3">
+    <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-orange-700 transition font-medium text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      回到主頁
+    </a>
+    <span class="text-stone-300">|</span>
+    <span class="text-stone-700 font-bold text-sm">🐕 林北家族旅遊</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="relative w-full h-72 sm:h-96 mt-12 overflow-hidden">
+    <img src="https://lh3.googleusercontent.com/pw/AP1GczPJwUyQeS0lRQ4dJT5h8NmUoRhpyd0hD16pqzlDgUnGyPUlnnYPoCnzzbTJNC3VN2VUMECeIemdti4MNJtp479iaN0TPeVEfNIZWDiIAYRW_az6dqK387vj0sorLWlsL92KKtRQV5dA_Juv5lYoeXOirQ=w1159-h869-s-no-gm?authuser=0"
+      alt="2022 台南家族旅遊" class="hero-img" loading="eager" />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 flex flex-col justify-end p-6">
+      <div class="flex flex-wrap gap-2 mb-2">
+        <span class="bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full">2022 春假</span>
+        <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">台灣 台南</span>
+      </div>
+      <h1 class="text-white text-3xl sm:text-4xl font-black drop-shadow-lg">鄧家家族台南旅遊</h1>
+      <p class="text-white/80 text-sm mt-1 drop-shadow">2022.4.25–4.27 · 3天2夜 · 台南古都 赤崁樓 安平 四草</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 py-8">
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">📅</div>
+        <div class="text-xs text-stone-500 mb-1">日期</div>
+        <div class="text-sm font-bold text-stone-800">4/25–4/27</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">🌙</div>
+        <div class="text-xs text-stone-500 mb-1">天數</div>
+        <div class="text-sm font-bold text-stone-800">3天2夜</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">👨‍👩‍👧‍👦</div>
+        <div class="text-xs text-stone-500 mb-1">成員</div>
+        <div class="text-sm font-bold text-stone-800">鄧家家族</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">🏠</div>
+        <div class="text-xs text-stone-500 mb-1">住宿</div>
+        <div class="text-sm font-bold text-stone-800">貓庵民宿</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 mb-8">
+      <a href="https://photos.app.goo.gl/nhqBPBhprt8cVWYb7" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📷</span> 相簿
+      </a>
+      <a href="https://docs.google.com/document/d/1hwImkN5kfL6ZXZPxy4eEWQ3hpdI9AOiDzXypCnVyyAM" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📋</span> 計畫書
+      </a>
+    </div>
+
+    <!-- Day by Day Itinerary -->
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">🗓️</span> 每日行程
+      </h2>
+      <div class="space-y-3">
+
+        <!-- Day 1 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">Day 1</span>
+              <div>
+                <div class="font-bold text-stone-800">4/25 (一) — 抵達台南</div>
+                <div class="text-xs text-stone-500 mt-0.5">嘉義 → 赤崁樓 → 孔廟 → 大東夜市 → 鐳射戰場</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">🍗</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">嘉義秋月雞肉飯（午餐，約12:20）</div>
+                  <div class="text-xs text-stone-500">嘉義市西區北港路1519號｜先在這裡填飽肚子</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🏯</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">赤崁樓（14:10，停留30分）</div>
+                  <div class="text-xs text-stone-500">門票45元｜荷蘭時期的歷史建築，台南必訪</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-yellow-500 text-sm mt-0.5">🏛️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">孔廟（14:50，停留30分）</div>
+                  <div class="text-xs text-stone-500">門票40元｜全台首學，古典雅緻的建築群</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-blue-400 text-sm mt-0.5">🏠</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">貓庵民宿 Check-in（15:40）</div>
+                  <div class="text-xs text-stone-500">台南市北區長榮路四段58巷42號｜休息片刻</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-sky-400 text-sm mt-0.5">🌅</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">龍崗天橋（四鯤鯓海景天橋）→ 黃金海岸看夕陽</div>
+                  <div class="text-xs text-stone-500">民宿出發約8分鐘｜絕美海景夕陽</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-purple-400 text-sm mt-0.5">🌆</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">大東夜市（晚餐外帶）</div>
+                  <div class="text-xs text-stone-500">民宿至大東夜市約15分鐘｜外帶回民宿享用</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-green-400 text-sm mt-0.5">🎮</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">KILL ZONE 鐳射戰場（20:20）</div>
+                  <div class="text-xs text-stone-500">06-299-8899｜刺激的光雕戰場遊戲體驗</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">Day 2</span>
+              <div>
+                <div class="font-bold text-stone-800">4/26 (二) — 安平探索日</div>
+                <div class="text-xs text-stone-500">四草綠色隧道 → 安平古堡 → 安平老街 → 運河遊船</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">🍔</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">丹丹漢堡早餐（外帶）</div>
+                  <div class="text-xs text-stone-500">派一台車去買，帶回民宿一起吃</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-green-500 text-sm mt-0.5">🌿</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">四草綠色隧道（10:00）</div>
+                  <div class="text-xs text-stone-500">票價200元｜08:00-16:30｜劃著竹筏穿越綠色水道，被譽為台版亞馬遜</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-amber-500 text-sm mt-0.5">🏰</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">安平古堡 → 德記洋行 → 安平樹屋 → 安平老街</div>
+                  <div class="text-xs text-stone-500">步行遊安平區，買林永泰興蜜餞與周氏蝦捲，約3小時</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-blue-400 text-sm mt-0.5">⚓</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">德陽艦園區 → 億載金城 → 漁光島</div>
+                  <div class="text-xs text-stone-500">預計15:00前往｜軍艦展示 → 砲台歷史 → 美麗沙灘</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-indigo-500 text-sm mt-0.5">🚢</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">立驛國際安平遊港運河（18:00）</div>
+                  <div class="text-xs text-stone-500">船票300元｜0903-232-168｜夜晚搭船遊安平運河，浪漫又特別</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🥩</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">文章牛肉湯 安平總店（晚餐）</div>
+                  <div class="text-xs text-stone-500">06-358-7910｜可外帶回民宿，台南必吃的虱目魚與牛肉湯</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full">Day 3</span>
+              <div>
+                <div class="font-bold text-stone-800">4/27 (三) — 北上回家</div>
+                <div class="text-xs text-stone-500">竹崎親水公園 → 后豐鐵馬道 → 回龍岡</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">☕</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">早餐（民宿附近老闆推薦）</div>
+                  <div class="text-xs text-stone-500">9:30退房，輕鬆享用早餐</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-blue-400 text-sm mt-0.5">💧</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">竹崎親水公園（約10:50到達）</div>
+                  <div class="text-xs text-stone-500">嘉義縣中華路｜戲水消暑，停留1小時</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-green-500 text-sm mt-0.5">🚴</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">后豐鐵馬道（約13:20到達）</div>
+                  <div class="text-xs text-stone-500">台中市豐原區｜廢棄鐵路改建自行車道，穿越隧道與橋梁，停留2小時</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-stone-500 text-sm mt-0.5">🏠</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">15:30 離開，約17:00 回龍岡</div>
+                  <div class="text-xs text-stone-500">愉快的家族台南之旅圓滿結束 ❤️</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Photo Gallery -->
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">🖼️</span> 旅遊相片
+      </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczPJwUyQeS0lRQ4dJT5h8NmUoRhpyd0hD16pqzlDgUnGyPUlnnYPoCnzzbTJNC3VN2VUMECeIemdti4MNJtp479iaN0TPeVEfNIZWDiIAYRW_az6dqK387vj0sorLWlsL92KKtRQV5dA_Juv5lYoeXOirQ=w1159-h869-s-no-gm?authuser=0"
+          alt="台南" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczOqTcTUKZRFfUDVhio-ROY3OR-Ta23vC9JJAI_-1dHTR-MwFw4wgK52T_Z-bCQRpzKqiVJHNVbgatboCGzOT6lx3-D06I48d4FR7QRk5FGpdAhkEs6UCVA9Eqd9zVhIpny1qkzeLDhY4_SUjjK5CYBTaQ=w651-h869-s-no-gm?authuser=0"
+          alt="台南" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczOBvTqvV8PTa8U6Ec1awCBBFQaaeoMoFu2WGcns0Hv-kosPYar0TsEN79eeUF4tO_5QFcd5N34t8sjwO5UP-7f-ExtQ6TH11PJQXa1CK08PlXlM2ZcUxX7rM0jcMRuf9P6dXU2nOigwiQCeFBbBMN62fw=w1080-h810-s-no-gm?authuser=0"
+          alt="台南" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczOoP5VHg86CWrpxDAig9Kx6fHxvgZtKDK2lRhwrPOuBGETKAZjg5MI7juunnFaeN-NquOA4IgXiJ80SSMYDcPNYrh6eGRyM8-uik9qm2oLHatkgybNNsrJFgRsjTwmXTlIwinDQygUFwiuJcUVCoUj6Gg=w1159-h869-s-no-gm?authuser=0"
+          alt="台南" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczNoJcOzWiC1800WK2KRcgNHQHjUmPNC6h0-5GlQJ_2XoYoRyLeZAO7WsuqN1yMD0zKa3QGm1tRrhTWUmxQOdcrtpeV5KRMPfrsQKRWKBejZ5NygaxNVG7dyv-jBa1zvHLu0gTRAmsgg_UWDiKVyxyeSXg=w1159-h869-s-no-gm?authuser=0"
+          alt="台南" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 text-stone-400 text-sm">
+    <p>🐕 林北家族旅遊 · 2022 春假</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full size" />
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl font-bold leading-none hover:text-stone-300 transition">&times;</button>
+  </div>
+
+  <script>
+    function toggleDay(btn) {
+      const body = btn.nextElementSibling;
+      const chev = btn.querySelector('.chev');
+      body.classList.toggle('open');
+      chev.classList.toggle('rotated');
+    }
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2021 澎湖 — 林北家族旅遊</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+    .hero-img { object-fit: cover; width: 100%; height: 100%; }
+    .day-body { display: none; }
+    .day-body.open { display: block; }
+    .chev { transition: transform 0.3s; }
+    .chev.rotated { transform: rotate(180deg); }
+    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.7); }
+    .gallery-img { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .gallery-img:hover { transform: scale(1.03); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+  </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center gap-3">
+    <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-sky-700 transition font-medium text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      回到主頁
+    </a>
+    <span class="text-stone-300">|</span>
+    <span class="text-stone-700 font-bold text-sm">🐕 林北家族旅遊</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="relative w-full h-72 sm:h-96 mt-12 overflow-hidden">
+    <img src="https://lh3.googleusercontent.com/pw/AP1GczOWyPeiR_92g04FqjWeg2EUS3XsyNGZSoxZBVDtGaNzUVadlOplFiFKFOcmj_lQpY0Z9VtVO5-iIKboJQeRL_OjvhPHwk2rHV6PW5bUqYsYald_ytBhjwCkS3fL2usU4fy-qTM1IVn3Z8tH9JFNJL0t_g=w1215-h911-s-no-gm?authuser=0"
+      alt="2021 澎湖" class="hero-img" loading="eager" />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 flex flex-col justify-end p-6">
+      <div class="flex flex-wrap gap-2 mb-2">
+        <span class="bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full">2021 春假</span>
+        <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">台灣 澎湖</span>
+      </div>
+      <h1 class="text-white text-3xl sm:text-4xl font-black drop-shadow-lg">澎湖</h1>
+      <p class="text-white/80 text-sm mt-1 drop-shadow">2021.4/26–5/1 · 6天5夜 · 馬公 · 西嶼 · 七美 · 望安 · 花火節</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 py-8">
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">📅</div>
+        <div class="text-xs text-stone-500 mb-1">日期</div>
+        <div class="text-sm font-bold text-stone-800">4/26–5/1</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">🌙</div>
+        <div class="text-xs text-stone-500 mb-1">天數</div>
+        <div class="text-sm font-bold text-stone-800">6天5夜</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">✈️</div>
+        <div class="text-xs text-stone-500 mb-1">交通</div>
+        <div class="text-sm font-bold text-stone-800">AE781/AE782</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">🎇</div>
+        <div class="text-xs text-stone-500 mb-1">特色</div>
+        <div class="text-sm font-bold text-stone-800">澎湖花火節</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 mb-8">
+      <a href="https://photos.app.goo.gl/VDvduGyLpJrJRWvK9" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📷</span> 相簿
+      </a>
+      <a href="https://docs.google.com/document/d/1kWK0K1WjR4uvMNrU2J9nyEKNvuYowHEOHcvqO2EnNSQ" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📋</span> 計畫書
+      </a>
+    </div>
+
+    <!-- Day by Day Itinerary -->
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">🗓️</span> 每日行程
+      </h2>
+      <div class="space-y-3">
+
+        <!-- Day 1 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full">Day 1</span>
+              <div>
+                <div class="font-bold text-stone-800">4/26 (一) — 抵達澎湖，西嶼半日遊</div>
+                <div class="text-xs text-stone-500 mt-0.5">AE781 10:55-11:40 → 西嶼 → 花火節</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-sky-500 text-sm mt-0.5">✈️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">AE781 台中→澎湖（10:55–11:40）</div>
+                  <div class="text-xs text-stone-500">由民宿老闆接到民宿，租車行老闆到民宿取車｜入住小時光民宿</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-emerald-500 text-sm mt-0.5">🏝️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">西嶼半日遊（13:30，勻褆家同行）</div>
+                  <div class="text-xs text-stone-500">跨海大橋 → 易家仙人掌冰 → 二崁聚落（二馬豆花、老派咖啡）→ 三仙塔 → 內垵遊憩區 → 西嶼燈塔</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🦞</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">晚餐：來福海鮮餐廳（18:30）</div>
+                  <div class="text-xs text-stone-500">鐵板中卷/東坡肉/金瓜米苔目/月亮蝦餅｜3桌大家族 ✅已訂</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-yellow-400 text-sm mt-0.5">🎇</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">澎湖花火節（21點煙火，觀音亭）</div>
+                  <div class="text-xs text-stone-500">煙火+LINE主題無人機秀！活動20:00開始</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">🍢</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">宵夜：獨領風燒宵夜串燒燒烤</div>
+                  <div class="text-xs text-stone-500">花火節結束後的完美收尾</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full">Day 2</span>
+              <div>
+                <div class="font-bold text-stone-800">4/27 (二) — 前往七美島</div>
+                <div class="text-xs text-stone-500 mt-0.5">南海之星 馬公→望安→七美｜七美夏夜小屋</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-amber-500 text-sm mt-0.5">🥐</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">早餐：鐘記燒餅 + 二信飯糰</div>
+                  <div class="text-xs text-stone-500">民宿老闆幫忙買的澎湖早餐美食</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-sky-500 text-sm mt-0.5">⛴️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">搭藍海之星前往七美</div>
+                  <div class="text-xs text-stone-500">8:00-8:20 取票 → 馬公-望安09:30-10:20 → 望安-七美10:50-11:35（南海之星）</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-emerald-500 text-sm mt-0.5">🏖️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">七美島全日遊</div>
+                  <div class="text-xs text-stone-500">照民宿老闆的推薦行程走，體驗在七美的純樸生活</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-purple-400 text-sm mt-0.5">🏡</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">入住七美夏夜小屋</div>
+                  <div class="text-xs text-stone-500">七美民宿不提供牙刷牙膏浴巾（有沐浴乳洗髮精），需帶防滑鞋</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full">Day 3</span>
+              <div>
+                <div class="font-bold text-stone-800">4/28 (三) — 七美繼續玩</div>
+                <div class="text-xs text-stone-500 mt-0.5">照民宿老闆推薦路線走</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-sky-400 text-sm mt-0.5">🏝️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">七美自由行</div>
+                  <div class="text-xs text-stone-500">照七美民宿老闆說的路線走，深度探索七美島的秘境景點、海灣和在地美食</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full">Day 4</span>
+              <div>
+                <div class="font-bold text-stone-800">4/29 (四) — 回馬公，海上花火節</div>
+                <div class="text-xs text-stone-500 mt-0.5">七美→馬公 → 中央老街 → 海上欣賞花火節</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-sky-500 text-sm mt-0.5">⛴️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">搭民營船回馬公（約15:30抵達）</div>
+                  <div class="text-xs text-stone-500">租車行老闆到碼頭接，取車→回民宿放行李</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-amber-500 text-sm mt-0.5">🛍️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">馬公市區 · 澎湖中央老街（16:40-19:40）</div>
+                  <div class="text-xs text-stone-500">澎湖玄武岩印章、玄武岩貓頭鷹｜伴手禮：水月堂黑糖糕、春仁黑糖糕、正一花生酥</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">🍕</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">晚餐：瑪珈朵披薩（外帶）18:00</div>
+                  <div class="text-xs text-stone-500">前一天line訂餐，地址：880澎湖縣馬公市北辰街10號</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-yellow-400 text-sm mt-0.5">🎇</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">海上欣賞花火節（20:10，南海遊客中心海安碼頭）</div>
+                  <div class="text-xs text-stone-500">【早鳥8折】澎湖花火節限定！海上欣賞，勻褆家同行，請務必準時</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🍺</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">消夜：榮町居酒屋</div>
+                  <div class="text-xs text-stone-500">0989-987-217｜輕鬆宵夜的美好夜晚</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 5 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full">Day 5</span>
+              <div>
+                <div class="font-bold text-stone-800">4/30 (五) — 隘門沙灘 · 摩西分海</div>
+                <div class="text-xs text-stone-500 mt-0.5">透明獨木舟 → 湖西半日遊 → 摩西分海（16:11）</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-cyan-500 text-sm mt-0.5">🛶</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">隘門沙灘玩水 + 透明獨木舟（早上10點）</div>
+                  <div class="text-xs text-stone-500">澎湖夏令限定！透明船底可以看海底，超夢幻體驗</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-green-500 text-sm mt-0.5">🍃</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">午餐：及林春咖啡館 林投店（13:00）</div>
+                  <div class="text-xs text-stone-500">06-992-3639｜4大3小，已訂位 ✅</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-stone-500 text-sm mt-0.5">🏘️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">湖西鄉半日遊（14:00）</div>
+                  <div class="text-xs text-stone-500">南寮古厝湖 → 澎福古棗味 → 清仔大腸包小腸（06-9923339）</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-blue-500 text-sm mt-0.5">🌊</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">摩西分海（16:11）</div>
+                  <div class="text-xs text-stone-500">要提早1小時到！海水退潮後形成一條走道，澎湖最神奇的自然景觀</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-yellow-400 text-sm mt-0.5">🍮</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">著時甜點（17:30，15:30-19:30）</div>
+                  <div class="text-xs text-stone-500">澎湖縣馬公市文山路116號</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-amber-600 text-sm mt-0.5">🍱</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">晚餐：沐一豬排（19:30）</div>
+                  <div class="text-xs text-stone-500">低銷一人100元｜7大4小，已訂位 ✅｜晚上按摩：樂活養生館</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 6 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full">Day 6</span>
+              <div>
+                <div class="font-bold text-stone-800">5/1 (六) — 最後一天，搭機回台中</div>
+                <div class="text-xs text-stone-500 mt-0.5">篤行十村 → AE782 12:20-13:00 回台中</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🍲</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">早餐：北新橋牛雜湯</div>
+                  <div class="text-xs text-stone-500">06-927-0549</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-indigo-400 text-sm mt-0.5">🎨</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">篤行十村 + 共融遊戲公園</div>
+                  <div class="text-xs text-stone-500">小小文創園區，澎湖最後的文化巡禮</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-sky-500 text-sm mt-0.5">✈️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">AE782 澎湖→台中（12:20–13:00）</div>
+                  <div class="text-xs text-stone-500">騎去還車→租車行老闆送機場→飛回台中！</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-pink-400 text-sm mt-0.5">🍲</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">落地後：織福療癒系鍋物（離機場8分鐘）</div>
+                  <div class="text-xs text-stone-500">0909-246-444｜已訂兩點！澎湖行完美收尾 🥰</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Photo Gallery -->
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">🖼️</span> 旅遊相片
+      </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczOWyPeiR_92g04FqjWeg2EUS3XsyNGZSoxZBVDtGaNzUVadlOplFiFKFOcmj_lQpY0Z9VtVO5-iIKboJQeRL_OjvhPHwk2rHV6PW5bUqYsYald_ytBhjwCkS3fL2usU4fy-qTM1IVn3Z8tH9JFNJL0t_g=w1215-h911-s-no-gm?authuser=0"
+          alt="澎湖" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczMb2ZrT6qBTMYYvQSf9ObOL6mReUdyCr_e1dAk24qlUQcWDrg_IzTlXOKuj4L4R_oy5J0bFwXcXJYw2lC4boHba4G2CwvsNQADXxZuXZI3LEEl5OiUIDfMimUwzovN6hWpaFQ2Tvjg0HBpA7gmmJOsfZA=w869-h869-s-no-gm?authuser=0"
+          alt="澎湖" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczM0JxrLTYhJboQv_RRsFaWU54jY5dmVx-qZf65c8ynvXDt8CsaSHPEOLWK4NhfyF3UhKnhwIpdjcuL81Et8V4MP9UtQkUUS08Q5H7ciYLDnPfcDf_gV0gTqQuhl-I-oRjzC7limAYZocBTOM67G3k5TtA=w869-h869-s-no-gm?authuser=0"
+          alt="澎湖" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczMnq1tePgBzGB-wq-d3RCqF-LeW6fPlHDbjtrCycsFQuyhZa9x3ygqao7_OC1LBPrCCg44YK0fNjzGhC2xj9cId56Hs6EJiifbLK6u8DyP5keywYEsAKsfRd8WayrHlNKjH_ff-dSEqkSiSPWJeIIGtYw=w1158-h869-s-no-gm?authuser=0"
+          alt="澎湖" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczO1OgYby1SuymrY1abmMwFQse5dRdydgd6GEwHeau8QSxEXX1OJm_ZDP9aiYYe5pnGrI6qSVbbPoLmeAyV7aJFUM8ONn2N3BOyMuk1XGIB5z8ku_4ZXFS9652YLNvOuw_u9pSPQui-3y78oTiW0ltOIdQ=w651-h869-s-no-gm?authuser=0"
+          alt="澎湖" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 text-stone-400 text-sm">
+    <p>🐕 林北家族旅遊 · 2021 春假</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full size" />
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl font-bold leading-none hover:text-stone-300 transition">&times;</button>
+  </div>
+
+  <script>
+    function toggleDay(btn) {
+      const body = btn.nextElementSibling;
+      const chev = btn.querySelector('.chev');
+      body.classList.toggle('open');
+      chev.classList.toggle('rotated');
+    }
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>

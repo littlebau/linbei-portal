@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>紐西蘭 2025 | 林北家族旅遊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans TC', 'PingFang TC', sans-serif; }
+        .day-body { display: none; }
+        .day-body.open { display: block; }
+        .chev { transition: transform 0.25s ease; }
+        .chev.rotated { transform: rotate(180deg); }
+        #lightbox { display: none; }
+        #lightbox.open { display: flex; }
+    </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-sm border-b border-stone-100">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-stone-900 transition-colors text-sm font-medium">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+                回到主頁
+            </a>
+            <span class="text-sm text-stone-400">🐕 林北家族旅遊</span>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="relative overflow-hidden" style="height:65vh;">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczPxhJCX6TrAJx8Jdz1ZSyNNFP1oqxBNQWw7lkLwXLvbkxKn0c9Mvfbzz5M7B3DEZjMsEo0RNe1BzS9_kvbTYsBvBLj5RGm_q-kh9ZXq-dBoJUbdw=w1367-h768-s-no-gm?authuser=0"
+             class="absolute inset-0 w-full h-full object-cover" alt="紐西蘭"
+             onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1400&q=80'">
+        <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.2) 50%,transparent 100%)"></div>
+        <div class="absolute bottom-0 inset-x-0 text-white text-center pb-10 pt-20 px-4">
+            <p class="text-xs tracking-[6px] uppercase opacity-70 mb-2">2025 · 春假</p>
+            <h1 class="text-4xl md:text-5xl font-black mb-2">紐西蘭</h1>
+            <p class="text-sm opacity-70">📍 皇后鎮 → 庫克山 → 蒂卡波 → 奧馬魯 → 奧克蘭</p>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="max-w-3xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">📅</div><div class="text-xs text-stone-400 mb-0.5">日期</div>
+                <div class="text-sm font-bold text-stone-700">4/16 – 4/28</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🗓️</div><div class="text-xs text-stone-400 mb-0.5">天數</div>
+                <div class="text-sm font-bold text-stone-700">13 天 12 夜</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">👨‍👩‍👧‍👦</div><div class="text-xs text-stone-400 mb-0.5">成員</div>
+                <div class="text-sm font-bold text-stone-700">四人行</div>
+            </div>
+            <div class="bg-white rounded-2xl p-4 text-center shadow-sm border border-stone-100">
+                <div class="text-2xl mb-1">🚗</div><div class="text-xs text-stone-400 mb-0.5">交通</div>
+                <div class="text-sm font-bold text-stone-700">七人座自駕</div>
+            </div>
+        </div>
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl px-5 py-3 text-center text-sm text-amber-700 mb-8">
+            💰 費用：<strong>81,888 元/人</strong>（不含餐費）
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="https://photos.app.goo.gl/X1Pf7zDu9YFnMpVW9" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📷 查看相簿</a>
+            <a href="https://youtu.be/DSEI095uOJM" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full font-semibold text-sm transition-colors shadow">▶ 觀看 Vlog</a>
+            <a href="https://docs.google.com/document/d/1Bs5kQhNJOBSvr5yFVrdMl6cMkDlmCAR8/edit" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full font-semibold text-sm transition-colors shadow">📋 完整計畫書</a>
+        </div>
+    </div>
+
+    <!-- Itinerary -->
+    <div class="max-w-3xl mx-auto px-4 pb-10">
+        <h2 class="text-xl font-bold text-stone-800 mb-5">🥝 逐日行程</h2>
+        <div class="space-y-3">
+
+            <!-- Day 1 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-sky-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">1</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/16 (三)</p>
+                        <h3 class="font-bold text-stone-800">台北 → 奧克蘭</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">✈️ 華航 CI53 深夜出發</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>✈️</span><span>華航 CI53 — 桃園 23:55 出發，飛往奧克蘭</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-sky-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">2</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/17 (四)</p>
+                        <h3 class="font-bold text-stone-800">奧克蘭抵達 · 休息</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏨 飯店 Check-in · 調時差</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛬</span><span>抵達奧克蘭，飯店 Check-in</span></li>
+                        <li class="flex gap-2"><span>😴</span><span>調整時差，原地休息</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-emerald-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">3</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/18 (五)</p>
+                        <h3 class="font-bold text-stone-800">奧克蘭 → 飛皇后鎮 · 取租車</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">✈️ 國內機票 · Mitsubishi Outlander</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🐑</span><span><strong>Ambury Regional Park</strong> — 奧克蘭農場公園，餵羊餵豬餵鴨</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>國內機票 飛往皇后鎮</span></li>
+                        <li class="flex gap-2"><span>🚗</span><span>取租車 Mitsubishi Outlander（7人座電動休旅）</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>皇后鎮市區飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 4 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-emerald-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">4</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/19 (六)</p>
+                        <h3 class="font-bold text-stone-800">皇后鎮探索</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🚡 天空纜車 · Fergburger · 溜溜車</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚡</span><span><strong>天空纜車</strong> — 俯瞰皇后鎮全景，超壯觀</span></li>
+                        <li class="flex gap-2"><span>🛷</span><span><strong>溜溜車（Luge）</strong> — 山頂滑行下山，老少咸宜</span></li>
+                        <li class="flex gap-2"><span>🍽️</span><span><strong>晚餐：</strong>山頂 KIWI 式自助餐（單點制）</span></li>
+                        <li class="flex gap-2"><span>🍔</span><span><strong>必吃：</strong>Fergburger — 皇后鎮超人氣漢堡排隊名店</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>皇后鎮市區飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 5 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-green-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">5</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/20 (日)</p>
+                        <h3 class="font-bold text-stone-800">皇后鎮近郊一日遊</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏇 格林諾奇 · 騎馬 · Deer Park</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🏘️</span><span><strong>格林諾奇（Glenorchy）</strong> — 魔戒拍攝小鎮，秋色金黃倒映湖面，絕美夢幻</span></li>
+                        <li class="flex gap-2"><span>🐴</span><span><strong>High Country Horse</strong> — 草原騎馬體驗，真正的牧場場景</span></li>
+                        <li class="flex gap-2"><span>🦌</span><span><strong>Deer Park Heights</strong> — 山丘上餵鹿、餵美利奴羊，眺望皇后鎮絕景</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>皇后鎮市區飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 6 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-amber-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">6</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/21 (一)</p>
+                        <h3 class="font-bold text-stone-800">皇后鎮 → 特威澤爾</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🍂 箭鎮金秋 · 瓦納卡孤獨樹 · Lindis Pass</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🏘️</span><span><strong>箭鎮（Arrowtown）</strong> — 淘金小鎮，白楊木金色秋葉大道，IG必拍打卡點</span></li>
+                        <li class="flex gap-2"><span>🍑</span><span><strong>克倫威爾杏桃園</strong> — 中奧塔哥水果產區，自採新鮮水果</span></li>
+                        <li class="flex gap-2"><span>🌳</span><span><strong>瓦納卡孤獨樹</strong> — 湖中一棵樹，世界最知名孤獨樹打卡點</span></li>
+                        <li class="flex gap-2"><span>🏔️</span><span><strong>Lindis Pass</strong> — 南阿爾卑斯山啡色草原山脊，壯闊無比</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>特威澤爾 Airbnb</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 7 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-blue-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">7</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/22 (二)</p>
+                        <h3 class="font-bold text-stone-800">庫克山 · 直升機雪地</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🚁 塔斯曼直升機 · Hooker Valley 步道</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🚁</span><span><strong>塔斯曼冰川直升機</strong> — 飛越庫克山，降落雪地，踩在數千年冰川上！</span></li>
+                        <li class="flex gap-2"><span>🥾</span><span><strong>Hooker Valley Track</strong> — 4 小時步道，過三座吊橋，終點是庫克山倒影湖</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>特威澤爾 Airbnb</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 8 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-indigo-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">8</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/23 (三)</p>
+                        <h3 class="font-bold text-stone-800">普卡基湖 · 蒂卡波 · 觀星</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">💙 牛奶藍湖 · 約翰山天文台</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>💙</span><span><strong>普卡基湖</strong> — 因冰川融水呈現夢幻藍綠色，庫克山的前景絕美</span></li>
+                        <li class="flex gap-2"><span>🌸</span><span><strong>蒂卡波湖</strong> — 薰衣草與魯冰花的故鄉，古德舍牧羊人教堂</span></li>
+                        <li class="flex gap-2"><span>🔭</span><span><strong>約翰山天文台夜間觀星</strong> — UNESCO 暗夜保護區，南半球最壯觀星空</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>特威澤爾 Airbnb</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 9 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-violet-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">9</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/24 (四)</p>
+                        <h3 class="font-bold text-stone-800">特威澤爾 → 奧馬魯</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🐧 Elephant Rocks · 藍企鵝回巢</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🍂</span><span><strong>Sailor's Cutting</strong> — 金秋祕境，金黃白楊樹林公路，少有人知的夢幻秘境</span></li>
+                        <li class="flex gap-2"><span>🗿</span><span><strong>Elephant Rocks</strong> — 巨型圓石散布草原，《納尼亞傳奇》取景地</span></li>
+                        <li class="flex gap-2"><span>🐧</span><span><strong>奧馬魯藍企鵝</strong> — 黃昏後觀看世界最小企鵝回巢，超級可愛！</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>奧馬魯飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 10 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-pink-600 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">10</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/25 (五)</p>
+                        <h3 class="font-bold text-stone-800">奧馬魯 → 基督城 → 奧克蘭</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏛️ 維多利亞遺跡區 · 飛奧克蘭 · 還車</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🏛️</span><span><strong>奧馬魯維多利亞遺跡區</strong> — 紐西蘭保存最完整的白色石灰岩建築群，懷舊復古</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>基督城機場 → 奧克蘭國際機場</span></li>
+                        <li class="flex gap-2"><span>🚗</span><span>奧克蘭還車</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>奧克蘭機場飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 11 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-orange-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">11</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/26 (六)</p>
+                        <h3 class="font-bold text-stone-800">哈比村 + 螢火蟲洞一日遊</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🧙 魔戒聖地 · 懷托摩螢火蟲洞</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🧙</span><span><strong>哈比村（Hobbiton）</strong> — 磁北中土世界片場，《魔戒》＆《哈比人》拍攝地，全球影迷朝聖點</span></li>
+                        <li class="flex gap-2"><span>✨</span><span><strong>懷托摩螢火蟲洞</strong> — 搭小舟穿越地底黑暗洞窟，頭頂數千隻螢火蟲宛如星空</span></li>
+                        <li class="flex gap-2"><span>🏨</span><span><strong>住宿：</strong>奧克蘭市區飯店</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 12 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-red-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">12</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/27 (日)</p>
+                        <h3 class="font-bold text-stone-800">奧克蘭市區 · 回台</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🗼 天空塔 · 伊甸山 · 華航 CI54</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛥️</span><span><strong>王子碼頭（Princes Wharf）</strong> — 奧克蘭港灣早晨散步</span></li>
+                        <li class="flex gap-2"><span>🌋</span><span><strong>伊甸山（Mt Eden）</strong> — 火山口俯瞰奧克蘭城市全景</span></li>
+                        <li class="flex gap-2"><span>🗼</span><span><strong>天空塔（Sky Tower）</strong> — 奧克蘭地標，328公尺高觀景台</span></li>
+                        <li class="flex gap-2"><span>✈️</span><span>華航 CI54 — 奧克蘭 19:30 → 桃園 04:45+1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Day 13 -->
+            <div class="bg-white rounded-2xl border border-stone-100 shadow-sm overflow-hidden">
+                <button class="w-full flex items-center gap-4 p-5 text-left hover:bg-stone-50 transition-colors" onclick="toggleDay(this)">
+                    <div class="flex-shrink-0 w-14 h-14 bg-stone-500 rounded-xl flex flex-col items-center justify-center text-white">
+                        <span class="text-[9px] font-semibold opacity-75 uppercase tracking-wider">DAY</span>
+                        <span class="text-2xl font-black leading-none">13</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs text-stone-400 font-medium mb-0.5">4/28 (一)</p>
+                        <h3 class="font-bold text-stone-800">回到台灣</h3>
+                        <p class="text-xs text-stone-500 mt-0.5">🏠 桃園機場 · 回家！</p>
+                    </div>
+                    <svg class="chev flex-shrink-0 w-5 h-5 text-stone-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="day-body border-t border-stone-100 px-5 pt-4 pb-5">
+                    <ul class="space-y-2 text-sm text-stone-600">
+                        <li class="flex gap-2"><span>🛬</span><span>桃園機場抵達，13天精彩旅程圓滿結束！</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center py-8 text-sm text-stone-400 border-t border-stone-100">🐕 林北家族旅遊紀錄</footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 z-[100] bg-black/90 items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-6 text-white text-4xl leading-none">×</button>
+        <img id="lb-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg" onclick="event.stopPropagation()" alt="">
+    </div>
+
+    <script>
+        function toggleDay(btn) {
+            const body = btn.nextElementSibling;
+            const chev = btn.querySelector('.chev');
+            const open = body.classList.toggle('open');
+            chev.classList.toggle('rotated', open);
+        }
+        function openLightbox(src) {
+            document.getElementById('lb-img').src = src;
+            document.getElementById('lightbox').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>

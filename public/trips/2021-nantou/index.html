@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2021 南投合歡山福壽山出遊 — 林北家族旅遊</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+    .hero-img { object-fit: cover; width: 100%; height: 100%; }
+    .day-body { display: none; }
+    .day-body.open { display: block; }
+    .chev { transition: transform 0.3s; }
+    .chev.rotated { transform: rotate(180deg); }
+    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 9999; align-items: center; justify-content: center; }
+    #lightbox.open { display: flex; }
+    #lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.7); }
+    .gallery-img { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .gallery-img:hover { transform: scale(1.03); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+  </style>
+</head>
+<body class="bg-stone-50 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-stone-200 px-4 py-3 flex items-center gap-3">
+    <a href="/" class="flex items-center gap-2 text-stone-600 hover:text-emerald-700 transition font-medium text-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      回到主頁
+    </a>
+    <span class="text-stone-300">|</span>
+    <span class="text-stone-700 font-bold text-sm">🐕 林北家族旅遊</span>
+  </nav>
+
+  <!-- Hero -->
+  <div class="relative w-full h-72 sm:h-96 mt-12 overflow-hidden">
+    <img src="https://lh3.googleusercontent.com/pw/AP1GczNlOHGQFVYQZecoZuEYBNFc3qaehwvIthFqBkG7ALXcyChbNvoOkK6bZ-1ERIiOUZEOnjfofCBw9WMK_TEPfxpoFPBQvRhRSLo7czSrL8F3kweaZCEUjAhhNlqAc61r60emm80R4JfNxa8HVrJ_MXZttg=w651-h869-s-no-gm?authuser=0"
+      alt="2021 南投合歡山福壽山" class="hero-img" loading="eager" />
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 flex flex-col justify-end p-6">
+      <div class="flex flex-wrap gap-2 mb-2">
+        <span class="bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full">2021 秋假</span>
+        <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">台灣 南投</span>
+      </div>
+      <h1 class="text-white text-3xl sm:text-4xl font-black drop-shadow-lg">南投合歡山福壽山出遊</h1>
+      <p class="text-white/80 text-sm mt-1 drop-shadow">2021.11/7–11/14 · 8天7夜 · 日月潭 · 清境 · 合歡山 · 武陵 · 宜蘭</p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4 py-8">
+
+    <!-- Summary Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">📅</div>
+        <div class="text-xs text-stone-500 mb-1">日期</div>
+        <div class="text-sm font-bold text-stone-800">11/7–11/14</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">🌙</div>
+        <div class="text-xs text-stone-500 mb-1">天數</div>
+        <div class="text-sm font-bold text-stone-800">8天7夜</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">👨‍👩‍👧‍👦</div>
+        <div class="text-xs text-stone-500 mb-1">成員</div>
+        <div class="text-sm font-bold text-stone-800">林北家族</div>
+      </div>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-100 text-center">
+        <div class="text-2xl mb-1">⛰️</div>
+        <div class="text-xs text-stone-500 mb-1">最高點</div>
+        <div class="text-sm font-bold text-stone-800">3237m 石門山</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-3 mb-8">
+      <a href="https://photos.app.goo.gl/ZjqDsUssKqur5ks7A" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📷</span> 相簿
+      </a>
+      <a href="https://docs.google.com/document/d/1SiQ0EF7aLXrQvFnk_FCZT_yU-g_-Z39g" target="_blank" rel="noopener noreferrer"
+        class="flex-1 min-w-[140px] flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-2xl transition shadow">
+        <span class="text-lg">📋</span> 計畫書
+      </a>
+    </div>
+
+    <!-- Day by Day Itinerary -->
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">🗓️</span> 每日行程
+      </h2>
+      <div class="space-y-3">
+
+        <!-- Day 1 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 1</span>
+              <div>
+                <div class="font-bold text-stone-800">11/7 (日) — 腳都鐵了：日月潭環湖</div>
+                <div class="text-xs text-stone-500 mt-0.5">虎頭山 → 日月潭自行車環湖 30KM → CANLIVE民宿</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-sky-500 text-sm mt-0.5">🪂</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">虎頭山觀看飛行傘活動</div>
+                  <div class="text-xs text-stone-500">大開眼界！還遇到可愛的小主人妹妹，離開時依依不捨 ☺️ 也很適合看夜景</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-emerald-500 text-sm mt-0.5">🚴</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">日月潭單車環湖 30KM！</div>
+                  <div class="text-xs text-stone-500">從水社綜合商場B1租公路車→文武廟→各潭邊步道→伊達邵商圈午餐→向山遊客中心。風景絕美但很累 😅 CNN評選全球十大最美自行車道！</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🍲</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">晚餐：敝姓郭火鍋</div>
+                  <div class="text-xs text-stone-500">蛤仔蒜頭雞鍋補冬，暖胃又暖心 🍲</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-blue-400 text-sm mt-0.5">🏠</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">入住 CANLIVE 日月潭私宅</div>
+                  <div class="text-xs text-stone-500">四天三夜，住宿費11,940元</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 2</span>
+              <div>
+                <div class="font-bold text-stone-800">11/8 (一) — 天氣大好的意外驚喜</div>
+                <div class="text-xs text-stone-500 mt-0.5">慈恩塔 → 日月潭纜車 → 鹿篙咖啡 → 和菓森林紅茶廠</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-yellow-500 text-sm mt-0.5">🗼</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">慈恩塔（154階樓梯）</div>
+                  <div class="text-xs text-stone-500">先走700m步道再上154階，從日月潭最高點俯瞰全景。肥晴說「下午再也不要走步道了！」😂</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-sky-500 text-sm mt-0.5">🚡</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">日月潭纜車</div>
+                  <div class="text-xs text-stone-500">俯瞰日月潭全景，空中視角超美麗</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">🍳</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">午餐：遊牧 Nomad day café</div>
+                  <div class="text-xs text-stone-500">好好吃，強力推薦！咖啡廳餐點超出水準</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-green-600 text-sm mt-0.5">☕</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">鹿篙咖啡莊園</div>
+                  <div class="text-xs text-stone-500">景色遼闊，有真正的咖啡樹可以看，大開眼界！（人多所以沒喝咖啡）</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🍵</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">和菓森林紅茶廠</div>
+                  <div class="text-xs text-stone-500">推薦「味覺實驗室」！三種茶+洛神牛奶黑糖用滴管試管自己配，非常特別的體驗 🥰</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-amber-600 text-sm mt-0.5">🍚</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">晚餐：方正谷</div>
+                  <div class="text-xs text-stone-500">非常下飯，好吃！但味道很重，需要多幾碗白飯 😋</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 3</span>
+              <div>
+                <div class="font-bold text-stone-800">11/9 (二) — 吃太飽的幸福一天</div>
+                <div class="text-xs text-stone-500 mt-0.5">喝喝茶 → 廣興紙寮 → 溫泉 → 移至清境</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-stone-400 text-sm mt-0.5">🥐</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">民宿早餐</div>
+                  <div class="text-xs text-stone-500">埔里日月潭在地食材，酌以紅茶入湯，溫熱早餐好幸福 🍲</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-green-500 text-sm mt-0.5">🍵</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">喝喝茶 Hohocha</div>
+                  <div class="text-xs text-stone-500">茶葉蛋好吃，可惜沒有預期的導覽</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">🍛</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">午餐：靠山咖哩</div>
+                  <div class="text-xs text-stone-500">偏鄉青少年培力商店，平價好吃又帶點感動 ❤️</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-yellow-500 text-sm mt-0.5">☕</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">JULU Café（鹿咖啡館）</div>
+                  <div class="text-xs text-stone-500">喜歡老闆的樸實，還有相近的親子理念，好喝！！推薦</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-blue-500 text-sm mt-0.5">📜</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">廣興紙寮（今日重頭戲）</div>
+                  <div class="text-xs text-stone-500">導覽手工紙+DIY抄紙與拓印 150元。從紙漿到成紙的全過程，非常有意義！肥晴很喜歡 🤩</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-pink-400 text-sm mt-0.5">🧁</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">小舖里甜點工作室 L.Puli Patisserie</div>
+                  <div class="text-xs text-stone-500">埔里隱藏版甜點，讓人驚艷的美味</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-indigo-400 text-sm mt-0.5">♨️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">晚餐→ 馥麗溫泉湯</div>
+                  <div class="text-xs text-stone-500">來享平價鐵板燒晚餐後，回民宿前先泡個舒服的溫泉</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 4</span>
+              <div>
+                <div class="font-bold text-stone-800">11/10 (三) — 穿羊咩咩裝還是很冷的一天</div>
+                <div class="text-xs text-stone-500 mt-0.5">日月潭 → 清境農場 → 合歡山觀星（3度！）</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-amber-500 text-sm mt-0.5">🥖</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">早餐：白鹿窯木燒麵包</div>
+                  <div class="text-xs text-stone-500">有選擇障礙可以選拼盤，老闆還會回烤過 🥐，肥晴依依不捨浪浪小黑哭哭出發</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-pink-400 text-sm mt-0.5">🍰</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">蒙塔尼法式甜點</div>
+                  <div class="text-xs text-stone-500">號稱南投最強甜點店！離清境農場5分鐘，「椒卡龍」出乎意料好吃特別 🤩</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-white bg-emerald-500 text-sm rounded-full w-5 h-5 flex items-center justify-center">🐑</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">清境農場（今日重頭戲）</div>
+                  <div class="text-xs text-stone-500">我們的服裝與羊咩融合 😆 餵羊咩刺激又療癒 ❤️｜中餐在清境農場南端商圈</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-blue-500 text-sm mt-0.5">🏨</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">清境佛羅倫斯（一晚）</div>
+                  <div class="text-xs text-stone-500">使用多年前買的住宿卷 + 加床1,200元，住宿與餐飲品質都有一定水準</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-indigo-500 text-sm mt-0.5">⭐</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">合歡山觀星活動</div>
+                  <div class="text-xs text-stone-500">只有3度快冷死，但專業星相解說、用望遠鏡看月亮與土星，肥晴超愛！值得 🥰🥰</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 5 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 5</span>
+              <div>
+                <div class="font-bold text-stone-800">11/11 (四) — 完成第一座百岳！</div>
+                <div class="text-xs text-stone-500 mt-0.5">石門山 3237m → 福壽山農場 → Sqoyaw天空民宿</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-stone-500 text-sm mt-0.5">🔭</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">合歡山國際暗空公園 鳶峰</div>
+                  <div class="text-xs text-stone-500">前往福壽山途中，昨夜觀星的地方，感謝老天給了豔陽</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-sky-500 text-sm mt-0.5">⛰️</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">石門山步道（海拔3237m，台灣百岳！）</div>
+                  <div class="text-xs text-stone-500">來回僅須一小時，步道784m，合歡群峰中最容易攀登。雖有寒風，走到山頂真的很感動！我們家第一座百岳 🥰</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-red-400 text-sm mt-0.5">🍎</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">福壽山農場 🍁</div>
+                  <div class="text-xs text-stone-500">到達那一刻很感動！陽光下楓葉透著光，非常美麗 🥰 第一次看到蘋果樹，還親手採下蘋果 😍</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-purple-400 text-sm mt-0.5">🏡</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">入住 Sqoyaw天空 民宿（三天兩夜）</div>
+                  <div class="text-xs text-stone-500">住宿費含晚餐12,000元，老闆娘煮的晚餐五菜一湯+蜜蘋果+水梨，超飽 😋</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 6 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 6</span>
+              <div>
+                <div class="font-bold text-stone-800">11/12 (五) — 武陵農場楓красив銀杏</div>
+                <div class="text-xs text-stone-500 mt-0.5">整天在武陵農場，雨停就散步，下雨就開車，看獼猴</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-orange-500 text-sm mt-0.5">🍁</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">武陵農場整日遊</div>
+                  <div class="text-xs text-stone-500">秋天除了楓葉，還有銀杏和芳香萬壽菊 🌸 雨停就散步一萬步，下雨就開車遊園，還看到獼猴！</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-pink-400 text-sm mt-0.5">🐱</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">民宿貓貓超好逗弄</div>
+                  <div class="text-xs text-stone-500">民宿一家人讓人好羨慕：姊姊愛做麵包、爸媽弟弟一起種水果（柿子蘋果水梨），媽媽煮的家常晚餐好飽 ❤️</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 7 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 7</span>
+              <div>
+                <div class="font-bold text-stone-800">11/13 (六) — 前往宜蘭三星</div>
+                <div class="text-xs text-stone-500 mt-0.5">久淘抱石館 → 樹說咖啡 → 貓天空寵物民宿</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-stone-600 text-sm mt-0.5">🧗</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">久淘抱石館</div>
+                  <div class="text-xs text-stone-500">在宜蘭體驗室內攀岩抱石</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-green-500 text-sm mt-0.5">🌳</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">樹說咖啡</div>
+                  <div class="text-xs text-stone-500">在大自然環境中的咖啡廳，氛圍超好</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-orange-400 text-sm mt-0.5">🧅</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">胖媽炸蛋蔥油餅</div>
+                  <div class="text-xs text-stone-500">三星蔥料理必吃！</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-pink-400 text-sm mt-0.5">🐾</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">入住 貓天空寵物民宿</div>
+                  <div class="text-xs text-stone-500">南瓜房型加床，住宿費3,400元。和兔兔一起入住的包棟民宿 ❤️</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 8 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden">
+          <button onclick="toggleDay(this)" class="w-full flex items-center justify-between p-5 text-left hover:bg-stone-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full">Day 8</span>
+              <div>
+                <div class="font-bold text-stone-800">11/14 (日) — 三星 · 回家</div>
+                <div class="text-xs text-stone-500 mt-0.5">星寶蔥體驗農場 → 踏上歸途 👪❤️</div>
+              </div>
+            </div>
+            <svg class="chev w-5 h-5 text-stone-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="day-body px-5 pb-5">
+            <div class="border-t border-stone-100 pt-4 space-y-3">
+              <div class="flex gap-3">
+                <span class="text-green-500 text-sm mt-0.5">🧅</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">星寶蔥體驗農場</div>
+                  <div class="text-xs text-stone-500">鄉間小路｜梅花鹿、迷你驢、DIY體驗蔥油餅、三星蔥派。訂單：RZ211104HG5726</div>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="text-stone-400 text-sm mt-0.5">🏠</span>
+                <div>
+                  <div class="font-semibold text-sm text-stone-800">回家 👪❤️🥰</div>
+                  <div class="text-xs text-stone-500">8天7夜的南投行圓滿結束，帶著滿滿的回憶和疲憊的雙腳 😆</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Photo Gallery -->
+    <div class="mb-8">
+      <h2 class="text-lg font-bold text-stone-800 mb-4 flex items-center gap-2">
+        <span class="text-2xl">🖼️</span> 旅遊相片
+      </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-2 gap-3">
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczNlOHGQFVYQZecoZuEYBNFc3qaehwvIthFqBkG7ALXcyChbNvoOkK6bZ-1ERIiOUZEOnjfofCBw9WMK_TEPfxpoFPBQvRhRSLo7czSrL8F3kweaZCEUjAhhNlqAc61r60emm80R4JfNxa8HVrJ_MXZttg=w651-h869-s-no-gm?authuser=0"
+          alt="南投" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczNunlxc1x-_NCn1ohEE63PoYP0Vgst5wNO28mbXMt5l_HeaRL0fJHX3AUZctX6_rP-HwIgsPKbSR4o0spljC0hOprUBvgcVyqCM858rsLoGhrKxgheXeSjHKc8Dp7la6aShybei_04qnu_vq65jcsO1BA=w651-h869-s-no-gm?authuser=0"
+          alt="合歡山" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczPp0PRsLjqAWRd-QpVDxC6aQ5ILnnFDM08G1p9PFrYzN17uIq_pwattsMErVqE9svwiL2Rp_2THygyzXLXQQVNGenYnFTXzBgiX4HxrmVIRAbrC6-gRksIgqTMgivTarfzB6D6idVUBQZe11iilz0CVPQ=w960-h720-s-no-gm?authuser=0"
+          alt="福壽山" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+        <img src="https://lh3.googleusercontent.com/pw/AP1GczMLc_M9YJXg_hATSn3oaYbrYKbYD_O1cJidigP7sb7a5szKFCRCl6-PC2vBMKEagYRyiutDTEvghb0T8-Pmy8eBJR1m8NGwwJvdDh75PN93MD4L-8cKvJF99VLQv1ad5AnaFFM0_Qz64ra8tW2AJJbfZA=w651-h869-s-no-gm?authuser=0"
+          alt="武陵" class="gallery-img w-full rounded-2xl aspect-square object-cover" onclick="openLightbox(this.src)" />
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 text-stone-400 text-sm">
+    <p>🐕 林北家族旅遊 · 2021 秋假</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <img id="lightbox-img" src="" alt="Full size" />
+    <button onclick="closeLightbox()" class="absolute top-4 right-4 text-white text-3xl font-bold leading-none hover:text-stone-300 transition">&times;</button>
+  </div>
+
+  <script>
+    function toggleDay(btn) {
+      const body = btn.nextElementSibling;
+      const chev = btn.querySelector('.chev');
+      body.classList.toggle('open');
+      chev.classList.toggle('rotated');
+    }
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
