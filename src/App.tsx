@@ -84,6 +84,7 @@ interface Trip {
   album: string;
   plan: string;
   vlog: string;
+  tripPage?: string;
 }
 
 interface GuestMessage {
@@ -895,6 +896,20 @@ const TripCard = React.forwardRef(({ trip, tripId, visualIndex, index, user, acc
                           </div>
                           <Plane size={32} className={`md:w-10 md:h-10 transform group-hover/btn:scale-110 transition-transform ${trip.vlog ? "text-stone-400" : "text-stone-200"}`} />
                       </a>
+
+                      {trip.tripPage && (
+                        <a
+                          href={trip.tripPage}
+                          className="relative flex items-center justify-between px-3 md:px-4 py-2 md:py-3 border-2 border-dashed border-emerald-300 rounded-lg bg-white text-stone-600 hover:bg-emerald-50 transition-all group/btn z-50 cursor-pointer"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <div className="flex items-center gap-3 md:gap-4">
+                            <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center text-4xl md:text-5xl">🗺️</div>
+                            <span className="text-lg md:text-xl font-black tracking-widest">行程網頁</span>
+                          </div>
+                          <MapPin size={32} className="md:w-10 md:h-10 text-emerald-400 group-hover/btn:scale-110 transition-transform" />
+                        </a>
+                      )}
                   </div>
               </div>
           </div>
@@ -1363,7 +1378,8 @@ const allTrips: Trip[] = [
     images: [],
     album: "", 
     plan: "https://docs.google.com/document/d/1KztrprkyI7DxRptC1q7lpHRYwVsS7iBW/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "" 
+    vlog: "",
+    tripPage: "/trips/2026-bali/"
   },
   { 
     year: 2026, season: "寒假", title: "沖繩家族旅行", location: "日本 沖繩", status: "Planning", type: "future", 

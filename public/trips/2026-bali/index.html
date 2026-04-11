@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>柴犬的峇里島九日療癒之旅 🐕</title>
+    
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 引入 React 核心 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" crossorigin></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js" crossorigin></script>
+
+    <!-- 引入圓潤可愛的字體 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
+            background-color: #FFF8E7;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 3s infinite;
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        #root:empty::before {
+            content: "🐕 柴犬正在更新最新行程表... 請稍候";
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            color: #9c4221;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        // --- 圖示組件 ---
+        const IconBase = ({ d, className = "w-6 h-6" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                {d}
+            </svg>
+        );
+
+        const RealPlane = (props) => <IconBase {...props} d={<path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/>} />;
+        const Hotel = (props) => <IconBase {...props} d={<path d="M3 21h18M5 21V7l8-4 8 4v14M8 21V11a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v10"/>} />;
+        const Coffee = (props) => <IconBase {...props} d={<path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>} />;
+        const MapPin = (props) => <IconBase {...props} d={<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>} />;
+        const Sun = (props) => <IconBase {...props} d={<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>} />;
+        const Utensils = (props) => <IconBase {...props} d={<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>} />;
+        const Waves = (props) => <IconBase {...props} d={<path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>} />;
+        const Camera = (props) => <IconBase {...props} d={<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>} />;
+        const ChevronDown = (props) => <IconBase {...props} d={<polyline points="6 9 12 15 18 9"/>} />;
+        const ChevronUp = (props) => <IconBase {...props} d={<polyline points="18 15 12 9 6 15"/>} />;
+        const DollarSign = (props) => <IconBase {...props} d={<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>} />;
+
+        const ShibaIcon = ({ className = "w-12 h-12" }) => (
+            <svg viewBox="0 0 100 100" className={className} style={{ overflow: 'visible' }}>
+                <g transform="translate(10, 10)">
+                    <path d="M15 25 L10 5 L35 15 Z" fill="#D97706" stroke="#92400E" strokeWidth="3" />
+                    <path d="M65 15 L90 5 L85 25 Z" fill="#D97706" stroke="#92400E" strokeWidth="3" />
+                    <circle cx="50" cy="50" r="40" fill="#F59E0B" stroke="#92400E" strokeWidth="3" />
+                    <path d="M25 60 Q50 85 75 60" fill="#FEF3C7" />
+                    <circle cx="35" cy="45" r="5" fill="#1F2937" />
+                    <circle cx="65" cy="45" r="5" fill="#1F2937" />
+                    <circle cx="50" cy="60" r="4" fill="#1F2937" />
+                    <path d="M45 68 Q50 72 55 68" fill="none" stroke="#1F2937" strokeWidth="2" strokeLinecap="round" />
+                </g>
+            </svg>
+        );
+
+        const PawPrint = ({ className = "w-6 h-6", color = "text-orange-200" }) => (
+            <svg viewBox="0 0 100 100" className={`${className} ${color} fill-current transform rotate-12 opacity-50`}>
+                <circle cx="20" cy="40" r="12" /><circle cx="50" cy="25" r="12" /><circle cx="80" cy="40" r="12" /><circle cx="50" cy="70" r="22" />
+            </svg>
+        );
+
+        const HandwritingCard = ({ children, className = "", title, icon: Icon, color = "bg-white" }) => (
+            <div className={`relative ${color} p-6 rounded-[2rem] border-4 border-orange-900/10 shadow-[4px_4px_0px_0px_rgba(124,45,18,0.1)] transition-transform ${className}`}>
+                {title && (
+                    <div className="flex items-center gap-3 mb-4 border-b-2 border-dashed border-orange-200 pb-2">
+                        {Icon && <Icon className="w-6 h-6 text-orange-600" />}
+                        <h3 className="text-xl font-bold text-orange-900 tracking-wider">{title}</h3>
+                    </div>
+                )}
+                {children}
+            </div>
+        );
+
+        // --- 行程數據 ---
+        const schedule = [
+            {
+                day: 1, date: "4/25 (六)", title: "抵達水明漾，高空夕陽晚餐",
+                highlights: ["華航 CI771", "Table Joe 早餐", "MoonLite 夕陽晚餐"],
+                stay: "水明漾萬怡飯店 (Courtyard)",
+                details: [
+                    { time: "05:10", icon: Utensils, text: "機場早餐：已選 Table Joe 喬桌子廚房" },
+                    { time: "09:10", icon: RealPlane, text: "搭乘 CI771 飛往峇里島" },
+                    { time: "14:35", icon: MapPin, text: "抵達機場，Klook 接機前往水明漾" },
+                    { time: "17:30", icon: Utensils, text: "晚餐：MoonLite Kitchen (走路5分鐘，看夕陽)" }
+                ],
+                note: "第一天好好休息，熟悉飯店環境，準備開始度假模式！"
+            },
+            {
+                day: 2, date: "4/26 (日)", title: "文青早午餐＋最美海邊俱樂部",
+                highlights: ["Bo and Bun 越式", "Potato Head", "Lluvia Spa"],
+                stay: "水明漾萬怡飯店 (Courtyard)",
+                details: [
+                    { time: "Morning", icon: Coffee, text: "飯店耍廢 / Titik Temu 文青咖啡店" },
+                    { time: "13:00", icon: Utensils, text: "午餐：Bo and Bun 越式料理 (已預約)" },
+                    { time: "Afternoon", icon: Camera, text: "Seminyak Village 逛街 / Lluvia Spa 按摩" },
+                    { time: "Sunset", icon: Waves, text: "Potato Head Beach Club (夕陽＋晚餐)" }
+                ],
+                note: "Potato Head 記得要佔草皮區的位置，邊喝飲料邊看日落超 Chill。"
+            },
+            {
+                day: 3, date: "4/27 (一)", title: "斷崖絕景：透明泳池與火舞",
+                highlights: ["One Eighty 懸崖", "神鷹廣場", "烏魯瓦圖火舞"],
+                stay: "水明漾萬怡飯店 (Courtyard)",
+                details: [
+                    { time: "09:30", icon: MapPin, text: "包車出發，前往神鷹廣場 (GWK)" },
+                    { time: "14:45", icon: Utensils, text: "午餐：One Eighty 懸崖透明泳池餐廳 (已預訂)" },
+                    { time: "18:00", icon: Sun, text: "烏魯瓦圖廟欣賞 Kecak 火舞表演" },
+                    { time: "20:00", icon: Utensils, text: "晚餐：Moggumung 韓式烤肉滿足靈魂" }
+                ],
+                note: "這天視覺衝擊最強，透明懸崖泳池是拍照熱點！"
+            },
+            {
+                day: 4, date: "4/28 (二)", title: "前進烏布：走入綠意梯田",
+                highlights: ["德哥拉朗梯田", "烏布皇宮", "Kebun Bistro"],
+                stay: "阿迪瓦納蘇維塔 (Adiwana Suweta)",
+                details: [
+                    { time: "09:00", icon: MapPin, text: "移動至烏布，德哥拉朗梯田 (Alas Harum)" },
+                    { time: "Lunch", icon: Utensils, text: "梯田內享用夢幻美景午餐" },
+                    { time: "Afternoon", icon: Camera, text: "烏布皇宮 / Seniman Coffee 冠軍咖啡" },
+                    { time: "17:30", icon: Utensils, text: "晚餐：Kebun Bistro (南法風情小酒館)" }
+                ],
+                note: "換到烏布住之後，氣氛會變得非常寧靜放鬆。"
+            },
+            {
+                day: 5, date: "4/29 (三)", title: "超療癒：狗狗瑜珈與聖猴森林",
+                highlights: ["狗狗瑜珈", "Pison Cafe", "飯店 Spa"],
+                stay: "阿迪瓦納蘇維塔 (Adiwana Suweta)",
+                details: [
+                    { time: "11:30", icon: Utensils, text: "午餐：Pison Cafe (已 Whatapp 訂位)" },
+                    { time: "13:30", icon: Sun, text: "狗狗瑜珈課：跟小狗一起做瑜珈 (亮點行程！)" },
+                    { time: "15:00", icon: Camera, text: "聖猴森林，看調皮的小猴子們" },
+                    { time: "18:00", icon: Utensils, text: "晚餐：L'Osteria 義式手工披薩" }
+                ],
+                note: "瑜珈跟狗狗互動超級可愛，飯店內的 Tejas Spa 也別忘了去做！"
+            },
+            {
+                day: 6, date: "4/30 (四)", title: "瀑布巡禮：水聲與叢林俱樂部",
+                highlights: ["三座秘境瀑布", "OMMA Dayclub", "五星萬麗"],
+                stay: "努沙杜瓦萬麗度假村 (Renaissance)",
+                details: [
+                    { time: "10:00", icon: MapPin, text: "出發瀑布巡禮：Goa Rang Reng & Kanto Lampo" },
+                    { time: "Lunch", icon: Utensils, text: "OMMA Dayclub (瀑布景觀餐廳)" },
+                    { time: "Afternoon", icon: Waves, text: "Tegenungan 瀑布，隨後前往努沙杜瓦" },
+                    { time: "Night", icon: Utensils, text: "入住五星萬麗飯店，峇里島 Collection 晚餐" }
+                ],
+                note: "瀑布水氣很大，建議穿著方便玩水的衣物和防滑鞋。"
+            },
+            {
+                day: 7, date: "5/1 (五)", title: "萬麗耍廢：度假村的極致放鬆",
+                highlights: ["飯店泳池", "Nusa By Suka", "Bali Collection"],
+                stay: "努沙杜瓦萬麗度假村 (Renaissance)",
+                details: [
+                    { time: "All Day", icon: Hotel, text: "整天待在萬麗享受絕美泳池與飯店設施" },
+                    { time: "16:00", icon: Camera, text: "Bali Collection 逛街晃晃" },
+                    { time: "Dinner", icon: Utensils, text: "晚餐：Nusa By Suka (林北極推超美味餐廳)" }
+                ],
+                note: "萬麗飯店的早餐很有名，記得慢慢享用，下午再出門晃晃。"
+            },
+            {
+                day: 8, date: "5/2 (六)", title: "刺激狂歡：Waterbom 水上樂園",
+                highlights: ["亞洲最強水樂園", "庫塔海景晚餐"],
+                stay: "努沙杜瓦萬麗度假村 (Renaissance)",
+                details: [
+                    { time: "All Day", icon: Waves, text: "Waterbom 濕身狂歡，體驗多種刺激滑道" },
+                    { time: "17:00", icon: Utensils, text: "庫塔海景餐廳，邊聽浪聲邊用餐" }
+                ],
+                note: "最後一個整天，用笑聲和水花畫下完美句點。"
+            },
+            {
+                day: 9, date: "5/3 (日)", title: "優雅收心，帶上滿滿回憶回家",
+                highlights: ["最後早餐", "華航 CI772"],
+                stay: "溫暖的家",
+                details: [
+                    { time: "Morning", icon: Coffee, text: "飯店最後一次豐盛早餐，整理行李" },
+                    { time: "12:00", icon: MapPin, text: "退房並前往機場 (12:40 前抵達)" },
+                    { time: "15:55", icon: RealPlane, text: "搭乘 CI772 飛往桃園 (21:20 抵達)" }
+                ],
+                note: "九天旅程辛苦了！帶著充滿能量的身心回家吧。"
+            }
+        ];
+
+        // --- 主程式 ---
+        function BaliTrip() {
+            const [activeDay, setActiveDay] = useState(null);
+
+            return (
+                <div className="min-h-screen pb-20 text-slate-800">
+                    {/* 背景裝飾 */}
+                    <div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-10 z-0">
+                        <PawPrint className="absolute top-20 left-10 w-24 h-24" />
+                        <PawPrint className="absolute top-1/3 right-10 w-16 h-16 rotate-45" />
+                        <PawPrint className="absolute bottom-20 left-1/4 w-20 h-20 -rotate-12" />
+                    </div>
+
+                    {/* Header */}
+                    <div className="relative z-10 pt-12 pb-8 px-4 text-center">
+                        <div className="flex justify-center mb-4 animate-bounce-slow">
+                            <ShibaIcon className="w-24 h-24 drop-shadow-xl" />
+                        </div>
+                        <h1 className="text-3xl md:text-4xl font-black text-orange-900 mb-2">
+                            峇里島<span className="text-orange-600">九日療癒</span>之旅
+                        </h1>
+                        <p className="text-orange-800 text-sm font-medium opacity-80">
+                            「視覺與味蕾的雙重高潮 🐾 視覺療癒行」
+                        </p>
+                        <a href="/" className="inline-block mt-4 text-orange-600 hover:text-orange-800 text-sm font-medium transition-colors">
+                            ← 回主頁
+                        </a>
+                    </div>
+
+                    {/* 航班與費用 */}
+                    <div className="relative z-10 max-w-4xl mx-auto px-4 mb-8 grid md:grid-cols-2 gap-4">
+                        <HandwritingCard title="飛行 & 住宿資訊" icon={RealPlane}>
+                            <div className="text-sm space-y-2 text-slate-600">
+                                <div className="flex justify-between">
+                                    <span>去程 CI771</span>
+                                    <span className="font-bold">09:10 - 14:35</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span>回程 CI772</span>
+                                    <span className="font-bold">15:55 - 21:20</span>
+                                </div>
+                                <div className="border-t border-dashed border-orange-200 my-2 pt-2">
+                                    <p>🏨 飯店分配：</p>
+                                    <p className="font-medium">• 水明漾萬怡 (3晚)</p>
+                                    <p className="font-medium">• 烏布阿迪瓦納蘇維塔 (2晚)</p>
+                                    <p className="font-medium">• 努沙杜瓦萬麗 (3晚)</p>
+                                </div>
+                            </div>
+                        </HandwritingCard>
+
+                        <HandwritingCard title="預估預算 (人)" icon={DollarSign}>
+                            <div className="flex flex-col items-center justify-center h-full">
+                                <div className="text-3xl font-black text-orange-600 mb-2">NT$ 40,359</div>
+                                <p className="text-xs text-slate-400 text-center">
+                                    (含機票、住宿、交通、保險、網卡)<br/>
+                                    *不含餐費
+                                </p>
+                            </div>
+                        </HandwritingCard>
+                    </div>
+
+                    {/* 每日行程 */}
+                    <div className="relative z-10 max-w-2xl mx-auto px-4 space-y-4">
+                        <h2 className="text-xl font-bold text-orange-900 border-b-4 border-yellow-300 inline-block mb-2">
+                            Daily Itinerary
+                        </h2>
+                        
+                        {schedule.map((day, index) => (
+                            <div key={index} className="bg-white rounded-2xl border-2 border-orange-100 shadow-sm overflow-hidden">
+                                <div 
+                                    className="p-4 flex items-start justify-between cursor-pointer"
+                                    onClick={() => setActiveDay(activeDay === index ? null : index)}
+                                >
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <span className="bg-orange-500 text-white text-xs font-bold px-2 py-0.5 rounded">Day {day.day}</span>
+                                            <span className="text-slate-400 text-xs">{day.date}</span>
+                                        </div>
+                                        <h3 className="font-bold text-slate-800">{day.title}</h3>
+                                        <div className="flex flex-wrap gap-1 mt-2">
+                                            {day.highlights.map((h, i) => (
+                                                <span key={i} className="text-[10px] bg-orange-50 text-orange-600 px-1.5 py-0.5 rounded border border-orange-100">#{h}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="pt-2 text-orange-300">
+                                        {activeDay === index ? <ChevronUp /> : <ChevronDown />}
+                                    </div>
+                                </div>
+
+                                {activeDay === index && (
+                                    <div className="px-4 pb-4 bg-orange-50/30 border-t border-dashed border-orange-100">
+                                        <div className="space-y-3 pt-4 relative">
+                                            <div className="absolute left-[15px] top-4 bottom-4 w-px bg-orange-200"></div>
+                                            {day.details.map((detail, idx) => (
+                                                <div key={idx} className="flex items-start gap-3 relative z-10">
+                                                    <div className="w-8 h-8 rounded-full bg-white border border-orange-100 flex items-center justify-center shrink-0">
+                                                        <detail.icon className="w-4 h-4 text-orange-500" />
+                                                    </div>
+                                                    <div className="pt-1">
+                                                        <span className="text-xs font-bold text-orange-800 bg-orange-100 px-1.5 py-0.5 rounded mr-2">{detail.time}</span>
+                                                        <span className="text-sm text-slate-700 font-medium">{detail.text}</span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="mt-4 p-3 bg-white rounded-xl border border-orange-100 flex items-center gap-3">
+                                            <ShibaIcon className="w-8 h-8 shrink-0" />
+                                            <p className="text-xs text-orange-800 italic">「{day.note}」</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* 司機資訊摘要 */}
+                    <div className="relative z-10 max-w-4xl mx-auto px-4 mt-8">
+                        <HandwritingCard title="給司機的資訊 (Snapshot)" icon={MapPin} color="bg-orange-900/5">
+                            <div className="text-xs font-mono space-y-1 text-orange-900 opacity-80">
+                                <p>• 4/25: Airport → Courtyard Seminyak (15:10)</p>
+                                <p>• 4/27: GWK, One Eighty, Uluwatu Temple (09:30)</p>
+                                <p>• 4/28: Seminyak → Ubud, Rice Terrace, Market (09:00)</p>
+                                <p>• 4/30: Ubud → Nusa Dua, Waterfalls (10:00)</p>
+                                <p>• 5/03: Hotel → Airport (12:00)</p>
+                            </div>
+                        </HandwritingCard>
+                    </div>
+
+                    <footer className="mt-12 text-center pb-12">
+                        <div className="flex justify-center gap-2 mb-4 opacity-20">
+                            <PawPrint /><PawPrint /><PawPrint />
+                        </div>
+                        <p className="text-xs text-orange-800/40">Have a nice healing trip! 🐕🏝️</p>
+                    </footer>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<BaliTrip />);
+    </script>
+</body>
+</html>
