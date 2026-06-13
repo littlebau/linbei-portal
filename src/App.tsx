@@ -1383,7 +1383,7 @@ const allTrips: Trip[] = [
       "https://lh3.googleusercontent.com/pw/AP1GczNWecf8ChDCnskzeLAscZF3j45exsA5KEyRAlOZm111jv0RKCobSH1cPIj-FjaOrcXugv_D1iqX6xqN9NvaJ8lLj7_1Ht7TvbnN-32mLnLMpqdXTarzcI8yz6mdXjX0SFBw4V1iNrhUhOo3k7-LfQwHsg=w1159-h869-s-no-gm?authuser=0",
       "https://lh3.googleusercontent.com/pw/AP1GczOeSAV9c3np02teerJJsvfWItJEMPQySuRFRXej20FI2jlE2k2xCLvbFr17zNRhUXwRDGertfTXZ5CRkaTjxgpofkLfVocky2dK0VoaNNScxgu_IKgaYJ69Ykf3cyhiarp0wPSox1Eg191UWhoQLKPmWQ=w651-h869-s-no-gm?authuser=0"
     ],
-    album: "https://photos.google.com/album/AF1QipOPQuT0C3xGscWVZ-63NPgSqqmU0m_PU-D-evZJ",
+    album: "https://photos.app.goo.gl/GJwA2sgdj5pRxGmt8",
     plan: "https://docs.google.com/document/d/1KztrprkyI7DxRptC1q7lpHRYwVsS7iBW/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
     vlog: "https://youtu.be/qxe-It-ojLY?si=mMbh81F4mCAhYh8G",
     tripPage: "/trips/2026-bali/"
