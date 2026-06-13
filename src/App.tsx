@@ -1376,12 +1376,12 @@ const allTrips: Trip[] = [
     year: 2026, season: "春假", title: "峇厘島 包車旅遊", location: "印尼 峇厘島", status: "Planning", type: "future", 
     image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", 
     images: [
-      "https://photos.fife.usercontent.google.com/pw/AP1GczNfZvFvB4wpAVCnhj8s0TCmNUVIbednOut69-MyRsf8nxDhzik89V-0Ow=w651-h869-s-no-gm?authuser=0",
-      "https://photos.fife.usercontent.google.com/pw/AP1GczNXgvuKMr0WGwwGH4DkFrVdUlfPs_fBF_-gqh1VAJXRoA0hZ4LeiXa1gw=w651-h869-s-no-gm?authuser=0",
-      "https://photos.fife.usercontent.google.com/pw/AP1GczM7XVE3DMGPIQnkHAFAik-tXHGlcBJjOLe27EqaLrv0S5PnRiUiCKBxgw=w651-h869-s-no-gm?authuser=0",
-      "https://photos.fife.usercontent.google.com/pw/AP1GczNy_CvaYigzNLCcKGY5DDNLXWHplAeCsszQkCpwBX53Rx4VbPBb5XSe4g=w651-h869-s-no-gm?authuser=0",
-      "https://photos.fife.usercontent.google.com/pw/AP1GczPshtPIPjUZnsDZ0z3dJqvWHRKulcbWEIWd_UyXb-hUpTL25uU-OCv9yQ=w651-h869-s-no-gm?authuser=0",
-      "https://photos.fife.usercontent.google.com/pw/AP1GczOrAZYvdqxSWYkZXKcuTlaJ1kT_IAD8vcauZtc5dbXtVEuzMPbTwQUYrA=w1159-h869-s-no-gm?authuser=0"
+      "https://lh3.googleusercontent.com/pw/AP1GczNawmzUyQrGqysSbF6huw8R7WDUH19wjAARqLsT1cZhLbaD43V3uk6sJzlbjFr3ePUjHHvUZshy6cNXF8LwEywB5fpoQZfijtYG4zgwwAV-ghQCqxBEgQVGU5MO-VnePbAvdXbpR2XZ56I8bxyCmncCSA=w1159-h869-s-no-gm?authuser=0",
+      "https://lh3.googleusercontent.com/pw/AP1GczOj3jQSVNrvPKNRk79TceeJ147cW_kuaIKQQTqQJVjCfg3vHhpagnUAYowudWLYyvJtG1dSmh20rA8G3rqagamLKFl4Bu6f-zuj8I7s0TgSkd16BKnXeJlV5_s8wRW_sZOYSz8vezjfdZu1BXmmWU6kcg=w651-h869-s-no-gm?authuser=0",
+      "https://lh3.googleusercontent.com/pw/AP1GczOLPTlN3nTMDUp45FotFL5XIVT6ccWA34p1Xb8UnWdm0SJKntLoYKo14IXoVO6T_MB_7KD2Ughp0PReawKoaj2Vcj97zgweWJzAHX1OZf35CR3DJQ0FldEhC7WrrocMnehtq3NhZnDp5PoyVkBnifeJ8Q=w1159-h869-s-no-gm?authuser=0",
+      "https://lh3.googleusercontent.com/pw/AP1GczPFjFYTBFS6vW5c5GkQKW8J0O2THVjfeE6N3Pl4tEuDVOGMhs-llp38VJu6pJtEP0SE72viB4voRGY2Sie0J3_LcZ7A3EGT6txQMkzLSg4_Ifbu_AvoPzgO_ZB1ww6bOSjuWLkGba3bWnBjxA2fQMypsw=w651-h869-s-no-gm?authuser=0",
+      "https://lh3.googleusercontent.com/pw/AP1GczNWecf8ChDCnskzeLAscZF3j45exsA5KEyRAlOZm111jv0RKCobSH1cPIj-FjaOrcXugv_D1iqX6xqN9NvaJ8lLj7_1Ht7TvbnN-32mLnLMpqdXTarzcI8yz6mdXjX0SFBw4V1iNrhUhOo3k7-LfQwHsg=w1159-h869-s-no-gm?authuser=0",
+      "https://lh3.googleusercontent.com/pw/AP1GczOeSAV9c3np02teerJJsvfWItJEMPQySuRFRXej20FI2jlE2k2xCLvbFr17zNRhUXwRDGertfTXZ5CRkaTjxgpofkLfVocky2dK0VoaNNScxgu_IKgaYJ69Ykf3cyhiarp0wPSox1Eg191UWhoQLKPmWQ=w651-h869-s-no-gm?authuser=0"
     ],
     album: "https://photos.google.com/album/AF1QipOPQuT0C3xGscWVZ-63NPgSqqmU0m_PU-D-evZJ",
     plan: "https://docs.google.com/document/d/1KztrprkyI7DxRptC1q7lpHRYwVsS7iBW/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
