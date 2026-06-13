@@ -1375,10 +1375,17 @@ const allTrips: Trip[] = [
   { 
     year: 2026, season: "春假", title: "峇厘島 包車旅遊", location: "印尼 峇厘島", status: "Planning", type: "future", 
     image: "https://drive.google.com/file/d/1J-gko7gU4iEFMEm3crSSljeQDzLJhHNe/view?usp=drive_link", 
-    images: [],
-    album: "", 
+    images: [
+https://photos.fife.usercontent.google.com/pw/AP1GczNfZvFvB4wpAVCnhj8s0TCmNUVIbednOut69-MyRsf8nxDhzik89V-0Ow=w651-h869-s-no-gm?authuser=0,
+https://photos.fife.usercontent.google.com/pw/AP1GczNXgvuKMr0WGwwGH4DkFrVdUlfPs_fBF_-gqh1VAJXRoA0hZ4LeiXa1gw=w651-h869-s-no-gm?authuser=0,
+https://photos.fife.usercontent.google.com/pw/AP1GczM7XVE3DMGPIQnkHAFAik-tXHGlcBJjOLe27EqaLrv0S5PnRiUiCKBxgw=w651-h869-s-no-gm?authuser=0,
+https://photos.fife.usercontent.google.com/pw/AP1GczNy_CvaYigzNLCcKGY5DDNLXWHplAeCsszQkCpwBX53Rx4VbPBb5XSe4g=w651-h869-s-no-gm?authuser=0,
+https://photos.fife.usercontent.google.com/pw/AP1GczPshtPIPjUZnsDZ0z3dJqvWHRKulcbWEIWd_UyXb-hUpTL25uU-OCv9yQ=w651-h869-s-no-gm?authuser=0,
+https://photos.fife.usercontent.google.com/pw/AP1GczOrAZYvdqxSWYkZXKcuTlaJ1kT_IAD8vcauZtc5dbXtVEuzMPbTwQUYrA=w1159-h869-s-no-gm?authuser=0
+    ],
+    album: "https://photos.google.com/album/AF1QipOPQuT0C3xGscWVZ-63NPgSqqmU0m_PU-D-evZJ", 
     plan: "https://docs.google.com/document/d/1KztrprkyI7DxRptC1q7lpHRYwVsS7iBW/edit?usp=drive_link&ouid=107075976967006832590&rtpof=true&sd=true", 
-    vlog: "",
+    vlog: "https://youtu.be/qxe-It-ojLY?si=mMbh81F4mCAhYh8G",
     tripPage: "/trips/2026-bali/"
   },
   { 
